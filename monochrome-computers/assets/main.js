@@ -8,13 +8,8 @@ function qsa(sel, root = document) {
   return Array.from(root.querySelectorAll(sel));
 }
 
-function formatUSD(cents) {
-  const dollars = cents / 100;
-  return dollars.toLocaleString(undefined, {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  });
+function formatMMK(amount) {
+  return amount.toLocaleString() + " MMK";
 }
 
 const I18N = {
@@ -37,10 +32,10 @@ const I18N = {
     "footer.copyrightName": "Techzy",
     "footer.themeLine": "Built in black, gray, and white.",
 
-    "home.hero.kicker": "Minimal hardware. Maximum focus.",
-    "home.hero.title": "Laptops and desktops built with a clean, modern edge.",
+    "home.hero.kicker": "Brand New. Factory Sealed. Only at Techzy.",
+    "home.hero.title": "For those who want to unbox their brand new laptop themselves.",
     "home.hero.lede":
-      "Curated machines for creators, builders, and teams who want quiet performance without the noise.",
+      "Discover top-quality brand new laptops for office, school, and business. From everyday use to enterprise performance.",
     "home.hero.ctaPrimary": "Browse Products",
     "home.hero.ctaSecondary": "How We Work",
     "home.metrics.aria": "Key metrics",
@@ -53,15 +48,15 @@ const I18N = {
     "home.featured.title": "Featured picks",
     "home.featured.subtitle": "A quick look at what customers are buying this week.",
     "home.featured.link": "See all products",
-    "home.why.title": "Why Techzy",
+    "home.why.title": "Why choose Techzy?",
     "home.why.body":
-      "We keep it simple: strong components, clean builds, and honest pricing. No neon. No clutter. Just machines that do the work.",
-    "home.why.f1Title": "Curated builds",
-    "home.why.f1Body": "Tested combinations for stability, thermals, and longevity.",
-    "home.why.f2Title": "Clean design",
-    "home.why.f2Body": "Minimalist finishes, subtle textures, and no visual noise.",
-    "home.why.f3Title": "Smart support",
-    "home.why.f3Body": "Fast diagnosis, clear answers, and real repair options.",
+      "Every device is 100% genuine, factory-sealed, and backed by our no-questions guarantee. Real peace of mind from unboxing to beyond.",
+    "home.why.f1Title": "100% Authenticity",
+    "home.why.f1Body": "Every laptop is 100% brand new and genuine. If not, we refund 2x the purchase price. Guaranteed.",
+    "home.why.f2Title": "30-Day Instant Replacement",
+    "home.why.f2Body": "Manufacturer defect within the first month? We replace it immediately. No repairs, no delays.",
+    "home.why.f3Title": "First-Hand Experience",
+    "home.why.f3Body": "Every device arrives factory-sealed. You will be the very first person to open and experience your new tech.",
 
     "about.hero.kicker": "About us",
     "about.hero.title": "A minimalist approach to computers.",
@@ -164,10 +159,10 @@ const I18N = {
     "footer.copyrightName": "Techzy",
     "footer.themeLine": "အနက်၊ မီးခိုး၊ အဖြူ အရောင်စနစ်ဖြင့် တည်ဆောက်ထားသည်။",
 
-    "home.hero.kicker": "မီနီမယ်လ် ဟာ့ဒ်ဝဲ။ အာရုံစိုက်မှု အမြင့်ဆုံး။",
-    "home.hero.title": "သန့်ရှင်းသက်သာသော ခေတ်မီဒီဇိုင်းနဲ့ လက်ပ်တော့/ဒက်စ်တော့များ။",
+    "home.hero.kicker": "Brand New. Factory Sealed. Techzy တွင်သာ။",
+    "home.hero.title": "Brand New Laptop တွေကို ကိုယ်တိုင် Unboxing လုပ်ချင်သူတွေအတွက်",
     "home.hero.lede":
-      "ဖန်တီးမှု၊ တည်ဆောက်မှု၊ အဖွဲ့လိုက်လုပ်ဆောင်မှုအတွက် တိတ်ဆိတ်ပြီး အားကောင်းသော စွမ်းဆောင်ရည်။",
+      "ရုံးသုံး၊ ကျောင်းသုံးကနေစပြီး လုပ်ငန်းသုံးအထိ အကောင်းစား brand new laptops များကို ရှာဖွေမည်",
     "home.hero.ctaPrimary": "ထုတ်ကုန်များ ကြည့်ရန်",
     "home.hero.ctaSecondary": "ကျွန်ုပ်တို့၏ လုပ်နည်း",
     "home.metrics.aria": "အဓိက အချက်အလက်များ",
@@ -176,19 +171,19 @@ const I18N = {
     "home.metrics.shippingLabel": "ပို့ဆောင်မှု",
     "home.metrics.shippingValue": "မြန်ဆန် + အာမခံပါ",
     "home.metrics.supportLabel": "အကူအညီ",
-    "home.metrics.supportValue": "လူจริงများ",
+    "home.metrics.supportValue": "လူသားအစစ်",
     "home.featured.title": "အကြံပြု ထုတ်ကုန်များ",
     "home.featured.subtitle": "ဒီအပတ်မှာ လူကြိုက်များနေတဲ့ မော်ဒယ်များကို မြန်မြန်ကြည့်ပါ။",
     "home.featured.link": "ထုတ်ကုန်အားလုံး ကြည့်ရန်",
-    "home.why.title": "Techzy ကို ဘာကြောင့်ရွေးမလဲ",
+    "home.why.title": "ဘာလို့ Techzy ကို ရွေးချယ်သင့်တာလဲ?",
     "home.why.body":
-      "ခိုင်မာတဲ့ အစိတ်အပိုင်းများ၊ သန့်ရှင်းတဲ့ တည်ဆောက်မှု၊ ရိုးရှင်းတဲ့ စျေးနှုန်း။ အလွန်အကျွံ မဟုတ်ပါ။",
-    "home.why.f1Title": "ရွေးချယ်စစ်ဆေးပြီးသား",
-    "home.why.f1Body": "တည်ငြိမ်မှု၊ အပူချိန်၊ ကြာရှည်ခံမှုအတွက် စမ်းသပ်ထားသည်။",
-    "home.why.f2Title": "သန့်ရှင်းတဲ့ ဒီဇိုင်း",
-    "home.why.f2Body": "မီနီမယ်လ် အပြင်အဆင်၊ သေသပ်သန့်ရှင်းပြီး မအလွန်အကျွံ။",
-    "home.why.f3Title": "အကူအညီကောင်း",
-    "home.why.f3Body": "လျင်မြန်တဲ့ စစ်ဆေးမှု၊ ရှင်းလင်းတဲ့ အဖြေတွေ၊ ပြုပြင်မှုရွေးချယ်စရာများ။",
+      "ကျွန်ုပ်တို့ရောင်းတဲ့ ထုတ်ကုန်တိုင်း စစ်မှန်ပြီး factory-sealed ဖြစ်တယ်လို့ အာမခံပါတယ်။ Unboxing ကနေ နောက်ပိုင်းအထိ မင်းရဲ့ စိတ်ချမှုကို ကာကွယ်ပေးမယ်။",
+    "home.why.f1Title": "၁၀၀% စစ်မှန်မှု အာမခံချက်",
+    "home.why.f1Body": "Techzy ကရောင်းတဲ့ Laptop တိုင်းဟာ Brand New အစစ်အမှန် မဟုတ်ခဲ့ရင် တန်ဖိုးရဲ့ (၂) ဆကို ပြန်လည်လျော်ပေးမယ့် အာမခံချက်ရှိပါတယ်။",
+    "home.why.f2Title": "ရက် (၃၀) အတွင်း အသစ်လဲလှယ်ပေးခြင်း",
+    "home.why.f2Body": "ဝယ်ယူပြီး (၁) လအတွင်းမှာ Factory Error တစ်ခုခု ပါခဲ့ရင် ပြင်ပေးတာမျိုးမဟုတ်ဘဲ အသစ်တစ်လုံး ချက်ချင်းလဲပေးမှာပါ!",
+    "home.why.f3Title": "ပထမဦးဆုံး Unboxing အတွေ့အကြုံ",
+    "home.why.f3Body": "ဘယ်သူမှ မဖောက်ရသေးတဲ့ Original Seal အပြည့်နဲ့ Laptop ကို ကိုယ်တိုင် ပထမဦးဆုံး ဖောက်ရမယ့် အတွေ့အကြုံကို ရမှာပါ။",
 
     "about.hero.kicker": "ကျွန်ုပ်တို့အကြောင်း",
     "about.hero.title": "ကွန်ပျူတာများကို မီနီမယ်လ်နည်းလမ်းနဲ့ ရွေးချယ်ရောင်းချခြင်း။",
@@ -399,107 +394,94 @@ function initLanguageSwitcher() {
 
 const PRODUCTS = [
   {
-    id: "mono-air-14",
-    name: "Mono Air 14",
-    nameMy: "Mono Air 14",
+    id: "lenovo-legion-7i-2025",
+    name: "Notebook Lenovo Legion 7i (2025)",
+    nameMy: "Notebook Lenovo Legion 7i (2025)",
     category: "laptop",
-    badge: "Ultralight",
-    badgeMy: "အလွန်ပေါ့ပါး",
-    priceCents: 99900,
-    desc: "A clean, portable laptop for daily work and travel. Quiet thermals and a crisp display.",
-    descMy:
-      "နေ့စဉ်အလုပ်နဲ့ ခရီးသွားအတွက် သန့်ရှင်းပြီး သယ်ဆောင်လွယ်တဲ့ လက်ပ်တော့။ အပူချိန်တိတ်ပြီး မျက်နှာပြင်ကြည်လင်။",
-    specs: ["14-inch", "16GB RAM", "512GB SSD", "All-day battery"],
-    specsMy: ["14 လက်မ", "16GB RAM", "512GB SSD", "တစ်နေ့လုံး ဘက်ထရီ"],
+    badge: "Gaming",
+    badgeMy: "ဂိမ်းဆော့ရန်",
+    priceMMK: 12955000,
+    desc: "Top-tier gaming laptop with OLED display, AI-boosted Intel Core Ultra 9 and RTX 5070 graphics.",
+    descMy: "OLED မျက်နှာပြင်၊ AI-boosted Intel Core Ultra 9 နှင့် RTX 5070 ပါဝင်သော အဆင့်မြင့် gaming laptop။",
+    specs: ["RTX 5070 8GB", "Intel Core Ultra 9", "32GB DDR5", "1TB NVMe"],
+    specsMy: ["RTX 5070 8GB", "Intel Core Ultra 9", "32GB DDR5", "1TB NVMe"],
+    image: "lenovo-legion-7i.png",
     featuredRank: 1,
   },
   {
-    id: "mono-studio-16",
-    name: "Mono Studio 16",
-    nameMy: "Mono Studio 16",
+    id: "asus-tuf-gaming-a15",
+    name: "ASUS TUF GAMING A15",
+    nameMy: "ASUS TUF GAMING A15",
     category: "laptop",
-    badge: "Creator",
-    badgeMy: "ဖန်တီးရေး",
-    priceCents: 159900,
-    desc: "For editing, design, and heavier multitasking. Balanced power with a calm minimalist finish.",
-    descMy:
-      "အင်တက်, ဒီဇိုင်း, မလွယ်ကူတဲ့ multitasking အတွက်။ မီနီမယ်လ် အပြင်အဆင်နဲ့ စွမ်းအားညီညွတ်။",
-    specs: ["16-inch", "32GB RAM", "1TB SSD", "Color-true panel"],
-    specsMy: ["16 လက်မ", "32GB RAM", "1TB SSD", "အရောင်မှန် panel"],
+    badge: "Gaming",
+    badgeMy: "ဂိမ်းဆော့ရန်",
+    priceMMK: 4295000,
+    desc: "Durable gaming laptop with AMD Ryzen 7 and RTX 3050. Reliable performance at an accessible price.",
+    descMy: "AMD Ryzen 7 နှင့် RTX 3050 ပါဝင်သော ခိုင်မာသည့် gaming laptop။ သင့်တော်သော စျေးနှုန်းနှင့် ယုံကြည်စိတ်ချရသော စွမ်းဆောင်ရည်။",
+    specs: ["RTX 3050 4GB", "AMD Ryzen 7", "16GB DDR5", "512GB NVMe"],
+    specsMy: ["RTX 3050 4GB", "AMD Ryzen 7", "16GB DDR5", "512GB NVMe"],
+    image: "asus-tuf-a15.png",
     featuredRank: 2,
   },
   {
-    id: "mono-pro-15",
-    name: "Mono Pro 15",
-    nameMy: "Mono Pro 15",
+    id: "hp-victus-15",
+    name: "HP Victus 15",
+    nameMy: "HP Victus 15",
     category: "laptop",
-    badge: "Performance",
-    badgeMy: "စွမ်းဆောင်ရည်",
-    priceCents: 189900,
-    desc: "High-performance laptop with dedicated graphics for demanding creative and technical workloads.",
-    descMy:
-      "လိုအပ်ချက်မြင့်မားတဲ့ ဖန်တီးရေး/နည်းပညာ လုပ်ငန်းများအတွက် GPU ပါဝင်တဲ့ စွမ်းဆောင်ရည်မြင့် လက်ပ်တော့။",
-    specs: ["15-inch", "32GB RAM", "1TB SSD", "RTX-class GPU"],
-    specsMy: ["15 လက်မ", "32GB RAM", "1TB SSD", "RTX အဆင့် GPU"],
-    featuredRank: 4,
-  },
-  {
-    id: "mono-tower-s",
-    name: "Mono Tower S",
-    nameMy: "Mono Tower S",
-    category: "desktop",
-    badge: "Workstation",
-    badgeMy: "လုပ်ငန်းသုံး",
-    priceCents: 149900,
-    desc: "A compact workstation tuned for airflow and low noise. Ideal for studio desks and small offices.",
-    descMy:
-      "လေဝင်လေထွက်ကောင်းပြီး အသံနိမ့်အောင်ညှိထားတဲ့ compact workstation။ စတူဒီယိုနဲ့ ရုံးသေးများအတွက် သင့်တော်။",
-    specs: ["Quiet cooling", "32GB RAM", "1TB SSD", "Upgradeable"],
-    specsMy: ["တိတ်ဆိတ် cooling", "32GB RAM", "1TB SSD", "အဆင့်မြှင့်နိုင်"],
+    badge: "Gaming",
+    badgeMy: "ဂိမ်းဆော့ရန်",
+    priceMMK: 5450000,
+    desc: "Balanced gaming and productivity with RTX 5050 and a bright 144Hz IPS display.",
+    descMy: "RTX 5050 နှင့် 144Hz IPS မျက်နှာပြင်ဖြင့် gaming နှင့် productivity ကို မျှတစွာ ဆောင်ရွက်နိုင်သော laptop။",
+    specs: ["RTX 5050 8GB", "Intel i7-13620H", "16GB DDR5", "512GB NVMe"],
+    specsMy: ["RTX 5050 8GB", "Intel i7-13620H", "16GB DDR5", "512GB NVMe"],
+    image: "hp-victus-15.png",
     featuredRank: 3,
   },
   {
-    id: "mono-tower-x",
-    name: "Mono Tower X",
-    nameMy: "Mono Tower X",
-    category: "desktop",
-    badge: "High-end",
+    id: "asus-rog-strix-g16",
+    name: "Notebook Asus ROG Strix G16",
+    nameMy: "Notebook Asus ROG Strix G16",
+    category: "laptop",
+    badge: "Premium",
     badgeMy: "အဆင့်မြင့်",
-    priceCents: 249900,
-    desc: "A powerful desktop for 3D, rendering, and heavy compute. Built for stability under sustained loads.",
-    descMy:
-      "3D၊ rendering၊ heavy compute အတွက် စွမ်းအားမြင့် desktop။ အမြဲတမ်း load အောက်မှာတောင် တည်ငြိမ်မှုကို ဦးစားပေးထားသည်။",
-    specs: ["64GB RAM", "2TB SSD", "Pro GPU", "10GbE optional"],
-    specsMy: ["64GB RAM", "2TB SSD", "Pro GPU", "10GbE (ရွေးချယ်နိုင်)"],
+    priceMMK: 14255000,
+    desc: "Elite gaming powerhouse with RTX 5070 Ti, AMD Ryzen 9 and the ROG Nebula Display.",
+    descMy: "RTX 5070 Ti၊ AMD Ryzen 9 နှင့် ROG Nebula Display ပါဝင်သော ထိပ်တန်း gaming laptop။",
+    specs: ["RTX 5070 Ti 12GB", "AMD Ryzen 9", "32GB DDR5", "1TB NVMe"],
+    specsMy: ["RTX 5070 Ti 12GB", "AMD Ryzen 9", "32GB DDR5", "1TB NVMe"],
+    image: "asus-rog-strix-g16.png",
+    featuredRank: 4,
+  },
+  {
+    id: "dell-alienware-16",
+    name: "Dell Alienware 16 Aurora",
+    nameMy: "Dell Alienware 16 Aurora",
+    category: "laptop",
+    badge: "Pro Gaming",
+    badgeMy: "Pro Gaming",
+    priceMMK: 9655000,
+    desc: "Premium gaming machine with RTX 5080 and a WQXGA display for the serious gamer.",
+    descMy: "RTX 5080 နှင့် WQXGA မျက်နှာပြင်ပါဝင်သော ပရော်ဖက်ရှင်နယ် gaming laptop။",
+    specs: ["RTX 5080 8GB", "Intel Core 7 240H", "16GB DDR5", "1TB NVMe"],
+    specsMy: ["RTX 5080 8GB", "Intel Core 7 240H", "16GB DDR5", "1TB NVMe"],
+    image: "dell-alienware-16.png",
+    featuredRank: 5,
+  },
+  {
+    id: "msi-katana-15-hx",
+    name: "MSI Katana 15 HX",
+    nameMy: "MSI Katana 15 HX",
+    category: "laptop",
+    badge: "Gaming",
+    badgeMy: "ဂိမ်းဆော့ရန်",
+    priceMMK: 7355000,
+    desc: "Mid-range gaming laptop with QHD display, RTX 5060 and solid everyday performance.",
+    descMy: "QHD မျက်နှာပြင်၊ RTX 5060 နှင့် နေ့စဉ်အသုံးပြုရန် သင့်တော်သော mid-range gaming laptop။",
+    specs: ["RTX 5060 8GB", "Intel i7-14650HX", "16GB DDR5", "512GB NVMe"],
+    specsMy: ["RTX 5060 8GB", "Intel i7-14650HX", "16GB DDR5", "512GB NVMe"],
+    image: "msi-katana-15.png",
     featuredRank: 6,
-  },
-  {
-    id: "mono-dock",
-    name: "Mono Dock",
-    nameMy: "Mono Dock",
-    category: "accessory",
-    badge: "Minimal",
-    badgeMy: "မီနီမယ်လ်",
-    priceCents: 14900,
-    desc: "A clean desk dock for fast I/O and one-cable laptop setups.",
-    descMy: "မြန်ဆန် I/O နဲ့ တစ်ကြိုးတည်း setup အတွက် သန့်ရှင်းတဲ့ desk dock။",
-    specs: ["USB-C", "HDMI", "PD charging", "Aluminum body"],
-    specsMy: ["USB-C", "HDMI", "PD အားသွင်း", "Aluminum ကိုယ်ထည်"],
-    featuredRank: 7,
-  },
-  {
-    id: "mono-sleeve",
-    name: "Mono Sleeve",
-    nameMy: "Mono Sleeve",
-    category: "accessory",
-    badge: "Essentials",
-    badgeMy: "အခြေခံ",
-    priceCents: 5900,
-    desc: "A simple protective sleeve with soft lining and understated branding.",
-    descMy: "နူးညံ့တဲ့ lining နဲ့ သပ်ရပ်တဲ့ branding ပါတဲ့ ကာကွယ်ရေး sleeve။",
-    specs: ["14–16 inch", "Soft lining", "Weather resistant", "Magnetic flap"],
-    specsMy: ["14–16 လက်မ", "Soft lining", "ရေစိုခံ", "Magnetic flap"],
-    featuredRank: 8,
   },
 ];
 
@@ -566,6 +548,18 @@ function productCard(p) {
   wrap.setAttribute("data-name", pt.name.toLowerCase());
   wrap.setAttribute("data-reveal", "1");
 
+  if (p.image) {
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "product-img-wrap";
+    const img = document.createElement("img");
+    img.src = `assets/images/${p.image}`;
+    img.alt = pt.name;
+    img.className = "product-img";
+    img.loading = "lazy";
+    imgWrap.appendChild(img);
+    wrap.appendChild(imgWrap);
+  }
+
   const top = document.createElement("div");
   top.className = "product-top";
 
@@ -575,7 +569,7 @@ function productCard(p) {
 
   const price = document.createElement("div");
   price.className = "price";
-  price.textContent = formatUSD(p.priceCents);
+  price.textContent = formatMMK(p.priceMMK);
 
   top.appendChild(badge);
   top.appendChild(price);
@@ -636,9 +630,8 @@ function mountFeatured() {
   grid.innerHTML = "";
 
   const featured = [...PRODUCTS]
-    .slice()
     .sort((a, b) => a.featuredRank - b.featuredRank)
-    .filter((p) => p.featuredRank <= 4);
+    .slice(0, 6);
 
   featured.forEach((p) => grid.appendChild(productCard(p)));
   revealOnScroll();
@@ -654,13 +647,11 @@ function mountProductsPage() {
   }
 
   const search = qs("#productSearch");
-  const sort = qs("#productSort");
   const empty = qs("#productsEmpty");
   const reset = qs("#resetFilters");
 
   let activeFilter = "all";
   let query = "";
-  let sortKey = "featured";
 
   function getFiltered() {
     let list = PRODUCTS.slice();
@@ -677,15 +668,7 @@ function mountProductsPage() {
       });
     }
 
-    if (sortKey === "featured") {
-      list.sort((a, b) => a.featuredRank - b.featuredRank);
-    } else if (sortKey === "price-asc") {
-      list.sort((a, b) => a.priceCents - b.priceCents);
-    } else if (sortKey === "price-desc") {
-      list.sort((a, b) => b.priceCents - a.priceCents);
-    } else if (sortKey === "name-asc") {
-      list.sort((a, b) => a.name.localeCompare(b.name));
-    }
+    list.sort((a, b) => a.featuredRank - b.featuredRank);
 
     return list;
   }
@@ -714,20 +697,11 @@ function mountProductsPage() {
     });
   }
 
-  if (sort) {
-    sort.addEventListener("change", () => {
-      sortKey = sort.value || "featured";
-      render();
-    });
-  }
-
   if (reset) {
     reset.addEventListener("click", () => {
       activeFilter = "all";
       query = "";
-      sortKey = "featured";
       if (search) search.value = "";
-      if (sort) sort.value = "featured";
       qsa(".chip[data-filter]").forEach((b) => {
         b.classList.toggle("is-active", b.dataset.filter === "all");
       });
@@ -786,6 +760,74 @@ function mountContactForm() {
   });
 }
 
+function initCarousel() {
+  const carousel = qs("#heroCarousel");
+  if (!carousel) return;
+
+  const slides = qsa(".carousel-slide", carousel);
+  const dots = qsa(".carousel-dot", carousel);
+  const total = slides.length;
+  let active = 0;
+  let autoTimer = null;
+
+  function posClass(slideIdx) {
+    const diff = ((slideIdx - active) % total + total) % total;
+    if (diff === 0) return "is-active";
+    if (diff === 1) return "is-next";
+    return "is-prev";
+  }
+
+  function update() {
+    slides.forEach((s, i) => {
+      s.classList.remove("is-active", "is-next", "is-prev");
+      s.classList.add(posClass(i));
+    });
+    dots.forEach((d, i) => {
+      d.classList.toggle("is-active", i === active);
+      d.setAttribute("aria-selected", String(i === active));
+    });
+  }
+
+  function go(idx) {
+    active = ((idx % total) + total) % total;
+    update();
+  }
+
+  function next() { go(active + 1); }
+  function prev() { go(active - 1); }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(next, 4500);
+  }
+
+  function stopAuto() {
+    clearInterval(autoTimer);
+  }
+
+  qs("#carouselNext", carousel)?.addEventListener("click", () => { stopAuto(); next(); startAuto(); });
+  qs("#carouselPrev", carousel)?.addEventListener("click", () => { stopAuto(); prev(); startAuto(); });
+
+  dots.forEach((d, i) => {
+    d.addEventListener("click", () => { stopAuto(); go(i); startAuto(); });
+  });
+
+  // Swipe support
+  let touchStartX = 0;
+  carousel.addEventListener("touchstart", (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  carousel.addEventListener("touchend", (e) => {
+    const dx = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 40) { stopAuto(); dx > 0 ? next() : prev(); startAuto(); }
+  });
+
+  // Pause on hover
+  carousel.addEventListener("mouseenter", stopAuto);
+  carousel.addEventListener("mouseleave", startAuto);
+
+  update();
+  startAuto();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const initial = getSavedLang() || normalizeLang(navigator.language);
   applyI18n(initial);
@@ -794,6 +836,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setActiveNav();
   mountFooterBits();
+  initCarousel();
   mountFeatured();
   mountProductsPage();
   mountContactForm();

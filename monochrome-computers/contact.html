@@ -75,8 +75,8 @@
               <form id="contactForm" class="form" novalidate>
                 <label class="field">
                   <span class="field-label" data-i18n="contact.form.nameLabel">Name</span>
-                  <input id="cName" name="name" autocomplete="name" required />
-                  <span class="field-help" data-error-for="cName"></span>
+                  <input id="cName" name="name" type="text" autocomplete="name" aria-describedby="err-cName" required />
+                  <span class="field-help" id="err-cName" data-error-for="cName" role="alert" aria-live="polite" aria-atomic="true"></span>
                 </label>
 
                 <label class="field">
@@ -87,9 +87,10 @@
                     type="email"
                     autocomplete="email"
                     inputmode="email"
+                    aria-describedby="err-cEmail"
                     required
                   />
-                  <span class="field-help" data-error-for="cEmail"></span>
+                  <span class="field-help" id="err-cEmail" data-error-for="cEmail" role="alert" aria-live="polite" aria-atomic="true"></span>
                 </label>
 
                 <label class="field">
@@ -99,10 +100,11 @@
                     name="message"
                     rows="5"
                     required
+                    aria-describedby="err-cMsg"
                     data-i18n-attr="placeholder:contact.form.messagePlaceholder"
                     placeholder="Tell us what you need (use-case, budget, screen size, etc.)"
                   ></textarea>
-                  <span class="field-help" data-error-for="cMsg"></span>
+                  <span class="field-help" id="err-cMsg" data-error-for="cMsg" role="alert" aria-live="polite" aria-atomic="true"></span>
                 </label>
 
                 <div class="form-actions">

@@ -3,15 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Browse minimalist laptops and desktops from Techzy."
-    />
-    <title>Products | Techzy</title>
+    <meta name="description" content="Page not found | Techzy" />
+    <title>404 | Techzy</title>
     <link rel="stylesheet" href="assets/styles.css" />
     <script defer src="assets/main.js"></script>
   </head>
-  <body data-page="products">
+  <body data-page="404">
     <a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
 
     <header class="site-header">
@@ -43,7 +40,12 @@
           >
             <span class="nav-toggle-icon" aria-hidden="true"></span>
           </button>
-          <button class="lang-btn" type="button" id="langToggle" data-i18n-attr="aria-label:common.langToggleAria">
+          <button
+            class="lang-btn"
+            type="button"
+            id="langToggle"
+            data-i18n-attr="aria-label:common.langToggleAria"
+          >
             EN
           </button>
         </div>
@@ -51,60 +53,35 @@
     </header>
 
     <main id="main">
-      <section class="page-hero">
-        <div class="container">
-          <p class="kicker" data-i18n="products.hero.kicker">Products</p>
-          <h1 class="title-xl" data-i18n="products.hero.title">
-            Clean machines. Clear choices.
-          </h1>
-          <p class="lede" data-i18n="products.hero.lede">
-            Use search, filters, and sorting to find your next laptop or desktop.
-          </p>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <div class="toolbar" role="region" aria-label="Product filters">
-            <label class="field">
-              <span class="field-label" data-i18n="products.filters.searchLabel">Search</span>
-              <input
-                id="productSearch"
-                type="search"
-                inputmode="search"
-                autocomplete="off"
-                data-i18n-attr="placeholder:products.filters.searchPlaceholder"
-                placeholder="e.g. 16-inch, studio, RTX, ultralight"
-              />
-            </label>
-
-            <div class="chips" aria-label="Category filter">
-              <button class="chip is-active" type="button" data-filter="all" data-i18n="products.filters.all">
-                All
-              </button>
-              <button class="chip" type="button" data-filter="laptop" data-i18n="products.filters.laptops">
-                Laptops
-              </button>
-              <button class="chip" type="button" data-filter="desktop" data-i18n="products.filters.desktops">
-                Desktops
-              </button>
-              <button class="chip" type="button" data-filter="accessory" data-i18n="products.filters.accessories">
-                Accessories
-              </button>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="kicker">404</p>
+            <h1 class="title-xl">Page not found.</h1>
+            <p class="lede">
+              The page you are looking for does not exist or may have moved.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="index.html">Go Home</a>
+              <a class="btn btn-ghost" href="products.html">Browse Products</a>
             </div>
-
           </div>
 
-          <div class="grid cards" id="productsGrid" aria-live="polite"></div>
-
-          <div class="empty" id="productsEmpty" hidden>
-            <h2 class="title-md" data-i18n="products.empty.title">No matches</h2>
-            <p class="muted" data-i18n="products.empty.body">
-              Try a different search term, or reset filters to see everything.
-            </p>
-            <button class="btn btn-ghost" type="button" id="resetFilters">
-              <span data-i18n="products.empty.reset">Reset filters</span>
-            </button>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="device-card device-laptop">
+              <div class="device-top"></div>
+              <div class="device-screen">
+                <div class="device-glow"></div>
+                <div class="device-lines"></div>
+              </div>
+              <div class="device-base"></div>
+            </div>
+            <div class="device-card device-tower">
+              <div class="tower-face"></div>
+              <div class="tower-port"></div>
+              <div class="tower-port"></div>
+              <div class="tower-port"></div>
+            </div>
           </div>
         </div>
       </section>
