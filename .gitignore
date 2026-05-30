@@ -3,6 +3,7 @@
 # allow the site project folder.
 *
 !.gitignore
-!monochrome-computers/
-!monochrome-computers/**
+!README.md
+!techzymm-web/
+!techzymm-web/**
 
