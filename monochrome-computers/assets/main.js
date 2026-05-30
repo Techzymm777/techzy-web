@@ -57,6 +57,8 @@ const I18N = {
     "home.why.f2Body": "Manufacturer defect within the first month? We replace it immediately. No repairs, no delays.",
     "home.why.f3Title": "First-Hand Experience",
     "home.why.f3Body": "Every device arrives factory-sealed. You will be the very first person to open and experience your new tech.",
+    "home.testimonials.title": "What Our Customers Say",
+    "home.testimonials.subtitle": "Real feedback from real buyers.",
 
     "about.hero.kicker": "About us",
     "about.hero.title": "A minimalist approach to computers.",
@@ -100,8 +102,6 @@ const I18N = {
     "products.filters.accessories": "Accessories",
     "products.filters.sortLabel": "Sort",
     "products.sort.featured": "Featured",
-    "products.sort.priceAsc": "Price: low to high",
-    "products.sort.priceDesc": "Price: high to low",
     "products.sort.nameAsc": "Name: A to Z",
     "products.empty.title": "No matches",
     "products.empty.body": "Try a different search term, or reset filters to see everything.",
@@ -184,6 +184,8 @@ const I18N = {
     "home.why.f2Body": "ဝယ်ယူပြီး (၁) လအတွင်းမှာ Factory Error တစ်ခုခု ပါခဲ့ရင် ပြင်ပေးတာမျိုးမဟုတ်ဘဲ အသစ်တစ်လုံး ချက်ချင်းလဲပေးမှာပါ!",
     "home.why.f3Title": "ပထမဦးဆုံး Unboxing အတွေ့အကြုံ",
     "home.why.f3Body": "ဘယ်သူမှ မဖောက်ရသေးတဲ့ Original Seal အပြည့်နဲ့ Laptop ကို ကိုယ်တိုင် ပထမဦးဆုံး ဖောက်ရမယ့် အတွေ့အကြုံကို ရမှာပါ။",
+    "home.testimonials.title": "ဝယ်ယူသူများ၏ သုံးသပ်ချက်",
+    "home.testimonials.subtitle": "တကယ့်ဝယ်သူများထံမှ တကယ့် feedback များ",
 
     "about.hero.kicker": "ကျွန်ုပ်တို့အကြောင်း",
     "about.hero.title": "ကွန်ပျူတာများကို မီနီမယ်လ်နည်းလမ်းနဲ့ ရွေးချယ်ရောင်းချခြင်း။",
@@ -226,8 +228,6 @@ const I18N = {
     "products.filters.accessories": "အပိုပစ္စည်းများ",
     "products.filters.sortLabel": "အစီအစဉ်",
     "products.sort.featured": "အကြံပြု",
-    "products.sort.priceAsc": "စျေးနှုန်း: နိမ့် မှ မြင့်",
-    "products.sort.priceDesc": "စျေးနှုန်း: မြင့် မှ နိမ့်",
     "products.sort.nameAsc": "အမည်: A မှ Z",
     "products.empty.title": "မကိုက်ညီတဲ့ ရလဒ်",
     "products.empty.body": "အခြား စကားလုံးနဲ့ စမ်းပါ၊ သို့မဟုတ် filter များကို ပြန်လည်သတ်မှတ်ပါ။",
@@ -394,94 +394,173 @@ function initLanguageSwitcher() {
 
 const PRODUCTS = [
   {
-    id: "lenovo-legion-7i-2025",
-    name: "Notebook Lenovo Legion 7i (2025)",
-    nameMy: "Notebook Lenovo Legion 7i (2025)",
+    id: "asus-rog-strix-g16",
+    name: "ASUS ROG Strix G16",
+    nameMy: "ASUS ROG Strix G16",
     category: "laptop",
-    badge: "Gaming",
-    badgeMy: "ဂိမ်းဆော့ရန်",
-    priceMMK: 12955000,
-    desc: "Top-tier gaming laptop with OLED display, AI-boosted Intel Core Ultra 9 and RTX 5070 graphics.",
-    descMy: "OLED မျက်နှာပြင်၊ AI-boosted Intel Core Ultra 9 နှင့် RTX 5070 ပါဝင်သော အဆင့်မြင့် gaming laptop။",
-    specs: ["RTX 5070 8GB", "Intel Core Ultra 9", "32GB DDR5", "1TB NVMe"],
-    specsMy: ["RTX 5070 8GB", "Intel Core Ultra 9", "32GB DDR5", "1TB NVMe"],
-    image: "lenovo-legion-7i.png",
+    badge: "ROG Gaming",
+    badgeMy: "ROG Gaming",
+    desc: "Powerhouse gaming laptop featuring the ROG Nebula Display, AMD Ryzen 9 processor and RTX 4080 GPU for unstoppable performance.",
+    descMy: "ROG Nebula Display၊ AMD Ryzen 9 နှင့် RTX 4080 GPU ပါဝင်သော ထိပ်တန်း gaming laptop။",
+    specs: ["RTX 4080 12GB", "AMD Ryzen 9 8945H", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz"],
+    specsMy: ["RTX 4080 12GB", "AMD Ryzen 9 8945H", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz"],
+    image: "ASUS ROG Strix16.png",
     featuredRank: 1,
   },
   {
-    id: "asus-tuf-gaming-a15",
-    name: "ASUS TUF GAMING A15",
-    nameMy: "ASUS TUF GAMING A15",
+    id: "asus-vivobook-v16",
+    name: "Asus Vivobook V16",
+    nameMy: "Asus Vivobook V16",
     category: "laptop",
-    badge: "Gaming",
-    badgeMy: "ဂိမ်းဆော့ရန်",
-    priceMMK: 4295000,
-    desc: "Durable gaming laptop with AMD Ryzen 7 and RTX 3050. Reliable performance at an accessible price.",
-    descMy: "AMD Ryzen 7 နှင့် RTX 3050 ပါဝင်သော ခိုင်မာသည့် gaming laptop။ သင့်တော်သော စျေးနှုန်းနှင့် ယုံကြည်စိတ်ချရသော စွမ်းဆောင်ရည်။",
-    specs: ["RTX 3050 4GB", "AMD Ryzen 7", "16GB DDR5", "512GB NVMe"],
-    specsMy: ["RTX 3050 4GB", "AMD Ryzen 7", "16GB DDR5", "512GB NVMe"],
-    image: "asus-tuf-a15.png",
-    featuredRank: 2,
+    badge: "Everyday",
+    badgeMy: "နေ့စဉ်အသုံး",
+    desc: "Slim and versatile 16-inch laptop for students and professionals, with a large display and long battery life.",
+    descMy: "ကျောင်းသားများနှင့် ပရော်ဖက်ရှင်နယ်များအတွက် ပါးလွှာပြီး ကြာရှည်ခံသော 16-inch laptop။",
+    specs: ["Intel Core i5-13500H", "Intel Iris Xe Graphics", "16GB DDR5", "512GB NVMe SSD", "16\" FHD IPS"],
+    specsMy: ["Intel Core i5-13500H", "Intel Iris Xe Graphics", "16GB DDR5", "512GB NVMe SSD", "16\" FHD IPS"],
+    image: "Asus V16.png",
+    featuredRank: 6,
   },
   {
-    id: "hp-victus-15",
-    name: "HP Victus 15",
-    nameMy: "HP Victus 15",
+    id: "asus-tuf-gaming-f16",
+    name: "ASUS TUF Gaming F16",
+    nameMy: "ASUS TUF Gaming F16",
     category: "laptop",
-    badge: "Gaming",
-    badgeMy: "ဂိမ်းဆော့ရန်",
-    priceMMK: 5450000,
-    desc: "Balanced gaming and productivity with RTX 5050 and a bright 144Hz IPS display.",
-    descMy: "RTX 5050 နှင့် 144Hz IPS မျက်နှာပြင်ဖြင့် gaming နှင့် productivity ကို မျှတစွာ ဆောင်ရွက်နိုင်သော laptop။",
-    specs: ["RTX 5050 8GB", "Intel i7-13620H", "16GB DDR5", "512GB NVMe"],
-    specsMy: ["RTX 5050 8GB", "Intel i7-13620H", "16GB DDR5", "512GB NVMe"],
-    image: "hp-victus-15.png",
+    badge: "TUF Gaming",
+    badgeMy: "TUF Gaming",
+    desc: "Military-grade durable gaming laptop with RTX 4060, 165Hz display and efficient Intel Core i7 for serious gamers.",
+    descMy: "RTX 4060၊ 165Hz မျက်နှာပြင်နှင့် Intel Core i7 ပါဝင်သော စစ်တပ်အဆင့် ခိုင်ခံ့မှုရှိသော gaming laptop။",
+    specs: ["RTX 4060 8GB", "Intel Core i7-13650HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD+ 165Hz"],
+    specsMy: ["RTX 4060 8GB", "Intel Core i7-13650HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD+ 165Hz"],
+    image: "TUF Gaming F16.png",
     featuredRank: 3,
   },
   {
-    id: "asus-rog-strix-g16",
-    name: "Notebook Asus ROG Strix G16",
-    nameMy: "Notebook Asus ROG Strix G16",
+    id: "acer-aspire-lite-15",
+    name: "Acer Aspire Lite 15",
+    nameMy: "Acer Aspire Lite 15",
     category: "laptop",
-    badge: "Premium",
-    badgeMy: "အဆင့်မြင့်",
-    priceMMK: 14255000,
-    desc: "Elite gaming powerhouse with RTX 5070 Ti, AMD Ryzen 9 and the ROG Nebula Display.",
-    descMy: "RTX 5070 Ti၊ AMD Ryzen 9 နှင့် ROG Nebula Display ပါဝင်သော ထိပ်တန်း gaming laptop။",
-    specs: ["RTX 5070 Ti 12GB", "AMD Ryzen 9", "32GB DDR5", "1TB NVMe"],
-    specsMy: ["RTX 5070 Ti 12GB", "AMD Ryzen 9", "32GB DDR5", "1TB NVMe"],
-    image: "asus-rog-strix-g16.png",
-    featuredRank: 4,
+    badge: "Everyday",
+    badgeMy: "နေ့စဉ်အသုံး",
+    desc: "Lightweight everyday laptop for home, school and work. Fast SSD storage and a full-HD display make daily tasks effortless.",
+    descMy: "အိမ်၊ ကျောင်းနှင့် အလုပ်အတွက် သင့်တော်သော ပေါ့ပါးသော laptop။ Fast SSD နှင့် Full-HD မျက်နှာပြင်ဖြင့် နေ့စဉ်လုပ်ငန်းများ လွယ်ကူစွာ ဆောင်ရွက်နိုင်သည်။",
+    specs: ["Intel Core i5-12450H", "Intel UHD Graphics", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
+    specsMy: ["Intel Core i5-12450H", "Intel UHD Graphics", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
+    image: "acer aspire lite 15.png",
+    featuredRank: 8,
   },
   {
-    id: "dell-alienware-16",
-    name: "Dell Alienware 16 Aurora",
-    nameMy: "Dell Alienware 16 Aurora",
-    category: "laptop",
-    badge: "Pro Gaming",
-    badgeMy: "Pro Gaming",
-    priceMMK: 9655000,
-    desc: "Premium gaming machine with RTX 5080 and a WQXGA display for the serious gamer.",
-    descMy: "RTX 5080 နှင့် WQXGA မျက်နှာပြင်ပါဝင်သော ပရော်ဖက်ရှင်နယ် gaming laptop။",
-    specs: ["RTX 5080 8GB", "Intel Core 7 240H", "16GB DDR5", "1TB NVMe"],
-    specsMy: ["RTX 5080 8GB", "Intel Core 7 240H", "16GB DDR5", "1TB NVMe"],
-    image: "dell-alienware-16.png",
-    featuredRank: 5,
-  },
-  {
-    id: "msi-katana-15-hx",
-    name: "MSI Katana 15 HX",
-    nameMy: "MSI Katana 15 HX",
+    id: "acer-nitro-v15",
+    name: "Acer Nitro V15",
+    nameMy: "Acer Nitro V15",
     category: "laptop",
     badge: "Gaming",
     badgeMy: "ဂိမ်းဆော့ရန်",
-    priceMMK: 7355000,
-    desc: "Mid-range gaming laptop with QHD display, RTX 5060 and solid everyday performance.",
-    descMy: "QHD မျက်နှာပြင်၊ RTX 5060 နှင့် နေ့စဉ်အသုံးပြုရန် သင့်တော်သော mid-range gaming laptop။",
-    specs: ["RTX 5060 8GB", "Intel i7-14650HX", "16GB DDR5", "512GB NVMe"],
-    specsMy: ["RTX 5060 8GB", "Intel i7-14650HX", "16GB DDR5", "512GB NVMe"],
-    image: "msi-katana-15.png",
-    featuredRank: 6,
+    desc: "Entry-level gaming laptop with RTX 4050, 144Hz display and AMD Ryzen 5 — ideal for gamers on a budget.",
+    descMy: "RTX 4050၊ 144Hz မျက်နှာပြင်နှင့် AMD Ryzen 5 ပါဝင်သော entry-level gaming laptop။",
+    specs: ["RTX 4050 6GB", "AMD Ryzen 5 7535HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    specsMy: ["RTX 4050 6GB", "AMD Ryzen 5 7535HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    image: "acer nitro v15.png",
+    featuredRank: 5,
+  },
+  {
+    id: "asus-tuf-gaming-a16",
+    name: "ASUS TUF Gaming A16",
+    nameMy: "ASUS TUF Gaming A16",
+    category: "laptop",
+    badge: "TUF Gaming",
+    badgeMy: "TUF Gaming",
+    desc: "AMD-powered 16-inch gaming laptop with Radeon RX 7600S, built to handle demanding games and creative workflows.",
+    descMy: "AMD Radeon RX 7600S ပါဝင်သော 16-inch gaming laptop၊ ကြမ်းတမ်းသော ဂိမ်းများနှင့် creative လုပ်ငန်းများအတွက် ဒီဇိုင်းထုတ်ထားသည်။",
+    specs: ["Radeon RX 7600S 8GB", "AMD Ryzen 7 7745HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD 165Hz"],
+    specsMy: ["Radeon RX 7600S 8GB", "AMD Ryzen 7 7745HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD 165Hz"],
+    image: "asus tuf gaminga16.png",
+    featuredRank: 4,
+  },
+  {
+    id: "asus-expertbook-b9",
+    name: "ASUS ExpertBook B9",
+    nameMy: "ASUS ExpertBook B9",
+    category: "laptop",
+    badge: "Business",
+    badgeMy: "စီးပွားရေး",
+    desc: "Ultra-lightweight business laptop at under 1 kg, with enterprise-grade security, Intel Core Ultra and long battery life.",
+    descMy: "1kg အောက် အလေးချိန်ရှိသော ultra-lightweight business laptop၊ enterprise security၊ Intel Core Ultra နှင့် ကြာရှည်ခံ battery ပါဝင်သည်။",
+    specs: ["Intel Core Ultra 7 155U", "Intel Iris Xe Graphics", "32GB LPDDR5", "1TB NVMe SSD", "14\" OLED FHD"],
+    specsMy: ["Intel Core Ultra 7 155U", "Intel Iris Xe Graphics", "32GB LPDDR5", "1TB NVMe SSD", "14\" OLED FHD"],
+    image: "expertbook-b9.png",
+    featuredRank: 9,
+  },
+  {
+    id: "lenovo-legion-7-pro",
+    name: "Lenovo Legion 7 Pro",
+    nameMy: "Lenovo Legion 7 Pro",
+    category: "laptop",
+    badge: "Pro Gaming",
+    badgeMy: "Pro Gaming",
+    desc: "Top-of-the-line gaming laptop with a Mini LED display, RTX 4080 and AMD Ryzen 9 for elite competitive gaming.",
+    descMy: "Mini LED မျက်နှာပြင်၊ RTX 4080 နှင့် AMD Ryzen 9 ပါဝင်သော ထိပ်တန်း gaming laptop။",
+    specs: ["RTX 4080 12GB", "AMD Ryzen 9 7945HX", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz Mini-LED"],
+    specsMy: ["RTX 4080 12GB", "AMD Ryzen 9 7945HX", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz Mini-LED"],
+    image: "legion 7pro.png",
+    featuredRank: 2,
+  },
+  {
+    id: "lenovo-loq-15irx10",
+    name: "Lenovo LOQ 15IRX10",
+    nameMy: "Lenovo LOQ 15IRX10",
+    category: "laptop",
+    badge: "Gaming",
+    badgeMy: "ဂိမ်းဆော့ရန်",
+    desc: "Latest-gen Lenovo LOQ with RTX 4060 and Intel Core i7, delivering smooth gaming and productivity in a 15.6-inch chassis.",
+    descMy: "RTX 4060 နှင့် Intel Core i7 ပါဝင်သော နောက်ဆုံးထွက် Lenovo LOQ gaming laptop။",
+    specs: ["RTX 4060 8GB", "Intel Core i7-14650HX", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    specsMy: ["RTX 4060 8GB", "Intel Core i7-14650HX", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    image: "loq 15irx10.png",
+    featuredRank: 7,
+  },
+  {
+    id: "lenovo-loq-15irx9",
+    name: "Lenovo LOQ 15IRX9",
+    nameMy: "Lenovo LOQ 15IRX9",
+    category: "laptop",
+    badge: "Gaming",
+    badgeMy: "ဂိမ်းဆော့ရန်",
+    desc: "Affordable gaming powerhouse with RTX 4050 and Intel Core i5, offering a great entry point into PC gaming.",
+    descMy: "RTX 4050 နှင့် Intel Core i5 ပါဝင်သော သင့်တော်သောစျေးနှုန်းဖြင့် gaming laptop။",
+    specs: ["RTX 4050 6GB", "Intel Core i5-12450HX", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    specsMy: ["RTX 4050 6GB", "Intel Core i5-12450HX", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    image: "loq 15irx9.png",
+    featuredRank: 10,
+  },
+  {
+    id: "lenovo-ideapad-slim-3",
+    name: "Lenovo IdeaPad Slim 3",
+    nameMy: "Lenovo IdeaPad Slim 3",
+    category: "laptop",
+    badge: "Everyday",
+    badgeMy: "နေ့စဉ်အသုံး",
+    desc: "Thin and light everyday laptop with a Full HD display, fast AMD Ryzen processor and long-lasting battery — perfect for students and home users.",
+    descMy: "Full HD မျက်နှာပြင်၊ AMD Ryzen processor နှင့် ကြာရှည်ခံ battery ပါဝင်သော ပေါ့ပါးသော everyday laptop — ကျောင်းသားများနှင့် အိမ်သုံးအတွက် အကောင်းဆုံး။",
+    specs: ["AMD Ryzen 5 7520U", "AMD Radeon 610M", "8GB LPDDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
+    specsMy: ["AMD Ryzen 5 7520U", "AMD Radeon 610M", "8GB LPDDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
+    image: "lenovo ideapad slim 3.png",
+    featuredRank: 99,
+    productsOnly: true,
+  },
+  {
+    id: "asus-tuf-gaming-a15",
+    name: "ASUS TUF Gaming A15",
+    nameMy: "ASUS TUF Gaming A15",
+    category: "laptop",
+    badge: "TUF Gaming",
+    badgeMy: "TUF Gaming",
+    desc: "Battle-tested 15.6-inch gaming laptop with RTX 4060, AMD Ryzen 7 and a 144Hz display for fluid gameplay.",
+    descMy: "RTX 4060၊ AMD Ryzen 7 နှင့် 144Hz မျက်နှာပြင်ပါဝင်သော 15.6-inch gaming laptop။",
+    specs: ["RTX 4060 8GB", "AMD Ryzen 7 7435HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    specsMy: ["RTX 4060 8GB", "AMD Ryzen 7 7435HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
+    image: "tuf gaming a15.png",
+    featuredRank: 11,
   },
 ];
 
@@ -552,7 +631,7 @@ function productCard(p) {
     const imgWrap = document.createElement("div");
     imgWrap.className = "product-img-wrap";
     const img = document.createElement("img");
-    img.src = `assets/images/${p.image}`;
+    img.src = `assets/images/products/${p.image}`;
     img.alt = pt.name;
     img.className = "product-img";
     img.loading = "lazy";
@@ -567,12 +646,7 @@ function productCard(p) {
   badge.className = "badge";
   badge.textContent = pt.badge;
 
-  const price = document.createElement("div");
-  price.className = "price";
-  price.textContent = formatMMK(p.priceMMK);
-
   top.appendChild(badge);
-  top.appendChild(price);
 
   const body = document.createElement("div");
   body.className = "product-body";
@@ -630,6 +704,7 @@ function mountFeatured() {
   grid.innerHTML = "";
 
   const featured = [...PRODUCTS]
+    .filter((p) => !p.productsOnly)
     .sort((a, b) => a.featuredRank - b.featuredRank)
     .slice(0, 6);
 
@@ -828,6 +903,48 @@ function initCarousel() {
   startAuto();
 }
 
+function mountTestimonials() {
+  const track = qs("#testimonialsTrack");
+  const prev = qs("#testimonialsPrev");
+  const next = qs("#testimonialsNext");
+  if (!track) return;
+
+  const scrollBy = () => {
+    const slide = track.querySelector(".testimonial-slide");
+    return slide ? slide.offsetWidth + 16 : 300;
+  };
+
+  if (prev) prev.addEventListener("click", () => track.scrollBy({ left: -scrollBy(), behavior: "smooth" }));
+  if (next) next.addEventListener("click", () => track.scrollBy({ left: scrollBy(), behavior: "smooth" }));
+
+  // Drag-to-scroll
+  let isDragging = false, startX = 0, startScroll = 0;
+
+  track.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.pageX;
+    startScroll = track.scrollLeft;
+    track.classList.add("is-dragging");
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    track.scrollLeft = startScroll - (e.pageX - startX);
+  });
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    track.classList.remove("is-dragging");
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  track.addEventListener("touchstart", (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener("touchmove", (e) => {
+    const diff = touchStartX - e.touches[0].clientX;
+    track.scrollLeft += diff * 0.6;
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const initial = getSavedLang() || normalizeLang(navigator.language);
   applyI18n(initial);
@@ -840,6 +957,7 @@ document.addEventListener("DOMContentLoaded", () => {
   mountFeatured();
   mountProductsPage();
   mountContactForm();
+  mountTestimonials();
 
   // Basic reveal for any cards already on page
   qsa(".card, .feature, .step").forEach((n, i) => {
