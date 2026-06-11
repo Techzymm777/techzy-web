@@ -8,13 +8,38 @@
       content="Contact Techzy for product questions, orders, and support."
     />
     <title>Contact | Techzy</title>
-    <link rel="stylesheet" href="assets/styles.css" />
+    <meta name="theme-color" content="#07070b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500&family=Noto+Sans+Myanmar:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/awwwards.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script defer src="assets/main.js"></script>
+    <script defer src="assets/awwwards.js"></script>
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
     <script defer src="assets/amplitude-init.js"></script>
   </head>
   <body data-page="contact">
     <a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader-inner">
+        <span class="preloader-word">TECHZY</span>
+        <span class="preloader-bar"><span class="preloader-fill" id="preloaderFill"></span></span>
+      </div>
+    </div>
+
+    <!-- Custom cursor (pointer devices only) -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <div class="cursor-dot" id="cursorDot"></div>
+      <div class="cursor-ring" id="cursorRing"></div>
+      <span class="cursor-label" id="cursorLabel"></span>
+    </div>
 
     <header class="site-header">
       <div class="container header-inner">

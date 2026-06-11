@@ -5,13 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Page not found | Techzy" />
     <title>404 | Techzy</title>
-    <link rel="stylesheet" href="assets/styles.css" />
+    <meta name="theme-color" content="#07070b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500&family=Noto+Sans+Myanmar:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/awwwards.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script defer src="assets/main.js"></script>
+    <script defer src="assets/awwwards.js"></script>
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
     <script defer src="assets/amplitude-init.js"></script>
   </head>
   <body data-page="404">
     <a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader-inner">
+        <span class="preloader-word">TECHZY</span>
+        <span class="preloader-bar"><span class="preloader-fill" id="preloaderFill"></span></span>
+      </div>
+    </div>
+
+    <!-- Custom cursor (pointer devices only) -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <div class="cursor-dot" id="cursorDot"></div>
+      <div class="cursor-ring" id="cursorRing"></div>
+      <span class="cursor-label" id="cursorLabel"></span>
+    </div>
 
     <header class="site-header">
       <div class="container header-inner">
@@ -55,35 +80,16 @@
     </header>
 
     <main id="main">
-      <section class="hero">
-        <div class="container hero-inner">
-          <div class="hero-copy">
-            <p class="kicker">404</p>
-            <h1 class="title-xl">Page not found.</h1>
-            <p class="lede">
-              The page you are looking for does not exist or may have moved.
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="index.html">Go Home</a>
-              <a class="btn btn-ghost" href="products.html">Browse Products</a>
-            </div>
-          </div>
-
-          <div class="hero-visual" aria-hidden="true">
-            <div class="device-card device-laptop">
-              <div class="device-top"></div>
-              <div class="device-screen">
-                <div class="device-glow"></div>
-                <div class="device-lines"></div>
-              </div>
-              <div class="device-base"></div>
-            </div>
-            <div class="device-card device-tower">
-              <div class="tower-face"></div>
-              <div class="tower-port"></div>
-              <div class="tower-port"></div>
-              <div class="tower-port"></div>
-            </div>
+      <section class="page-hero">
+        <div class="container">
+          <p class="kicker">404</p>
+          <h1 class="title-xl">Page not found.</h1>
+          <p class="lede">
+            The page you are looking for does not exist or may have moved.
+          </p>
+          <div class="hero-actions" style="margin-top: 2rem">
+            <a class="btn btn-primary" href="index.html">Go Home</a>
+            <a class="btn btn-ghost" href="products.html">Browse Products</a>
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 /* Techzy — Awwwards redesign: GSAP choreography, cursor, magnetic, tilt.
-   Degrades gracefully: if GSAP fails to load or user prefers reduced
-   motion, content stays fully visible and interactive. */
+   Runs on every page, after main.js (which owns i18n, nav, products,
+   forms, testimonials). Degrades gracefully: if GSAP fails to load or
+   user prefers reduced motion, content stays visible and interactive. */
 (function () {
   "use strict";
 
@@ -8,11 +9,6 @@
   var finePointer = window.matchMedia("(pointer: fine)").matches;
 
   document.addEventListener("DOMContentLoaded", function () {
-    var yearEl = document.getElementById("year");
-    if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-    setupMobileNav();
-
     if (!window.gsap || reduceMotion) {
       // No animation path: remove preloader, leave everything visible.
       var pre = document.getElementById("preloader");
@@ -26,6 +22,7 @@
     runIntro();
     setupScrollScenes();
     setupMarquee();
+    setupLangRefresh();
 
     if (finePointer) {
       setupCursor();
@@ -34,27 +31,15 @@
     }
   });
 
-  /* ---------- Mobile nav ---------- */
-  function setupMobileNav() {
-    var toggle = document.getElementById("navToggle");
-    var nav = document.getElementById("primaryNav");
-    if (!toggle || !nav) return;
-    toggle.addEventListener("click", function () {
-      var open = nav.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", String(open));
-      document.body.style.overflow = open ? "hidden" : "";
-    });
-    nav.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") {
-        nav.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-      }
-    });
-  }
-
-  /* ---------- Intro: preloader + hero reveal ---------- */
+  /* ---------- Intro: preloader + reveal (all pages) ---------- */
   function runIntro() {
+    // Safety net: if the GSAP ticker is throttled (background tab, frozen
+    // rAF), remove the preloader anyway so content is never blocked.
+    setTimeout(function () {
+      var pre = document.getElementById("preloader");
+      if (pre) pre.remove();
+    }, 3000);
+
     var tl = gsap.timeline();
 
     tl.to("#preloaderFill", { scaleX: 1, duration: 0.9, ease: "power2.inOut" })
@@ -66,32 +51,53 @@
           var pre = document.getElementById("preloader");
           if (pre) pre.remove();
         },
-      })
-      .from(".hero-title .word", {
+      });
+
+    // Home hero
+    if (document.querySelector(".hero-title .word")) {
+      tl.from(".hero-title .word", {
         yPercent: 110,
         duration: 1,
         stagger: 0.08,
         ease: "power4.out",
       }, "-=0.25")
-      .from(".reveal-line > span", {
-        yPercent: 110,
+        .from(".reveal-line > span", {
+          yPercent: 110,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+        }, "-=0.7")
+        .from(".hero-actions .btn", {
+          y: 24,
+          autoAlpha: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+        }, "-=0.5")
+        .from(".hero-meta", { autoAlpha: 0, duration: 0.6 }, "-=0.3");
+    }
+
+    // Inner pages hero
+    if (document.querySelector(".page-hero")) {
+      tl.from(".page-hero .kicker, .page-hero .title-xl, .page-hero .lede", {
+        y: 36,
+        autoAlpha: 0,
         duration: 0.8,
         stagger: 0.1,
         ease: "power3.out",
-      }, "-=0.7")
-      .from(".hero-actions .btn", {
-        y: 24,
-        autoAlpha: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out",
-      }, "-=0.5")
-      .from(".hero-meta", { autoAlpha: 0, duration: 0.6 }, "-=0.3");
+      }, "-=0.25")
+        .from(".page-hero-img-wrap", {
+          y: 40,
+          autoAlpha: 0,
+          duration: 0.9,
+          ease: "power3.out",
+        }, "-=0.6");
+    }
   }
 
   /* ---------- Scroll scenes ---------- */
   function setupScrollScenes() {
-    // Manifesto: word-by-word ink-in tied to scroll
+    // Manifesto: word-by-word ink-in tied to scroll (home)
     var words = document.querySelectorAll("#manifestoText .mword");
     if (words.length) {
       gsap.to(words, {
@@ -107,49 +113,43 @@
       });
     }
 
-    // Featured cards rise in
-    gsap.utils.toArray(".product-card").forEach(function (card, i) {
-      gsap.from(card, {
-        y: 60,
+    // Why items stagger (home)
+    if (document.querySelector(".why-grid")) {
+      gsap.from("[data-stagger]", {
+        y: 40,
         autoAlpha: 0,
-        duration: 0.8,
-        delay: (i % 4) * 0.08,
+        duration: 0.7,
+        stagger: 0.15,
         ease: "power3.out",
-        scrollTrigger: { trigger: card, start: "top 88%" },
+        scrollTrigger: { trigger: ".why-grid", start: "top 80%" },
       });
-    });
+    }
 
-    // Why items stagger
-    gsap.from("[data-stagger]", {
-      y: 40,
-      autoAlpha: 0,
-      duration: 0.7,
-      stagger: 0.15,
-      ease: "power3.out",
-      scrollTrigger: { trigger: ".why-grid", start: "top 80%" },
-    });
+    // Big CTA lines (home)
+    if (document.querySelector(".big-cta")) {
+      gsap.from(".cta-line", {
+        yPercent: 110,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power4.out",
+        scrollTrigger: { trigger: ".big-cta", start: "top 70%" },
+      });
+    }
 
-    // CTA lines
-    gsap.from(".cta-line", {
-      yPercent: 110,
-      duration: 1,
-      stagger: 0.12,
-      ease: "power4.out",
-      scrollTrigger: { trigger: ".cta", start: "top 70%" },
-    });
-
-    // Subtle hero parallax out
-    gsap.to(".hero-content", {
-      yPercent: -12,
-      autoAlpha: 0.25,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
+    // Subtle hero parallax out (home)
+    if (document.querySelector(".hero-content")) {
+      gsap.to(".hero-content", {
+        yPercent: -12,
+        autoAlpha: 0.25,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }
   }
 
   /* ---------- Marquee ---------- */
@@ -157,7 +157,6 @@
     var track = document.getElementById("marqueeTrack");
     if (!track) return;
     var tween = gsap.to(track, { xPercent: -50, ease: "none", duration: 22, repeat: -1 });
-    // Scroll direction nudges marquee speed
     ScrollTrigger.create({
       onUpdate: function (self) {
         gsap.to(tween, {
@@ -175,24 +174,35 @@
   function splitManifesto() {
     var el = document.getElementById("manifestoText");
     if (!el) return;
-    var nodes = Array.prototype.slice.call(el.childNodes);
+    var text = el.textContent;
     el.textContent = "";
-    nodes.forEach(function (node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        node.textContent.split(/(\s+)/).forEach(function (part) {
-          if (/^\s+$/.test(part)) {
-            el.appendChild(document.createTextNode(" "));
-          } else if (part) {
-            var s = document.createElement("span");
-            s.className = "mword";
-            s.textContent = part;
-            el.appendChild(s);
-          }
-        });
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        node.classList.add("mword");
-        el.appendChild(node);
+    text.split(/(\s+)/).forEach(function (part) {
+      if (/^\s+$/.test(part)) {
+        el.appendChild(document.createTextNode(" "));
+      } else if (part) {
+        var s = document.createElement("span");
+        s.className = "mword";
+        s.textContent = part;
+        el.appendChild(s);
       }
+    });
+  }
+
+  /* ---------- Language switch: re-split manifesto, re-bind tilt ----------
+     main.js's #langToggle handler re-translates [data-i18n] nodes and
+     re-renders #featuredGrid. Our handler runs after it (registered later,
+     plus a microtask delay) to restore the split words and tilt. */
+  function setupLangRefresh() {
+    var btn = document.getElementById("langToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      setTimeout(function () {
+        splitManifesto();
+        document.querySelectorAll("#manifestoText .mword").forEach(function (s) {
+          s.style.opacity = "1";
+        });
+        if (finePointer) setupTilt();
+      }, 0);
     });
   }
 
@@ -220,23 +230,27 @@
       labX(e.clientX); labY(e.clientY);
     }, { passive: true });
 
-    // Hover states
-    document.querySelectorAll("[data-cursor]").forEach(function (el) {
-      el.addEventListener("mouseenter", function () {
-        label.textContent = el.getAttribute("data-cursor") || "";
+    // Hover states (delegated so dynamically rendered cards work too)
+    document.addEventListener("mouseover", function (e) {
+      var t = e.target instanceof Element ? e.target : null;
+      if (!t) return;
+      var labeled = t.closest("[data-cursor]");
+      if (labeled) {
+        label.textContent = labeled.getAttribute("data-cursor") || "";
         cursor.classList.add("is-active");
-      });
-      el.addEventListener("mouseleave", function () {
-        cursor.classList.remove("is-active");
-      });
-    });
-    document.querySelectorAll("[data-hover]").forEach(function (el) {
-      el.addEventListener("mouseenter", function () {
+        return;
+      }
+      if (t.closest("[data-hover], a, button, input, textarea, .chip")) {
         gsap.to(ring, { scale: 1.6, duration: 0.25 });
-      });
-      el.addEventListener("mouseleave", function () {
+      }
+    });
+    document.addEventListener("mouseout", function (e) {
+      var t = e.target instanceof Element ? e.target : null;
+      if (!t) return;
+      if (t.closest("[data-cursor]")) cursor.classList.remove("is-active");
+      if (t.closest("[data-hover], a, button, input, textarea, .chip")) {
         gsap.to(ring, { scale: 1, duration: 0.25 });
-      });
+      }
     });
   }
 
@@ -256,9 +270,11 @@
     });
   }
 
-  /* ---------- 3D tilt on cards ---------- */
+  /* ---------- 3D tilt on product cards ---------- */
   function setupTilt() {
-    document.querySelectorAll("[data-tilt]").forEach(function (card) {
+    document.querySelectorAll(".product-card").forEach(function (card) {
+      if (card.dataset.tiltBound) return;
+      card.dataset.tiltBound = "1";
       card.addEventListener("mousemove", function (e) {
         var r = card.getBoundingClientRect();
         var px = (e.clientX - r.left) / r.width - 0.5;

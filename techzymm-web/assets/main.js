@@ -32,6 +32,20 @@ const I18N = {
     "footer.copyrightName": "Techzy",
     "footer.themeLine": "Built in black, gray, and white.",
 
+    "awn.hero.kicker": "Yangon · Est. for builders & gamers",
+    "awn.hero.w1": "MACHINES",
+    "awn.hero.w2": "WITH AN",
+    "awn.hero.w3": "EDGE.",
+    "awn.hero.lede":
+      "Curated laptops for creators, gamers and teams — 100% genuine, or we refund double. That's the Techzy promise.",
+    "awn.hero.ctaPrimary": "Browse the lineup",
+    "awn.hero.ctaSecondary": "Our story",
+    "awn.manifesto":
+      "We don't stock everything. We stock the right things — every machine hand-picked, tested, and backed by a 2× refund guarantee if it isn't genuine.",
+    "awn.cta.l1": "Ready when",
+    "awn.cta.l2": "you are.",
+    "awn.cta.button": "Talk to us",
+
     "home.hero.kicker": "Brand New. Factory Sealed. Only at Techzy.",
     "home.hero.title": "For those who want to unbox their brand new laptop themselves.",
     "home.hero.lede":
@@ -158,6 +172,20 @@ const I18N = {
     "footer.backToTop": "အပေါ်သို့ ပြန်သွားရန်",
     "footer.copyrightName": "Techzy",
     "footer.themeLine": "အနက်၊ မီးခိုး၊ အဖြူ အရောင်စနစ်ဖြင့် တည်ဆောက်ထားသည်။",
+
+    "awn.hero.kicker": "ရန်ကုန် · Builder များနှင့် Gamer များအတွက်",
+    "awn.hero.w1": "ထိပ်တန်း",
+    "awn.hero.w2": "စွမ်းဆောင်ရည်",
+    "awn.hero.w3": "စက်များ။",
+    "awn.hero.lede":
+      "Creator၊ gamer နှင့် အဖွဲ့များအတွက် လက်ရွေးစင် laptop များ — 100% စစ်မှန်သည်၊ မဟုတ်ပါက နှစ်ဆ ပြန်အမ်းပေးသည်။ ၎င်းသည် Techzy ၏ ကတိဖြစ်သည်။",
+    "awn.hero.ctaPrimary": "ပစ္စည်းများ ကြည့်ရန်",
+    "awn.hero.ctaSecondary": "ကျွန်ုပ်တို့အကြောင်း",
+    "awn.manifesto":
+      "ကျွန်ုပ်တို့သည် အရာအားလုံးကို မရောင်းပါ။ မှန်ကန်သည့်အရာများကိုသာ ရောင်းသည် — စက်တိုင်းကို လက်ရွေးစင် စမ်းသပ်ပြီး စစ်မှန်မှုမရှိပါက နှစ်ဆ ပြန်အမ်းအာမခံဖြင့် ရောင်းချသည်။",
+    "awn.cta.l1": "အသင့်ဖြစ်ရင်",
+    "awn.cta.l2": "လာခဲ့ပါ။",
+    "awn.cta.button": "ဆက်သွယ်ရန်",
 
     "home.hero.kicker": "Brand New. Factory Sealed. Techzy တွင်သာ။",
     "home.hero.title": "Brand New Laptop တွေကို ကိုယ်တိုင် Unboxing လုပ်ချင်သူတွေအတွက်",
