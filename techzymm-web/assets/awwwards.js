@@ -136,6 +136,44 @@
       });
     }
 
+    // Image band parallax (about)
+    var bandImg = document.querySelector(".img-band img");
+    if (bandImg) {
+      gsap.fromTo(bandImg, { yPercent: -8 }, {
+        yPercent: 8,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".img-band",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }
+
+    // Quote reveal (about)
+    if (document.querySelector(".quote-xl")) {
+      gsap.from(".quote-xl", {
+        x: -40,
+        autoAlpha: 0,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".quote-xl", start: "top 82%" },
+      });
+    }
+
+    // Step rows slide in (about)
+    gsap.utils.toArray(".steps--rows .step").forEach(function (step, i) {
+      gsap.from(step, {
+        y: 50,
+        autoAlpha: 0,
+        duration: 0.7,
+        delay: i * 0.08,
+        ease: "power3.out",
+        scrollTrigger: { trigger: step, start: "top 88%" },
+      });
+    });
+
     // Subtle hero parallax out (home)
     if (document.querySelector(".hero-content")) {
       gsap.to(".hero-content", {

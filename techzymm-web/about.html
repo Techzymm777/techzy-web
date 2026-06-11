@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="About Techzy." />
-    <title>About Us | Techzy</title>
     <meta name="theme-color" content="#07070b" />
+    <title>About Us | Techzy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,6 +17,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script defer src="assets/main.js"></script>
     <script defer src="assets/awwwards.js"></script>
+    <script type="module" src="assets/three-hero.js"></script>
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
     <script defer src="assets/amplitude-init.js"></script>
   </head>
@@ -40,22 +41,22 @@
 
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="index.html" data-i18n-attr="aria-label:common.brandHomeAria">
+        <a class="brand" href="index.html" data-magnetic data-i18n-attr="aria-label:common.brandHomeAria">
           <img
             class="brand-logo"
             src="assets/techzy-logo.svg"
             alt="Techzy"
-            width="190"
-            height="32"
+            width="150"
+            height="26"
           />
         </a>
 
         <div class="header-actions">
           <nav class="nav" id="primaryNav" aria-label="Primary">
-            <a href="index.html" data-nav="home" data-i18n="nav.home">Home</a>
-            <a href="about.html" data-nav="about" data-i18n="nav.about">About Us</a>
-            <a href="products.html" data-nav="products" data-i18n="nav.products">Products</a>
-            <a href="contact.html" data-nav="contact" data-i18n="nav.contact">Contact</a>
+            <a href="index.html" data-nav="home" data-i18n="nav.home" data-hover>Home</a>
+            <a href="about.html" data-nav="about" data-i18n="nav.about" data-hover>About Us</a>
+            <a href="products.html" data-nav="products" data-i18n="nav.products" data-hover>Products</a>
+            <a href="contact.html" data-nav="contact" data-i18n="nav.contact" data-hover>Contact</a>
           </nav>
           <button
             class="nav-toggle"
@@ -67,7 +68,7 @@
           >
             <span class="nav-toggle-icon" aria-hidden="true"></span>
           </button>
-          <button class="lang-btn" type="button" id="langToggle" data-i18n-attr="aria-label:common.langToggleAria">
+          <button class="lang-btn" type="button" id="langToggle" data-hover data-i18n-attr="aria-label:common.langToggleAria">
             EN
           </button>
         </div>
@@ -75,126 +76,143 @@
     </header>
 
     <main id="main">
-      <section class="page-hero page-hero--has-img">
-        <div class="container page-hero-inner">
-          <div class="page-hero-copy">
-            <p class="kicker" data-i18n="about.hero.kicker">About us</p>
-            <h1 class="title-xl" data-i18n="about.hero.title">
-              A minimalist approach to computers.
-            </h1>
-            <p class="lede" data-i18n="about.hero.lede">
-              We sell carefully selected laptops and desktops that prioritize
-              reliability, clean design, and quiet performance.
+      <!-- ============ HERO (Three.js) ============ -->
+      <section class="hero" id="hero">
+        <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+        <div class="hero-grain" aria-hidden="true"></div>
+
+        <div class="hero-content">
+          <p class="hero-kicker reveal-line">
+            <span data-i18n="about.hero.kicker">About us</span>
+          </p>
+          <h1 class="hero-title hero-title--page">
+            <span class="hero-title-line"
+              ><span class="word" data-i18n="about.hero.title"
+                >A minimalist approach to computers.</span
+              ></span
+            >
+          </h1>
+          <p class="hero-lede reveal-line">
+            <span data-i18n="about.hero.lede"
+              >We sell carefully selected laptops and desktops that prioritize reliability,
+              clean design, and quiet performance.</span
+            >
+          </p>
+        </div>
+
+        <div class="hero-meta" aria-hidden="true">
+          <span class="hero-meta-item">EN / မြန်မာ</span>
+          <span class="hero-meta-item">Techzy Tech Store</span>
+          <span class="hero-meta-item scroll-hint">Scroll <span class="scroll-line"></span></span>
+        </div>
+      </section>
+
+      <!-- ============ IMAGE BAND ============ -->
+      <section class="img-band">
+        <img src="assets/images/hero/hero-about.jpg" alt="Techzy — shop online anytime" loading="lazy" />
+      </section>
+
+      <!-- ============ BELIEFS: manifesto scrub ============ -->
+      <section class="manifesto" id="beliefs">
+        <p class="manifesto-kicker" data-i18n="about.beliefs.title">What we believe</p>
+        <p class="manifesto-text" id="manifestoText" data-i18n="about.beliefs.body">
+          Technology should fade into the background. Your machine should be fast, stable,
+          and understated. That is the whole point.
+        </p>
+        <blockquote class="quote-xl">
+          <p data-i18n="about.beliefs.quote">
+            “The best spec is the one you never have to think about.”
+          </p>
+          <cite class="muted" data-i18n="about.beliefs.byline">Techzy team</cite>
+        </blockquote>
+      </section>
+
+      <!-- ============ PILLARS ============ -->
+      <section class="why" id="pillars">
+        <div class="why-grid">
+          <div class="why-item" data-stagger>
+            <span class="why-num">01</span>
+            <h3 data-i18n="about.cards.qTitle">Quality checks</h3>
+            <p data-i18n="about.cards.qBody">
+              Each model is validated for thermals, performance consistency, and
+              daily-driver reliability.
             </p>
           </div>
-          <div class="page-hero-img-wrap">
-            <img src="assets/images/hero/hero-about.jpg" alt="Techzy — shop online anytime" class="page-hero-img" />
+          <div class="why-item" data-stagger>
+            <span class="why-num">02</span>
+            <h3 data-i18n="about.cards.pTitle">Straight pricing</h3>
+            <p data-i18n="about.cards.pBody">
+              Clear configurations, no confusing bundles, and no gimmicks.
+            </p>
+          </div>
+          <div class="why-item" data-stagger>
+            <span class="why-num">03</span>
+            <h3 data-i18n="about.cards.rTitle">Repair mindset</h3>
+            <p data-i18n="about.cards.rBody">
+              We support upgrades and repairs where it makes sense, to extend the life of
+              your machine.
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="split">
-            <div>
-              <h2 class="title-lg" data-i18n="about.beliefs.title">What we believe</h2>
-              <p class="muted" data-i18n="about.beliefs.body">
-                Technology should fade into the background. Your machine should
-                be fast, stable, and understated. That is the whole point.
-              </p>
-              <div class="quote">
-                <p data-i18n="about.beliefs.quote">
-                  “The best spec is the one you never have to think about.”
-                </p>
-                <span class="muted" data-i18n="about.beliefs.byline">Techzy team</span>
-              </div>
-            </div>
-
-            <div class="stack">
-              <div class="card">
-                <h3 class="title-md" data-i18n="about.cards.qTitle">Quality checks</h3>
-                <p class="muted" data-i18n="about.cards.qBody">
-                  Each model is validated for thermals, performance consistency,
-                  and daily-driver reliability.
-                </p>
-              </div>
-              <div class="card">
-                <h3 class="title-md" data-i18n="about.cards.pTitle">Straight pricing</h3>
-                <p class="muted" data-i18n="about.cards.pBody">
-                  Clear configurations, no confusing bundles, and no gimmicks.
-                </p>
-              </div>
-              <div class="card">
-                <h3 class="title-md" data-i18n="about.cards.rTitle">Repair mindset</h3>
-                <p class="muted" data-i18n="about.cards.rBody">
-                  We support upgrades and repairs where it makes sense, to extend
-                  the life of your machine.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-inset">
-        <div class="container">
-          <div class="section-head">
-            <h2 class="title-lg" data-i18n="about.how.title">How it works</h2>
-            <p class="muted" data-i18n="about.how.subtitle">
+      <!-- ============ HOW IT WORKS ============ -->
+      <section class="how" id="how">
+        <header class="section-head section-head--row">
+          <div>
+            <h2 class="section-title">
+              <span class="section-index">02</span>
+              <span data-i18n="about.how.title">How it works</span>
+            </h2>
+            <p class="section-sub" data-i18n="about.how.subtitle">
               A simple process from selection to delivery.
             </p>
           </div>
+        </header>
 
-          <ol class="steps">
-            <li class="step">
-              <span class="step-num" aria-hidden="true">01</span>
-              <div>
-                <h3 class="title-md" data-i18n="about.steps.s1Title">Pick a category</h3>
-                <p class="muted" data-i18n="about.steps.s1Body">
-                  Browse laptops, desktops, and accessories in one place.
-                </p>
-              </div>
-            </li>
-            <li class="step">
-              <span class="step-num" aria-hidden="true">02</span>
-              <div>
-                <h3 class="title-md" data-i18n="about.steps.s2Title">
-                  Choose a configuration
-                </h3>
-                <p class="muted" data-i18n="about.steps.s2Body">
-                  Select a build that matches your workload: work, studio, or
-                  performance.
-                </p>
-              </div>
-            </li>
-            <li class="step">
-              <span class="step-num" aria-hidden="true">03</span>
-              <div>
-                <h3 class="title-md" data-i18n="about.steps.s3Title">Get support</h3>
-                <p class="muted" data-i18n="about.steps.s3Body">
-                  Ask a question, confirm compatibility, and get post-purchase
-                  help.
-                </p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <div class="cta">
+        <ol class="steps steps--rows">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">01</span>
             <div>
-              <h2 class="title-lg" data-i18n="about.cta.title">Ready to browse?</h2>
-              <p class="muted" data-i18n="about.cta.body">
-                Explore our lineup of minimalist machines and clean builds.
+              <h3 class="title-md" data-i18n="about.steps.s1Title">Pick a category</h3>
+              <p class="muted" data-i18n="about.steps.s1Body">
+                Browse laptops, desktops, and accessories in one place.
               </p>
             </div>
-            <a class="btn btn-primary" href="products.html" data-i18n="about.cta.button"
-              >View Products</a
-            >
-          </div>
-        </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">02</span>
+            <div>
+              <h3 class="title-md" data-i18n="about.steps.s2Title">Choose a configuration</h3>
+              <p class="muted" data-i18n="about.steps.s2Body">
+                Select a build that matches your workload: work, studio, or performance.
+              </p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">03</span>
+            <div>
+              <h3 class="title-md" data-i18n="about.steps.s3Title">Get support</h3>
+              <p class="muted" data-i18n="about.steps.s3Body">
+                Ask a question, confirm compatibility, and get post-purchase help.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ============ CTA ============ -->
+      <section class="big-cta" id="cta">
+        <h2 class="big-cta-title">
+          <span class="cta-line" data-i18n="about.cta.title">Ready to browse?</span>
+        </h2>
+        <p class="big-cta-sub muted" data-i18n="about.cta.body">
+          Explore our lineup of minimalist machines and clean builds.
+        </p>
+        <a class="btn btn-primary btn-xl" href="products.html" data-magnetic data-cursor="VIEW">
+          <span data-i18n="about.cta.button">View Products</span>
+          <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
       </section>
     </main>
 
@@ -206,8 +224,8 @@
               class="brand-logo"
               src="assets/techzy-logo.svg"
               alt="Techzy"
-              width="190"
-              height="32"
+              width="150"
+              height="26"
             />
           </div>
           <p class="muted" data-i18n="footer.tagline">
@@ -215,10 +233,10 @@
           </p>
         </div>
         <div class="footer-links" aria-label="Footer">
-          <a href="about.html" data-i18n="footer.about">About</a>
-          <a href="products.html" data-i18n="footer.products">Products</a>
-          <a href="contact.html" data-i18n="footer.contact">Contact</a>
-          <a href="#" id="backToTop" data-i18n="footer.backToTop">Back to top</a>
+          <a href="about.html" data-i18n="footer.about" data-hover>About</a>
+          <a href="products.html" data-i18n="footer.products" data-hover>Products</a>
+          <a href="contact.html" data-i18n="footer.contact" data-hover>Contact</a>
+          <a href="#" id="backToTop" data-i18n="footer.backToTop" data-hover>Back to top</a>
         </div>
       </div>
       <div class="container footer-bottom">
