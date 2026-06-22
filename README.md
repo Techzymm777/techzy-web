@@ -4,7 +4,7 @@ The official website for **Techzy Tech Store**, a laptop and computer retailer b
 
 ## Live Site
 
-Deployed on [Vercel](https://vercel.com) — visit the live site at your configured domain.
+Deployed on [Netlify](https://www.netlify.com) — live at [techzymm.com](https://techzymm.com).
 
 ---
 
@@ -17,27 +17,29 @@ Deployed on [Vercel](https://vercel.com) — visit the live site at your configu
 - **Why Techzy section** — sticky layout with feature highlights
 - **Responsive** — mobile-first design, works across all screen sizes
 - **Accessible** — semantic HTML, ARIA labels, skip-to-content link
-- **Vercel Analytics** — built-in web analytics
+- **Amplitude Analytics** — web analytics and session replay
 
 ---
 
 ## Project Structure
 
 ```
-monochrome-computers/
-├── index.html          # Home page
-├── about.html          # About Us page
-├── products.html       # Products listing page
-├── contact.html        # Contact page
-├── 404.html            # Custom 404 page
+techzymm-web/
+├── index.html              # Home page
+├── about.html              # About Us page
+├── products.html           # Products listing page
+├── contact.html            # Contact page (Netlify Forms)
+├── 404.html                # Custom 404 page
 └── assets/
-    ├── styles.css      # All styles
-    ├── main.js         # App logic, i18n, product data, carousels
+    ├── styles.css          # All styles
+    ├── main.js             # App logic, i18n, product data, carousels
+    ├── amplitude-init.js   # Amplitude analytics + session replay init
     ├── techzy-logo.svg
+    ├── favicon.svg         # Adaptive light/dark favicon
     └── images/
-        ├── hero/       # Hero section images
-        ├── products/   # Product images
-        └── testmonials/ # Customer feedback images
+        ├── hero/           # Hero section images
+        ├── products/       # Product images
+        └── testmonials/    # Customer feedback images
 ```
 
 ---
@@ -49,7 +51,7 @@ No build step required — this is a pure HTML/CSS/JS static site.
 ### Run locally
 
 ```bash
-cd monochrome-computers
+cd techzymm-web
 python3 -m http.server 8080
 ```
 
@@ -57,7 +59,7 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ### Deploy
 
-Push to `main` — Vercel auto-deploys on every commit.
+Push to `main` — Netlify auto-deploys on every commit.
 
 ---
 
@@ -68,9 +70,10 @@ Push to `main` — Vercel auto-deploys on every commit.
 | Markup | HTML5 |
 | Styling | CSS3 (custom properties, grid, flexbox) |
 | Logic | Vanilla JavaScript (ES2020+) |
-| Fonts | Space Grotesk, IBM Plex Sans (Google Fonts) |
-| Hosting | Vercel |
-| Analytics | Vercel Web Analytics |
+| Fonts | Inter (Google Fonts) |
+| Hosting | Netlify |
+| Forms | Netlify Forms |
+| Analytics | Amplitude (analytics + session replay) |
 
 ---
 
