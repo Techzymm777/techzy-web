@@ -117,14 +117,17 @@ const I18N = {
       "Questions about specs, shipping, warranties, or the right build? Send a message and we will respond soon.",
     "contact.form.title": "Send a message",
     "contact.form.subtitle":
-      "This is a static site, so the form will open your email app with a pre-filled message.",
+      "Fill in the form and we will get back to you by email.",
     "contact.form.nameLabel": "Name",
     "contact.form.emailLabel": "Email",
     "contact.form.messageLabel": "Message",
     "contact.form.messagePlaceholder":
       "Tell us what you need (use-case, budget, screen size, etc.)",
-    "contact.form.submit": "Compose Email",
+    "contact.form.submit": "Send message",
     "contact.form.reset": "Clear",
+    "contact.form.sending": "Sending your message...",
+    "contact.form.success": "Thanks! Your message has been sent. We will reply by email soon.",
+    "contact.form.error": "Sorry, something went wrong. Please try again or email us directly.",
     "contact.form.direct": "Or email directly:",
     "contact.aside.hoursTitle": "Hours",
     "contact.aside.hoursBody": "Mon to Fri, 9:00 to 18:00",
@@ -243,14 +246,17 @@ const I18N = {
       "စပက်၊ ပို့ဆောင်မှု၊ အာမခံ၊ သင့်တော်တဲ့ build ရွေးချယ်မှုအတွက် မေးမြန်းနိုင်ပါတယ်။",
     "contact.form.title": "စာပို့ရန်",
     "contact.form.subtitle":
-      "ဒီဆိုက်က static ဖြစ်လို့ email app ကို ဖွင့်ပြီး စာကို အလိုအလျောက် ဖြည့်ပေးမှာပါ။",
+      "ဖောင်ကို ဖြည့်ပါ၊ ကျွန်ုပ်တို့ အီးမေးလ်ဖြင့် ပြန်လည်ဆက်သွယ်ပါမည်။",
     "contact.form.nameLabel": "နာမည်",
     "contact.form.emailLabel": "အီးမေးလ်",
     "contact.form.messageLabel": "စာ",
     "contact.form.messagePlaceholder":
       "လိုအပ်တာတွေကို ရေးပါ (အသုံးပြုရည်ရွယ်ချက်၊ ဘတ်ဂျက်၊ အရွယ်အစား စသည်)",
-    "contact.form.submit": "Email ဖွင့်ရန်",
+    "contact.form.submit": "စာပို့ရန်",
     "contact.form.reset": "ရှင်းလင်းရန်",
+    "contact.form.sending": "စာ ပို့နေသည်...",
+    "contact.form.success": "ကျေးဇူးတင်ပါသည်။ သင့်စာ ပေးပို့ပြီးပါပြီ။ မကြာမီ အီးမေးလ်ဖြင့် ပြန်ဆက်သွယ်ပါမည်။",
+    "contact.form.error": "တောင်းပန်ပါသည်၊ တစ်ခုခု မှားယွင်းသွားသည်။ ထပ်စမ်းကြည့်ပါ သို့မဟုတ် တိုက်ရိုက် အီးမေးလ်ပို့ပါ။",
     "contact.form.direct": "သို့မဟုတ် တိုက်ရိုက် email ပို့ပါ:",
     "contact.aside.hoursTitle": "အချိန်",
     "contact.aside.hoursBody": "တနင်္လာ မှ သောကြာ, 9:00 မှ 18:00",
@@ -808,7 +814,17 @@ function mountContactForm() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
   }
 
-  form.addEventListener("submit", (e) => {
+  const status = qs("#formStatus");
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  function setStatus(message, kind) {
+    if (!status) return;
+    status.textContent = message || "";
+    status.classList.toggle("is-error", kind === "error");
+    status.classList.toggle("is-success", kind === "success");
+  }
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const n = String(name?.value || "").trim();
     const em = String(email?.value || "").trim();
@@ -820,18 +836,37 @@ function mountContactForm() {
 
     if (!n || !isValidEmail(em) || !m) return;
 
-    const subject = encodeURIComponent(t("contact.mail.subject", { name: n }));
-    const body = encodeURIComponent(
-      `Name: ${n}\nEmail: ${em}\n\nMessage:\n${m}\n\n---\n${t("contact.mail.footer")}`
-    );
+    setStatus(t("contact.form.sending"), "");
+    if (submitBtn) submitBtn.disabled = true;
 
-    window.location.href = `mailto:sales@techzy.example?subject=${subject}&body=${body}`;
+    try {
+      // Netlify Forms accepts URL-encoded AJAX submissions posted to the page path.
+      // The hidden "form-name" field is included via FormData so Netlify attributes it.
+      const body = new URLSearchParams(new FormData(form)).toString();
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+
+      if (res.ok) {
+        form.reset();
+        setStatus(t("contact.form.success"), "success");
+      } else {
+        setStatus(t("contact.form.error"), "error");
+      }
+    } catch (err) {
+      setStatus(t("contact.form.error"), "error");
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
   });
 
   form.addEventListener("reset", () => {
     setErr("cName", "");
     setErr("cEmail", "");
     setErr("cMsg", "");
+    setStatus("", "");
   });
 }
 

@@ -14,6 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/styles.css" />
     <script defer src="assets/main.js"></script>
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
@@ -76,11 +77,28 @@
             <div class="card">
               <h2 class="title-lg" data-i18n="contact.form.title">Send a message</h2>
               <p class="muted" data-i18n="contact.form.subtitle">
-                This is a static site, so the form will open your email app with
-                a pre-filled message.
+                Fill in the form and we will get back to you by email.
               </p>
 
-              <form id="contactForm" class="form" novalidate>
+              <form
+                id="contactForm"
+                class="form"
+                name="contact"
+                method="POST"
+                action="/"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                novalidate
+              >
+                <!-- Netlify Forms: hidden field so submissions are attributed to the "contact" form -->
+                <input type="hidden" name="form-name" value="contact" />
+                <!-- Honeypot: real users never fill this; bots do -->
+                <p hidden aria-hidden="true">
+                  <label
+                    >Don't fill this out if you're human:
+                    <input name="bot-field" tabindex="-1" autocomplete="off"
+                  /></label>
+                </p>
                 <label class="field">
                   <span class="field-label" data-i18n="contact.form.nameLabel">Name</span>
                   <input id="cName" name="name" type="text" autocomplete="name" aria-describedby="err-cName" required />
@@ -117,17 +135,18 @@
 
                 <div class="form-actions">
                   <button class="btn btn-primary" type="submit" data-i18n="contact.form.submit">
-                    Compose Email
+                    Send message
                   </button>
                   <button class="btn btn-ghost" type="reset" data-i18n="contact.form.reset">Clear</button>
                 </div>
 
-                <p class="muted tiny">
-                  <span data-i18n="contact.form.direct">Or email directly:</span>
-                  <a class="link" href="mailto:sales@techzy.example"
-                    >sales@techzy.example</a
-                  >
-                </p>
+                <p
+                  class="field-help"
+                  id="formStatus"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                ></p>
               </form>
             </div>
 
