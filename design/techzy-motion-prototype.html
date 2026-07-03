@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Techzy — Motion Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — Techzy Design System (Phase 1)
+   Binary palette. Opacity carries every intermediate value.
+   8px grid. Golden-ratio type scale. Zero radius, everywhere.
+   ============================================================ */
+:root{
+  --ink:#000000;
+  --paper:#FFFFFF;
+  /* opacity steps (the "no grays" rule, honored) */
+  --alpha-secondary:.62;
+  --alpha-tertiary:.40;
+  --alpha-hairline:.18;
+  /* golden-ratio scale from 16 */
+  --t-0:1rem;            /* 16 */
+  --t-1:1.625rem;        /* 26 */
+  --t-2:clamp(2rem,3.4vw,2.625rem);   /* 42 */
+  --t-3:clamp(2.5rem,5.6vw,4.25rem);  /* 68 */
+  --t-4:clamp(3rem,8.6vw,6.875rem);   /* 110 */
+  --t-label:.6875rem;    /* 11 — utility */
+  /* 8px grid */
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s6:48px; --s8:64px; --s12:96px; --s16:128px; --s20:160px;
+  --gutter:clamp(16px,4vw,48px);
+  --ease:cubic-bezier(.76,0,.24,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;border-radius:0 !important;}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  *,*::before,*::after{cursor:none !important;}
+}
+html{scroll-behavior:auto;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  font-size:var(--t-0);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--ink);color:var(--paper);}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;background:none;border:none;color:inherit;cursor:pointer;}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px;}
+
+/* utility label */
+.label{
+  font-size:var(--t-label);
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  opacity:var(--alpha-secondary);
+}
+.hairline{border-top:1px solid var(--ink);opacity:var(--alpha-hairline);}
+.wrap{padding-left:var(--gutter);padding-right:var(--gutter);max-width:1440px;margin:0 auto;}
+
+/* ============================================================
+   CURSOR — dot + trailing frame, difference blend
+   ============================================================ */
+.cursor,.cursor-frame{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+  mix-blend-mode:difference;
+}
+.cursor{
+  width:8px;height:8px;background:#fff;
+  transform:translate(-50%,-50%);
+}
+.cursor-frame{
+  width:40px;height:40px;border:1px solid #fff;
+  transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;
+  transition:width .35s var(--ease),height .35s var(--ease);
+}
+.cursor-frame span{
+  font-size:10px;font-weight:600;letter-spacing:.12em;color:#fff;
+  opacity:0;transition:opacity .2s;
+}
+.cursor-frame.is-label{width:72px;height:72px;}
+.cursor-frame.is-label span{opacity:1;}
+.cursor-frame.is-hover{width:64px;height:64px;}
+@media (hover:none){.cursor,.cursor-frame{display:none;}}
+
+/* ============================================================
+   PRELOADER — the seal cut
+   ============================================================ */
+.loader{
+  position:fixed;inset:0;z-index:9000;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+.loader-panel{
+  position:absolute;left:0;width:100%;height:50.5%;background:var(--ink);
+}
+.loader-panel.top{top:0;}
+.loader-panel.bottom{bottom:0;}
+.loader-line{
+  position:absolute;top:50%;left:0;height:1px;width:100%;background:var(--paper);
+  transform:scaleX(0);transform-origin:left center;
+}
+.loader-mark{
+  position:relative;z-index:2;color:var(--paper);
+  font-size:var(--t-2);font-weight:600;letter-spacing:-.03em;
+  display:flex;overflow:hidden;
+}
+.loader-mark span{display:inline-block;transform:translateY(110%);}
+.loader-count{
+  position:absolute;bottom:var(--s4);left:var(--gutter);z-index:2;
+  color:var(--paper);font-size:var(--t-label);font-weight:500;letter-spacing:.14em;
+}
+.loader-tag{
+  position:absolute;bottom:var(--s4);right:var(--gutter);z-index:2;
+  color:var(--paper);font-size:var(--t-label);font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;opacity:var(--alpha-secondary);
+}
+
+/* ============================================================
+   PAGE TRANSITION — abbreviated seal cut
+   ============================================================ */
+.veil{position:fixed;inset:0;z-index:8000;pointer-events:none;}
+.veil-panel{position:absolute;left:0;width:100%;height:50.5%;background:var(--ink);transform:scaleY(0);}
+.veil-panel.top{top:0;transform-origin:top center;}
+.veil-panel.bottom{bottom:0;transform-origin:bottom center;}
+.veil-line{position:absolute;top:50%;left:0;height:1px;width:100%;background:var(--paper);transform:scaleX(0);transform-origin:left center;}
+
+/* ============================================================
+   NAV — fixed, inverts over dark sections via difference
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:7000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s3) var(--gutter);
+  mix-blend-mode:difference;color:#fff;
+  transition:transform .5s var(--ease);
+}
+.nav.is-hidden{transform:translateY(-100%);}
+.nav-logo{font-weight:600;font-size:18px;letter-spacing:-.02em;}
+.nav-links{display:flex;gap:var(--s4);list-style:none;}
+.nav-links a{
+  font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  position:relative;padding:4px 0;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+  background:currentColor;transform:scaleX(0);transform-origin:right;
+  transition:transform .4s var(--ease);
+}
+.nav-links a:hover::after,.nav-links a[aria-current="page"]::after{transform:scaleX(1);transform-origin:left;}
+@media (max-width:720px){.nav-links{gap:var(--s2);}.nav-links a{font-size:11px;}}
+
+/* sound toggle */
+.sound{
+  display:flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;padding:6px 0;
+}
+.sound-bars{display:flex;align-items:flex-end;gap:2px;height:12px;}
+.sound-bars i{width:2px;height:100%;background:#fff;transform-origin:bottom;animation:eq 1s ease-in-out infinite;animation-play-state:paused;transform:scaleY(.2);}
+.sound-bars i:nth-child(2){animation-delay:.2s;}
+.sound-bars i:nth-child(3){animation-delay:.4s;}
+.sound-bars i:nth-child(4){animation-delay:.1s;}
+.sound[aria-pressed="true"] .sound-bars i{animation-play-state:running;}
+@keyframes eq{0%,100%{transform:scaleY(.2);}50%{transform:scaleY(1);}}
+
+/* scroll progress */
+.progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:7100;mix-blend-mode:difference;}
+
+/* ============================================================
+   SHARED SECTIONS
+   ============================================================ */
+main{min-height:100vh;}
+.section{padding:var(--s16) 0;}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);margin-bottom:var(--s8);flex-wrap:wrap;}
+h1,h2,h3{font-weight:500;letter-spacing:-.03em;line-height:1.05;}
+.display{font-size:var(--t-4);}
+.hero h1{font-weight:800;letter-spacing:-.045em;line-height:.98;}
+.headline{font-size:var(--t-3);font-weight:600;}
+.title{font-size:var(--t-2);}
+.lede{font-size:var(--t-1);line-height:1.4;font-weight:400;letter-spacing:-.01em;max-width:34ch;}
+.muted{opacity:var(--alpha-secondary);}
+
+/* masked word reveal */
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;}
+.split .w i{display:inline-block;font-style:normal;transform:translateY(115%);}
+
+/* buttons — magnetic */
+.btn{
+  display:inline-flex;align-items:center;gap:var(--s2);
+  padding:var(--s2) var(--s4);
+  border:1px solid var(--ink);
+  font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  position:relative;overflow:hidden;background:var(--paper);color:var(--ink);
+}
+.btn::before{
+  content:"";position:absolute;inset:0;background:var(--ink);
+  transform:scaleY(0);transform-origin:bottom;transition:transform .4s var(--ease);
+}
+.btn span{position:relative;z-index:1;transition:color .3s;}
+.btn:hover::before{transform:scaleY(1);}
+.btn:hover span{color:var(--paper);}
+.btn.solid{background:var(--ink);color:var(--paper);}
+.btn.solid::before{background:var(--paper);}
+.btn.solid:hover span{color:var(--ink);}
+
+/* image frame with clip reveal + fallback */
+.frame{position:relative;overflow:hidden;background:var(--ink);}
+.frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08);}
+.frame .fallback{
+  position:absolute;inset:0;display:none;align-items:flex-end;padding:var(--s3);
+  color:var(--paper);background:
+    repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 1px,transparent 1px 12px),var(--ink);
+}
+.frame.no-img .fallback{display:flex;}
+.frame .fallback .label{opacity:1;color:var(--paper);}
+
+/* reveal helpers */
+[data-reveal]{opacity:0;transform:translateY(32px);}
+[data-clip]{clip-path:inset(100% 0 0 0);}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+.hero{
+  position:relative;min-height:100vh;background:var(--ink);color:var(--paper);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:var(--s20) 0 var(--s8);overflow:hidden;
+}
+#webgl{position:absolute;inset:0;width:100%;height:100%;}
+.hero .wrap{position:relative;z-index:2;width:100%;}
+.hero-eyebrow{margin-bottom:var(--s3);color:var(--paper);opacity:var(--alpha-secondary);}
+.hero h1{max-width:14ch;}
+.hero-sub{margin-top:var(--s4);max-width:44ch;opacity:var(--alpha-secondary);}
+.hero-cta{display:flex;gap:var(--s2);margin-top:var(--s6);flex-wrap:wrap;}
+.hero .btn{background:transparent;color:var(--paper);border-color:var(--paper);}
+.hero .btn::before{background:var(--paper);}
+.hero .btn:hover span{color:var(--ink);}
+.hero-meta{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);
+  margin-top:var(--s12);padding-top:var(--s3);
+  border-top:1px solid rgba(255,255,255,var(--alpha-hairline));
+}
+.hero-meta .label{color:var(--paper);}
+.hero-meta strong{display:block;font-weight:500;margin-top:var(--s1);}
+.hero-scroll{position:absolute;right:var(--gutter);bottom:var(--s8);z-index:2;writing-mode:vertical-rl;font-size:var(--t-label);letter-spacing:.2em;text-transform:uppercase;opacity:var(--alpha-tertiary);color:var(--paper);}
+
+/* featured grid */
+.grid-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:rgba(0,0,0,var(--alpha-hairline));border:1px solid rgba(0,0,0,var(--alpha-hairline));}
+.card{background:var(--paper);padding:var(--s4);display:flex;flex-direction:column;gap:var(--s3);min-height:340px;position:relative;transition:background .35s var(--ease),color .35s var(--ease);}
+.card .frame{aspect-ratio:4/3;}
+.card:hover{background:var(--ink);color:var(--paper);}
+.card .idx{font-size:var(--t-label);letter-spacing:.14em;opacity:var(--alpha-tertiary);}
+.card h3{font-size:var(--t-1);letter-spacing:-.02em;margin-top:auto;}
+.card .spec{font-size:13px;opacity:var(--alpha-secondary);}
+.card .price{font-size:13px;font-weight:600;letter-spacing:.06em;}
+
+/* why — pinned counters feel */
+.why{background:var(--ink);color:var(--paper);}
+.why .hairline{border-color:var(--paper);}
+.why-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s8) var(--s6);margin-top:var(--s8);}
+.why-item .label{color:var(--paper);opacity:var(--alpha-tertiary);}
+.why-item h3{font-size:var(--t-1);margin:var(--s2) 0;}
+.why-item p{opacity:var(--alpha-secondary);font-size:15px;max-width:36ch;}
+
+/* marquee */
+.marquee{overflow:hidden;border-top:1px solid rgba(0,0,0,var(--alpha-hairline));border-bottom:1px solid rgba(0,0,0,var(--alpha-hairline));padding:var(--s6) 0;}
+.marquee-track{display:flex;gap:var(--s6);width:max-content;will-change:transform;}
+.quote{width:340px;flex:none;border-left:1px solid var(--ink);padding-left:var(--s3);}
+.quote p{font-size:15px;}
+.quote .label{display:block;margin-top:var(--s2);}
+
+/* ============================================================
+   PAGE HEADERS (inner pages)
+   ============================================================ */
+.page-head{padding:var(--s20) 0 var(--s8);}
+.page-head .label{display:block;margin-bottom:var(--s3);}
+.page-head p{margin-top:var(--s4);}
+
+/* products page */
+.toolbar{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;justify-content:space-between;padding:var(--s3) 0;border-top:1px solid var(--ink);border-bottom:1px solid rgba(0,0,0,var(--alpha-hairline));margin-bottom:var(--s6);}
+.tabs{display:flex;gap:var(--s1);flex-wrap:wrap;}
+.tab{padding:var(--s1) var(--s2);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border:1px solid transparent;}
+.tab[aria-pressed="true"]{background:var(--ink);color:var(--paper);}
+.tab:not([aria-pressed="true"]):hover{border-color:var(--ink);}
+.search{border:1px solid var(--ink);padding:var(--s1) var(--s2);display:flex;align-items:center;gap:var(--s1);}
+.search input{border:none;outline:none;font:inherit;font-size:13px;width:180px;background:transparent;color:inherit;}
+.count-note{font-size:var(--t-label);letter-spacing:.12em;text-transform:uppercase;opacity:var(--alpha-tertiary);margin-top:var(--s3);}
+
+/* about */
+.belief{display:grid;grid-template-columns:1fr 1fr;gap:var(--s8);align-items:start;}
+.pull{font-size:var(--t-2);line-height:1.15;letter-spacing:-.02em;font-weight:500;max-width:18ch;}
+.pull-by{margin-top:var(--s3);}
+.steps{counter-reset:step;}
+.step{display:grid;grid-template-columns:120px 1fr;gap:var(--s4);padding:var(--s6) 0;border-top:1px solid rgba(0,0,0,var(--alpha-hairline));}
+.step-num{font-size:var(--t-3);font-weight:500;letter-spacing:-.03em;line-height:1;}
+.step h3{font-size:var(--t-1);}
+.step p{margin-top:var(--s1);opacity:var(--alpha-secondary);max-width:44ch;}
+@media (max-width:720px){.belief{grid-template-columns:1fr;}.step{grid-template-columns:64px 1fr;}}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s8);}
+@media (max-width:820px){.contact-grid{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:var(--s1);margin-bottom:var(--s4);}
+.field label{font-size:var(--t-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;}
+.field input,.field textarea{border:none;border-bottom:1px solid var(--ink);padding:var(--s2) 0;font:inherit;background:transparent;color:inherit;outline:none;}
+.field input:focus,.field textarea:focus{border-bottom-width:2px;}
+.info-block{padding:var(--s4) 0;border-top:1px solid rgba(0,0,0,var(--alpha-hairline));}
+.info-block h3{font-size:var(--t-0);font-weight:600;}
+.info-block p{opacity:var(--alpha-secondary);font-size:15px;margin-top:var(--s1);}
+
+/* product detail */
+.pd-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--s8);align-items:start;}
+@media (max-width:820px){.pd-grid{grid-template-columns:1fr;}}
+.pd-specs{width:100%;border-collapse:collapse;margin-top:var(--s4);}
+.pd-specs td{padding:var(--s2) 0;border-top:1px solid rgba(0,0,0,var(--alpha-hairline));font-size:14px;}
+.pd-specs td:first-child{font-size:var(--t-label);letter-spacing:.12em;text-transform:uppercase;opacity:var(--alpha-secondary);width:40%;}
+
+/* CTA band */
+.cta-band{background:var(--ink);color:var(--paper);text-align:left;}
+.cta-band .headline{max-width:16ch;}
+.cta-band .btn{margin-top:var(--s6);background:transparent;color:var(--paper);border-color:var(--paper);}
+.cta-band .btn::before{background:var(--paper);}
+.cta-band .btn:hover span{color:var(--ink);}
+
+/* footer */
+footer{border-top:1px solid var(--ink);padding:var(--s8) 0;}
+.foot{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;align-items:flex-start;}
+.foot-links{display:flex;gap:var(--s4);list-style:none;flex-wrap:wrap;}
+.foot-links a{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;}
+.foot small{display:block;margin-top:var(--s6);font-size:12px;opacity:var(--alpha-tertiary);}
+
+/* reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important;}
+  [data-reveal]{opacity:1 !important;transform:none !important;}
+  [data-clip]{clip-path:none !important;}
+  .split .w i{transform:none !important;}
+  .cursor,.cursor-frame{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- cursor -->
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-frame" aria-hidden="true"><span>VIEW</span></div>
+
+<!-- preloader -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-panel top"></div>
+  <div class="loader-panel bottom"></div>
+  <div class="loader-line"></div>
+  <div class="loader-mark" id="loaderMark"></div>
+  <div class="loader-count" id="loaderCount">000</div>
+  <div class="loader-tag">Factory sealed / First touch</div>
+</div>
+
+<!-- page transition veil -->
+<div class="veil" id="veil" aria-hidden="true">
+  <div class="veil-panel top"></div>
+  <div class="veil-panel bottom"></div>
+  <div class="veil-line"></div>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<nav class="nav" id="nav" aria-label="Main">
+  <a href="#/" class="nav-logo" data-route>TECHZY</a>
+  <ul class="nav-links">
+    <li><a href="#/" data-route data-nav="home">Home</a></li>
+    <li><a href="#/about" data-route data-nav="about">About Us</a></li>
+    <li><a href="#/products" data-route data-nav="products">Products</a></li>
+    <li><a href="#/contact" data-route data-nav="contact">Contact</a></li>
+    <li>
+      <button class="sound" id="soundToggle" aria-pressed="false" aria-label="Turn sound on">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span id="soundLabel">Sound off</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IMG = 'https://techzymm.com/assets/images';
+
+/* ============================================================
+   DATA — live copy captured from techzymm.com.
+   Product catalog below is SAMPLE data (live cards are rendered
+   client-side) — wire to real inventory at build time.
+   ============================================================ */
+const PRODUCTS = [
+  {id:'aera-14',   name:'Aera 14',        cat:'Laptops',     spec:'14" / Ryzen 7 / 16GB / 512GB', price:'$1,190'},
+  {id:'aera-16',   name:'Aera 16',        cat:'Laptops',     spec:'16" / Core Ultra 7 / 32GB / 1TB', price:'$1,690'},
+  {id:'field-13',  name:'Field 13',       cat:'Laptops',     spec:'13" / Ryzen 5 / 16GB / 512GB', price:'$890'},
+  {id:'slate-mini',name:'Slate Desk Mini',cat:'Desktops',    spec:'SFF / Core i5 / 16GB / 1TB',   price:'$740'},
+  {id:'slate-pro', name:'Slate Desk Pro', cat:'Desktops',    spec:'Tower / Ryzen 9 / 64GB / 2TB', price:'$2,150'},
+  {id:'panel-27',  name:'Panel 27',       cat:'Accessories', spec:'27" / 4K IPS / 60Hz',          price:'$390'},
+  {id:'mono-kb',   name:'Mono Keyboard',  cat:'Accessories', spec:'Low-profile / Wired / Black',  price:'$95'},
+  {id:'quiet-dock',name:'Quiet Dock',     cat:'Accessories', spec:'USB-C / Dual display / 100W',  price:'$140'},
+];
+const QUOTES = [
+  ['Arrived factory-sealed, exactly as promised. Quietest machine I have owned.','Customer feedback 01'],
+  ['No upsells, no bundles. Just the build I picked.','Customer feedback 02'],
+  ['Support answered a compatibility question in minutes. Real humans.','Customer feedback 03'],
+  ['Replaced a defective unit inside a week. No repair queue.','Customer feedback 04'],
+  ['Clean packaging, clean OS install. Zero bloat.','Customer feedback 05'],
+  ['The 2x authenticity guarantee is why I bought here.','Customer feedback 06'],
+];
+
+const frame = (src,alt,ratio) => `
+  <div class="frame" data-clip ${ratio?`style="aspect-ratio:${ratio}"`:''}>
+    <img src="${src}" alt="${alt}" loading="lazy" onerror="this.parentElement.classList.add('no-img')">
+    <div class="fallback"><span class="label">${alt}</span></div>
+  </div>`;
+
+const cardHTML = (p,i) => `
+  <a class="card" href="#/product/${p.id}" data-route data-card>
+    <span class="idx">${String(i+1).padStart(2,'0')} / ${p.cat}</span>
+    ${frame(`${IMG}/products/${p.id}.jpg`, p.name, '4/3')}
+    <h3>${p.name}</h3>
+    <span class="spec">${p.spec}</span>
+    <span class="price">${p.price}</span>
+  </a>`;
+
+/* ============================================================
+   PAGE TEMPLATES — content verbatim from the live site
+   ============================================================ */
+const PAGES = {
+
+home: () => `
+  <section class="hero">
+    <canvas id="webgl" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="label hero-eyebrow" data-reveal>Minimal hardware. Maximum focus.</p>
+      <h1 class="display split">Laptops and desktops built with a clean, modern edge.</h1>
+      <p class="hero-sub" data-reveal>Curated machines for creators, builders, and teams who want quiet performance without the noise.</p>
+      <div class="hero-cta" data-reveal>
+        <a class="btn" href="#/products" data-route><span>Browse Products</span></a>
+        <a class="btn" href="#/about" data-route><span>How We Work</span></a>
+      </div>
+      <div class="hero-meta" data-reveal>
+        <div><span class="label">Warranty</span><strong>2 years</strong></div>
+        <div><span class="label">Shipping</span><strong>Fast + insured</strong></div>
+        <div><span class="label">Support</span><strong>Real humans</strong></div>
+      </div>
+    </div>
+    <span class="hero-scroll">Scroll</span>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label" data-reveal>Featured picks</span>
+          <h2 class="headline split" style="margin-top:var(--s2)">What customers are buying this week.</h2>
+        </div>
+        <a class="btn" href="#/products" data-route data-reveal><span>See all products</span></a>
+      </div>
+      <div class="grid-products">${PRODUCTS.slice(0,4).map(cardHTML).join('')}</div>
+      <p class="count-note">Sample catalog data — wire to live inventory.</p>
+    </div>
+  </section>
+
+  <section class="section why">
+    <div class="wrap">
+      <span class="label" style="color:#fff" data-reveal>Why Techzy</span>
+      <h2 class="headline split" style="margin-top:var(--s2);max-width:22ch">We keep it simple: strong components, clean builds, and honest pricing. No neon. No clutter. Just machines that do the work.</h2>
+      <div class="why-items">
+        <div class="why-item" data-reveal><span class="label">01</span><h3>100% Authenticity</h3><p>Every laptop is 100% brand new and genuine. If not, we refund 2x the purchase price. Guaranteed.</p></div>
+        <div class="why-item" data-reveal><span class="label">02</span><h3>30-Day Instant Replacement</h3><p>Manufacturer defect within the first month? We replace it immediately. No repairs, no delays.</p></div>
+        <div class="why-item" data-reveal><span class="label">03</span><h3>First-Hand Experience</h3><p>Every device arrives factory-sealed. You will be the very first person to open and experience your new tech.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-bottom:var(--s8)">
+    <div class="wrap section-head" style="margin-bottom:0">
+      <div>
+        <span class="label" data-reveal>What our customers say</span>
+        <h2 class="headline split" style="margin-top:var(--s2)">Real feedback from real buyers.</h2>
+      </div>
+    </div>
+  </section>
+  <div class="marquee" aria-label="Customer feedback">
+    <div class="marquee-track" id="marquee">
+      ${[...QUOTES,...QUOTES].map(q=>`<blockquote class="quote"><p>“${q[0]}”</p><cite class="label">${q[1]}</cite></blockquote>`).join('')}
+    </div>
+  </div>
+  ${ctaBand('Ready to browse?','Explore our lineup of minimalist machines and clean builds.','View Products','#/products')}
+`,
+
+products: () => `
+  <section class="page-head">
+    <div class="wrap">
+      <span class="label" data-reveal>Products</span>
+      <h1 class="display split">Clean machines. Clear choices.</h1>
+      <p class="lede muted" data-reveal>Use search, filters, and sorting to find your next laptop or desktop.</p>
+    </div>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--s16)">
+    <div class="toolbar" data-reveal>
+      <div class="tabs" role="group" aria-label="Filter by category">
+        ${['All','Laptops','Desktops','Accessories'].map((c,i)=>`<button class="tab" data-cat="${c}" aria-pressed="${i===0}">${c}</button>`).join('')}
+      </div>
+      <label class="search"><span class="label">Search</span><input id="q" type="search" aria-label="Search products" placeholder="Model, spec…"></label>
+    </div>
+    <div class="grid-products" id="productGrid">${PRODUCTS.map(cardHTML).join('')}</div>
+    <p class="count-note" id="countNote">${PRODUCTS.length} items — sample catalog data, wire to live inventory.</p>
+  </section>
+`,
+
+product: (id) => {
+  const p = PRODUCTS.find(x=>x.id===id) || PRODUCTS[0];
+  return `
+  <section class="page-head">
+    <div class="wrap">
+      <span class="label" data-reveal>${p.cat} / ${p.name}</span>
+      <h1 class="display split">${p.name}</h1>
+    </div>
+  </section>
+  <section class="wrap pd-grid" style="padding-bottom:var(--s16)">
+    <div>${frame(`${IMG}/products/${p.id}.jpg`, p.name, '4/3')}</div>
+    <div>
+      <p class="lede" data-reveal>Quiet performance, clean build, straight pricing.</p>
+      <table class="pd-specs" data-reveal>
+        <tr><td>Configuration</td><td>${p.spec}</td></tr>
+        <tr><td>Warranty</td><td>2 years</td></tr>
+        <tr><td>Replacement</td><td>30-day instant, manufacturer defects</td></tr>
+        <tr><td>Condition</td><td>Factory-sealed, 100% genuine</td></tr>
+        <tr><td>Price</td><td><strong>${p.price}</strong></td></tr>
+      </table>
+      <div style="display:flex;gap:var(--s2);margin-top:var(--s6)" data-reveal>
+        <a class="btn solid" href="#/contact" data-route><span>Ask about this build</span></a>
+        <a class="btn" href="#/products" data-route><span>Back to products</span></a>
+      </div>
+      <p class="count-note">Template page — one route serves the whole catalog.</p>
+    </div>
+  </section>`;
+},
+
+about: () => `
+  <section class="page-head">
+    <div class="wrap">
+      <span class="label" data-reveal>About us</span>
+      <h1 class="display split">A minimalist approach to computers.</h1>
+      <p class="lede muted" data-reveal>We sell carefully selected laptops and desktops that prioritize reliability, clean design, and quiet performance.</p>
+    </div>
+  </section>
+  <section class="wrap">${frame(`${IMG}/hero/hero-about.jpg`,'Techzy — shop online anytime','21/9')}</section>
+
+  <section class="section wrap">
+    <div class="belief">
+      <div>
+        <span class="label" data-reveal>What we believe</span>
+        <p class="lede" style="margin-top:var(--s3)" data-reveal>Technology should fade into the background. Your machine should be fast, stable, and understated. That is the whole point.</p>
+      </div>
+      <div>
+        <p class="pull split">“The best spec is the one you never have to think about.”</p>
+        <p class="label pull-by" data-reveal>Techzy team</p>
+      </div>
+    </div>
+    <div class="why-items" style="margin-top:var(--s12)">
+      <div class="why-item" data-reveal><h3>Quality checks</h3><p class="muted">Each model is validated for thermals, performance consistency, and daily-driver reliability.</p></div>
+      <div class="why-item" data-reveal><h3>Straight pricing</h3><p class="muted">Clear configurations, no confusing bundles, and no gimmicks.</p></div>
+      <div class="why-item" data-reveal><h3>Repair mindset</h3><p class="muted">We support upgrades and repairs where it makes sense, to extend the life of your machine.</p></div>
+    </div>
+  </section>
+
+  <section class="section wrap" style="padding-top:0">
+    <span class="label" data-reveal>How it works</span>
+    <h2 class="headline split" style="margin:var(--s2) 0 var(--s6)">A simple process from selection to delivery.</h2>
+    <div class="steps">
+      <div class="step" data-reveal><span class="step-num">01</span><div><h3>Pick a category</h3><p>Browse laptops, desktops, and accessories in one place.</p></div></div>
+      <div class="step" data-reveal><span class="step-num">02</span><div><h3>Choose a configuration</h3><p>Select a build that matches your workload: work, studio, or performance.</p></div></div>
+      <div class="step" data-reveal><span class="step-num">03</span><div><h3>Get support</h3><p>Ask a question, confirm compatibility, and get post-purchase help.</p></div></div>
+    </div>
+  </section>
+  ${ctaBand('Ready to browse?','Explore our lineup of minimalist machines and clean builds.','View Products','#/products')}
+`,
+
+contact: () => `
+  <section class="page-head">
+    <div class="wrap">
+      <span class="label" data-reveal>Contact</span>
+      <h1 class="display split">Talk to a human.</h1>
+      <p class="lede muted" data-reveal>Questions about specs, shipping, warranties, or the right build? Send a message and we will respond soon.</p>
+    </div>
+  </section>
+  <section class="wrap contact-grid" style="padding-bottom:var(--s16)">
+    <div data-reveal>
+      <h2 class="title" style="margin-bottom:var(--s2)">Send a message</h2>
+      <p class="muted" style="margin-bottom:var(--s6)">Fill in the form and we will get back to you by email.</p>
+      <div class="field"><label for="fName">Name</label><input id="fName" type="text" autocomplete="name"></div>
+      <div class="field"><label for="fEmail">Email</label><input id="fEmail" type="email" autocomplete="email"></div>
+      <div class="field"><label for="fMsg">Message</label><textarea id="fMsg" rows="5"></textarea></div>
+      <div style="display:flex;gap:var(--s2)">
+        <button class="btn solid" type="button"><span>Send message</span></button>
+        <button class="btn" type="button" onclick="['fName','fEmail','fMsg'].forEach(i=>document.getElementById(i).value='')"><span>Clear</span></button>
+      </div>
+    </div>
+    <div>
+      <div class="info-block" data-reveal><h3>Hours</h3><p>Mon to Fri, 9:00 to 18:00</p></div>
+      <div class="info-block" data-reveal><h3>Support</h3><p>Include your model name and order number (if you have one).</p></div>
+      <div class="info-block" data-reveal><h3>Location</h3><p>We ship nationwide. Local pickup available by appointment.</p></div>
+    </div>
+  </section>
+`
+};
+
+function ctaBand(h,sub,btn,href){
+  return `<section class="section cta-band"><div class="wrap">
+    <span class="label" style="color:#fff" data-reveal>Next step</span>
+    <h2 class="headline split" style="margin-top:var(--s2)">${h}</h2>
+    <p class="muted" style="margin-top:var(--s3);max-width:44ch" data-reveal>${sub}</p>
+    <a class="btn" href="${href}" data-route data-reveal><span>${btn}</span></a>
+  </div></section>`;
+}
+const footerHTML = `<footer><div class="wrap foot">
+  <div><span class="nav-logo">TECHZY</span><small>Minimalist laptops and desktops for modern work.<br>© Techzy. Built in black and white.</small></div>
+  <ul class="foot-links">
+    <li><a href="#/about" data-route>About</a></li>
+    <li><a href="#/products" data-route>Products</a></li>
+    <li><a href="#/contact" data-route>Contact</a></li>
+    <li><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top</a></li>
+  </ul>
+</div></footer>`;
+
+/* ============================================================
+   ROUTER + SEAL-CUT TRANSITION
+   ============================================================ */
+const app = document.getElementById('app');
+let three = null; // active three.js scene
+
+function parseRoute(){
+  const h = location.hash.replace(/^#\/?/, '');
+  if(h.startsWith('product/')) return {name:'product', id:h.split('/')[1]};
+  return {name: h || 'home'};
+}
+
+function render(){
+  const r = parseRoute();
+  if(three){three.destroy(); three=null;}
+  ScrollTrigger.getAll().forEach(t=>t.kill());
+  const tpl = PAGES[r.name] || PAGES.home;
+  app.innerHTML = tpl(r.id) + footerHTML;
+  window.scrollTo(0,0);
+  document.querySelectorAll('[data-nav]').forEach(a=>{
+    a.toggleAttribute('aria-current', false);
+    if(a.dataset.nav === (r.name==='product'?'products':r.name)) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  });
+  splitAll();
+  initPage(r);
+  bindCursorTargets();
+}
+
+let transitioning = false;
+function navigate(hash){
+  if(transitioning || hash === location.hash) { if(hash!==location.hash) location.hash = hash; return; }
+  if(reduced){ location.hash = hash; return; }
+  transitioning = true;
+  const tl = gsap.timeline({onComplete:()=>{transitioning=false;}});
+  tl.set('#veil',{pointerEvents:'auto'})
+    .to('.veil-line',{scaleX:1,duration:.45,ease:'power3.inOut'})
+    .to('.veil-panel',{scaleY:1,duration:.55,ease:'power4.inOut'},'-=.15')
+    .set('.veil-line',{scaleX:0})
+    .add(()=>{ location.hash = hash; })
+    .to('.veil-panel',{scaleY:0,duration:.8,ease:'power4.inOut',delay:.1})
+    .set('#veil',{pointerEvents:'none'});
+}
+window.addEventListener('hashchange', render);
+document.addEventListener('click', e=>{
+  const a = e.target.closest('a[data-route]');
+  if(!a) return;
+  e.preventDefault();
+  navigate(a.getAttribute('href'));
+});
+
+/* ============================================================
+   TEXT SPLIT — masked word reveal
+   ============================================================ */
+function splitAll(){
+  document.querySelectorAll('.split').forEach(el=>{
+    const words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map(w=>`<span class="w"><i>${w}</i></span>`).join(' ');
+  });
+}
+
+/* ============================================================
+   PER-PAGE ANIMATION INIT
+   ============================================================ */
+function initPage(r){
+  if(reduced) return;
+  // split reveals
+  document.querySelectorAll('.split').forEach(el=>{
+    gsap.to(el.querySelectorAll('.w i'),{
+      y:0,duration:1,ease:'power4.out',stagger:.045,
+      scrollTrigger:{trigger:el,start:'top 88%'}
+    });
+  });
+  // fade-up reveals
+  document.querySelectorAll('[data-reveal]').forEach(el=>{
+    gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',
+      scrollTrigger:{trigger:el,start:'top 92%'}});
+  });
+  // clip reveals
+  document.querySelectorAll('[data-clip]').forEach(el=>{
+    gsap.to(el,{clipPath:'inset(0% 0 0 0)',duration:1.2,ease:'power4.inOut',
+      scrollTrigger:{trigger:el,start:'top 85%'}});
+  });
+  // marquee
+  const mq = document.getElementById('marquee');
+  if(mq){
+    const half = mq.scrollWidth/2;
+    gsap.to(mq,{x:-half,duration:28,ease:'none',repeat:-1});
+  }
+  // products filtering
+  if(r.name==='products') initProducts();
+  // three.js hero
+  if(r.name==='home') three = createHero();
+  ScrollTrigger.refresh();
+}
+
+function initProducts(){
+  const grid=document.getElementById('productGrid'),
+        note=document.getElementById('countNote'),
+        q=document.getElementById('q');
+  let cat='All';
+  const apply=()=>{
+    const term=(q.value||'').toLowerCase();
+    const list=PRODUCTS.filter(p=>(cat==='All'||p.cat===cat)&&(p.name+' '+p.spec).toLowerCase().includes(term));
+    grid.innerHTML=list.map(cardHTML).join('')||'<div style="padding:var(--s8);background:var(--paper)"><p class="muted">No matches. Clear the search or pick another category.</p></div>';
+    note.textContent=`${list.length} item${list.length===1?'':'s'} — sample catalog data, wire to live inventory.`;
+    grid.querySelectorAll('[data-clip]').forEach(el=>el.style.clipPath='none');
+    bindCursorTargets();
+  };
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-pressed','false'));
+    t.setAttribute('aria-pressed','true'); cat=t.dataset.cat; apply();
+  }));
+  q.addEventListener('input',apply);
+}
+
+/* ============================================================
+   THREE.JS — quiet field: still points that ripple under cursor
+   ============================================================ */
+function createHero(){
+  const canvas=document.getElementById('webgl');
+  if(!canvas||typeof THREE==='undefined') return null;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(55,1,.1,100);
+  cam.position.set(0,2.2,7);
+  cam.lookAt(0,0,0);
+
+  const COLS=110,ROWS=60,W=22,H=12;
+  const geo=new THREE.BufferGeometry();
+  const pos=new Float32Array(COLS*ROWS*3);
+  let i=0;
+  for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
+    pos[i++]=(x/(COLS-1)-.5)*W;
+    pos[i++]=0;
+    pos[i++]=(y/(ROWS-1)-.5)*H;
+  }
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const mat=new THREE.PointsMaterial({color:0xffffff,size:.028,transparent:true,opacity:.75});
+  const points=new THREE.Points(geo,mat);
+  points.position.y=-1.4;
+  scene.add(points);
+
+  const mouse={x:0,z:0,tx:0,tz:0};
+  const onMove=e=>{
+    const r=canvas.getBoundingClientRect();
+    mouse.tx=((e.clientX-r.left)/r.width-.5)*W;
+    mouse.tz=((e.clientY-r.top)/r.height-.5)*H;
+  };
+  window.addEventListener('pointermove',onMove);
+
+  let raf,t=0,alive=true;
+  const resize=()=>{
+    const r=canvas.getBoundingClientRect();
+    renderer.setSize(r.width,r.height,false);
+    cam.aspect=r.width/r.height;cam.updateProjectionMatrix();
+  };
+  window.addEventListener('resize',resize);resize();
+
+  const tick=()=>{
+    if(!alive)return;
+    t+=.008;
+    mouse.x+=(mouse.tx-mouse.x)*.06;
+    mouse.z+=(mouse.tz-mouse.z)*.06;
+    const p=geo.attributes.position.array;
+    for(let k=0;k<p.length;k+=3){
+      const x=p[k],z=p[k+2];
+      const dx=x-mouse.x,dz=z-mouse.z;
+      const d=Math.sqrt(dx*dx+dz*dz);
+      const ripple=Math.exp(-d*.9)*Math.sin(d*3-t*6)*.5;      // cursor ripple
+      const ambient=Math.sin(x*.5+t)*Math.cos(z*.6+t*.7)*.06; // near-still field
+      p[k+1]=ambient+ripple;
+    }
+    geo.attributes.position.needsUpdate=true;
+    renderer.render(scene,cam);
+    raf=requestAnimationFrame(tick);
+  };
+  if(!reduced) tick(); else renderer.render(scene,cam);
+
+  return {destroy(){
+    alive=false;cancelAnimationFrame(raf);
+    window.removeEventListener('pointermove',onMove);
+    window.removeEventListener('resize',resize);
+    geo.dispose();mat.dispose();renderer.dispose();
+  }};
+}
+
+/* ============================================================
+   CURSOR
+   ============================================================ */
+const dot=document.querySelector('.cursor'),ring=document.querySelector('.cursor-frame');
+let cx=innerWidth/2,cy=innerHeight/2,rx=cx,ry=cy;
+window.addEventListener('pointermove',e=>{cx=e.clientX;cy=e.clientY;});
+(function cursorLoop(){
+  rx+=(cx-rx)*.14;ry+=(cy-ry)*.14;
+  dot.style.transform=`translate(${cx-4}px,${cy-4}px)`;
+  ring.style.transform=`translate(${rx-ring.offsetWidth/2}px,${ry-ring.offsetHeight/2}px)`;
+  requestAnimationFrame(cursorLoop);
+})();
+function bindCursorTargets(){
+  document.querySelectorAll('a,button,input,textarea,.tab').forEach(el=>{
+    el.onmouseenter=()=>ring.classList.add(el.closest('[data-card]')||el.hasAttribute('data-card')?'is-label':'is-hover');
+    el.onmouseleave=()=>ring.classList.remove('is-hover','is-label');
+  });
+}
+
+/* ============================================================
+   SOUND — ambient drone via Web Audio (starts only on user tap).
+   To use a real track instead: replace startAudio/stopAudio with
+   an <audio loop src="track.mp3"> element and call .play()/.pause().
+   ============================================================ */
+const soundBtn=document.getElementById('soundToggle'),
+      soundLabel=document.getElementById('soundLabel');
+let audio=null;
+
+function startAudio(){
+  const ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const master=ctx.createGain();
+  master.gain.value=0;
+  master.connect(ctx.destination);
+
+  const filter=ctx.createBiquadFilter();
+  filter.type='lowpass';filter.frequency.value=520;filter.Q.value=.4;
+  filter.connect(master);
+
+  // two detuned oscillators + a low sub = quiet monochrome pad
+  const voices=[[110,'sine',.5],[110.7,'sine',.5],[55,'triangle',.35]].map(([f,type,g])=>{
+    const o=ctx.createOscillator(),vg=ctx.createGain();
+    o.type=type;o.frequency.value=f;vg.gain.value=g;
+    o.connect(vg);vg.connect(filter);o.start();
+    return o;
+  });
+
+  // slow breathing on the filter so it never feels static
+  const lfo=ctx.createOscillator(),lfoGain=ctx.createGain();
+  lfo.frequency.value=.05;lfoGain.gain.value=180;
+  lfo.connect(lfoGain);lfoGain.connect(filter.frequency);lfo.start();
+
+  master.gain.linearRampToValueAtTime(.05,ctx.currentTime+2); // gentle fade in
+  audio={ctx,master,voices,lfo};
+}
+function stopAudio(){
+  if(!audio)return;
+  const {ctx,master}=audio;
+  master.gain.linearRampToValueAtTime(0,ctx.currentTime+.8);
+  setTimeout(()=>ctx.close(),900);
+  audio=null;
+}
+soundBtn.addEventListener('click',()=>{
+  const on=soundBtn.getAttribute('aria-pressed')==='true';
+  if(on){stopAudio();}else{startAudio();}
+  soundBtn.setAttribute('aria-pressed',String(!on));
+  soundBtn.setAttribute('aria-label',on?'Turn sound on':'Turn sound off');
+  soundLabel.textContent=on?'Sound off':'Sound on';
+});
+document.addEventListener('visibilitychange',()=>{
+  if(!audio)return;
+  if(document.hidden)audio.ctx.suspend();else audio.ctx.resume();
+});
+
+/* ============================================================
+   NAV hide/show + progress
+   ============================================================ */
+let lastY=0;
+window.addEventListener('scroll',()=>{
+  const y=scrollY;
+  document.getElementById('nav').classList.toggle('is-hidden', y>lastY && y>160);
+  lastY=y;
+  const max=document.documentElement.scrollHeight-innerHeight;
+  document.getElementById('progress').style.width=(max>0?y/max*100:0)+'%';
+},{passive:true});
+
+/* ============================================================
+   PRELOADER — seal cut, once per load
+   ============================================================ */
+function boot(){
+  render();
+  const mark=document.getElementById('loaderMark');
+  mark.innerHTML='TECHZY'.split('').map(c=>`<span>${c}</span>`).join('');
+  if(reduced){document.getElementById('loader').remove();return;}
+  document.body.style.overflow='hidden';
+  const count={v:0},countEl=document.getElementById('loaderCount');
+  const tl=gsap.timeline({onComplete(){
+    document.getElementById('loader').remove();
+    document.body.style.overflow='';
+  }});
+  tl.to(mark.children,{y:0,duration:.9,ease:'power4.out',stagger:.05},.2)
+    .to(count,{v:100,duration:1.6,ease:'power2.inOut',
+        onUpdate:()=>countEl.textContent=String(Math.round(count.v)).padStart(3,'0')},.2)
+    .to('.loader-line',{scaleX:1,duration:.7,ease:'power3.inOut'},'-=.5')      // the cut
+    .to([mark,countEl,'.loader-tag'],{opacity:0,duration:.3},'-=.2')
+    .to('.loader-panel.top',{yPercent:-100,duration:1,ease:'power4.inOut'})     // the box opens
+    .to('.loader-panel.bottom',{yPercent:100,duration:1,ease:'power4.inOut'},'<')
+    .set('.loader-line',{opacity:0},'<+.1');
+}
+boot();
+</script>
+</body>
+</html>
