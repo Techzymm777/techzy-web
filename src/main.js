@@ -7,6 +7,10 @@ import products from '../content/products.json'
 import { getProductText } from './pages/card.js'
 import { initShell } from './shell.js'
 
+if (import.meta.env.PROD) {
+  import('./amplitude-init.js')
+}
+
 const app = document.getElementById('app')
 let currentRoute = { name: 'home' }
 

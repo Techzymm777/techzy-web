@@ -50,6 +50,16 @@
       </div>
     </footer>
 
+    <!-- Netlify Forms build-time registration only. The interactive form
+         is rendered client-side on /contact with these exact field names. -->
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden aria-hidden="true">
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
