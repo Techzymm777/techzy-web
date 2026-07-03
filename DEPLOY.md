@@ -11,8 +11,12 @@ of truth for build settings and overrides anything set in the Netlify UI.
 | Publish directory | `dist` |
 | Node version | 22 (pinned via `NODE_VERSION` in `netlify.toml`) |
 
-Every push to `main` deploys production. Pull requests get deploy previews;
-branches get branch deploys. All contexts run the same build.
+**Pre-launch state:** production currently serves the static
+`coming-soon/` page (`[context.production]` in `netlify.toml`). Pull
+requests get deploy previews and branches get branch deploys of the FULL
+site — that is the staging environment. **To launch:** delete the
+`[context.production]` block from `netlify.toml` and merge; production
+then builds and publishes `dist` like every other context.
 
 ## Things the build relies on
 
