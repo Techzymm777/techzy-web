@@ -5,6 +5,7 @@ import { initRouter } from './router.js'
 import { PAGES } from './pages/index.js'
 import products from '../content/products.json'
 import { getProductText } from './pages/card.js'
+import { initShell } from './shell.js'
 
 const app = document.getElementById('app')
 let currentRoute = { name: 'home' }
@@ -38,4 +39,5 @@ export function getCurrentRoute() {
 }
 
 initI18n()
+initShell({ onLangChange: () => renderRoute(getCurrentRoute()) })
 initRouter(renderRoute)
