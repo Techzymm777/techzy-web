@@ -1,0 +1,22 @@
+/* Techzy Design System tokens — see CLAUDE.md. Binary palette; opacity
+   carries every intermediate value. 8px grid. Golden-ratio type scale. */
+:root {
+  --ink: #000000;
+  --paper: #FFFFFF;
+  /* opacity steps (the "no grays" rule) */
+  --alpha-secondary: .62;
+  --alpha-tertiary: .40;
+  --alpha-hairline: .18;
+  /* golden-ratio scale from 16 */
+  --t-0: 1rem;                             /* 16 */
+  --t-1: 1.625rem;                         /* 26 */
+  --t-2: clamp(2rem, 3.4vw, 2.625rem);     /* 42 */
+  --t-3: clamp(2.5rem, 5.6vw, 4.25rem);    /* 68 */
+  --t-4: clamp(3rem, 8.6vw, 6.875rem);     /* 110 */
+  --t-label: .6875rem;                     /* 11 — utility */
+  /* 8px grid */
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s6: 48px;
+  --s8: 64px; --s12: 96px; --s16: 128px; --s20: 160px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --ease: cubic-bezier(.76, 0, .24, 1);
+}
