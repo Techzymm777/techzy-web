@@ -1,5 +1,6 @@
-# All contexts (production, deploy previews, branch deploys) build and
-# publish the Vite app. SPA routing fallback lives in public/_redirects.
+# Deploy previews and branch deploys build the full Vite app (staging).
+# Production serves the static coming-soon page until launch — to launch,
+# delete the [context.production] block so production falls back to [build].
 # NOTE: this file overrides base/publish settings configured in the
 # Netlify UI.
 
@@ -9,3 +10,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+[context.production]
+  command = "echo 'production serves the coming-soon page until launch'"
+  publish = "coming-soon"
