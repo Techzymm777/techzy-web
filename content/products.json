@@ -10,7 +10,7 @@
     "descMy": "ROG Nebula Display၊ AMD Ryzen 9 နှင့် RTX 4080 GPU ပါဝင်သော ထိပ်တန်း gaming laptop။",
     "specs": ["RTX 4080 12GB", "AMD Ryzen 9 8945H", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz"],
     "specsMy": ["RTX 4080 12GB", "AMD Ryzen 9 8945H", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz"],
-    "image": "asus-rog-strix-g16.png",
+    "image": "asus-rog-strix-g16.webp",
     "featuredRank": 1
   },
   {
@@ -24,7 +24,7 @@
     "descMy": "ကျောင်းသားများနှင့် ပရော်ဖက်ရှင်နယ်များအတွက် ပါးလွှာပြီး ကြာရှည်ခံသော 16-inch laptop။",
     "specs": ["Intel Core i5-13500H", "Intel Iris Xe Graphics", "16GB DDR5", "512GB NVMe SSD", "16\" FHD IPS"],
     "specsMy": ["Intel Core i5-13500H", "Intel Iris Xe Graphics", "16GB DDR5", "512GB NVMe SSD", "16\" FHD IPS"],
-    "image": "asus-vivobook-v16.png",
+    "image": "asus-vivobook-v16.webp",
     "featuredRank": 6
   },
   {
@@ -38,7 +38,7 @@
     "descMy": "RTX 4060၊ 165Hz မျက်နှာပြင်နှင့် Intel Core i7 ပါဝင်သော စစ်တပ်အဆင့် ခိုင်ခံ့မှုရှိသော gaming laptop။",
     "specs": ["RTX 4060 8GB", "Intel Core i7-13650HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD+ 165Hz"],
     "specsMy": ["RTX 4060 8GB", "Intel Core i7-13650HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD+ 165Hz"],
-    "image": "asus-tuf-gaming-f16.png",
+    "image": "asus-tuf-gaming-f16.webp",
     "featuredRank": 3
   },
   {
@@ -52,7 +52,7 @@
     "descMy": "အိမ်၊ ကျောင်းနှင့် အလုပ်အတွက် သင့်တော်သော ပေါ့ပါးသော laptop။ Fast SSD နှင့် Full-HD မျက်နှာပြင်ဖြင့် နေ့စဉ်လုပ်ငန်းများ လွယ်ကူစွာ ဆောင်ရွက်နိုင်သည်။",
     "specs": ["Intel Core i5-12450H", "Intel UHD Graphics", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
     "specsMy": ["Intel Core i5-12450H", "Intel UHD Graphics", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
-    "image": "acer-aspire-lite-15.png",
+    "image": "acer-aspire-lite-15.webp",
     "featuredRank": 8
   },
   {
@@ -66,7 +66,7 @@
     "descMy": "RTX 4050၊ 144Hz မျက်နှာပြင်နှင့် AMD Ryzen 5 ပါဝင်သော entry-level gaming laptop။",
     "specs": ["RTX 4050 6GB", "AMD Ryzen 5 7535HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
     "specsMy": ["RTX 4050 6GB", "AMD Ryzen 5 7535HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
-    "image": "acer-nitro-v15.png",
+    "image": "acer-nitro-v15.webp",
     "featuredRank": 5
   },
   {
@@ -80,7 +80,7 @@
     "descMy": "AMD Radeon RX 7600S ပါဝင်သော 16-inch gaming laptop၊ ကြမ်းတမ်းသော ဂိမ်းများနှင့် creative လုပ်ငန်းများအတွက် ဒီဇိုင်းထုတ်ထားသည်။",
     "specs": ["Radeon RX 7600S 8GB", "AMD Ryzen 7 7745HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD 165Hz"],
     "specsMy": ["Radeon RX 7600S 8GB", "AMD Ryzen 7 7745HX", "16GB DDR5", "512GB NVMe SSD", "16\" FHD 165Hz"],
-    "image": "asus-tuf-gaming-a16.png",
+    "image": "asus-tuf-gaming-a16.webp",
     "featuredRank": 4
   },
   {
@@ -94,7 +94,7 @@
     "descMy": "1kg အောက် အလေးချိန်ရှိသော ultra-lightweight business laptop၊ enterprise security၊ Intel Core Ultra နှင့် ကြာရှည်ခံ battery ပါဝင်သည်။",
     "specs": ["Intel Core Ultra 7 155U", "Intel Iris Xe Graphics", "32GB LPDDR5", "1TB NVMe SSD", "14\" OLED FHD"],
     "specsMy": ["Intel Core Ultra 7 155U", "Intel Iris Xe Graphics", "32GB LPDDR5", "1TB NVMe SSD", "14\" OLED FHD"],
-    "image": "asus-expertbook-b9.png",
+    "image": "asus-expertbook-b9.webp",
     "featuredRank": 9
   },
   {
@@ -108,7 +108,7 @@
     "descMy": "Mini LED မျက်နှာပြင်၊ RTX 4080 နှင့် AMD Ryzen 9 ပါဝင်သော ထိပ်တန်း gaming laptop။",
     "specs": ["RTX 4080 12GB", "AMD Ryzen 9 7945HX", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz Mini-LED"],
     "specsMy": ["RTX 4080 12GB", "AMD Ryzen 9 7945HX", "32GB DDR5", "1TB NVMe SSD", "16\" QHD+ 240Hz Mini-LED"],
-    "image": "lenovo-legion-7-pro.png",
+    "image": "lenovo-legion-7-pro.webp",
     "featuredRank": 2
   },
   {
@@ -122,7 +122,7 @@
     "descMy": "RTX 4060 နှင့် Intel Core i7 ပါဝင်သော နောက်ဆုံးထွက် Lenovo LOQ gaming laptop။",
     "specs": ["RTX 4060 8GB", "Intel Core i7-14650HX", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
     "specsMy": ["RTX 4060 8GB", "Intel Core i7-14650HX", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
-    "image": "lenovo-loq-15irx10.png",
+    "image": "lenovo-loq-15irx10.webp",
     "featuredRank": 7
   },
   {
@@ -136,7 +136,7 @@
     "descMy": "RTX 4050 နှင့် Intel Core i5 ပါဝင်သော သင့်တော်သောစျေးနှုန်းဖြင့် gaming laptop။",
     "specs": ["RTX 4050 6GB", "Intel Core i5-12450HX", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
     "specsMy": ["RTX 4050 6GB", "Intel Core i5-12450HX", "8GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
-    "image": "lenovo-loq-15irx9.png",
+    "image": "lenovo-loq-15irx9.webp",
     "featuredRank": 10
   },
   {
@@ -150,7 +150,7 @@
     "descMy": "Full HD မျက်နှာပြင်၊ AMD Ryzen processor နှင့် ကြာရှည်ခံ battery ပါဝင်သော ပေါ့ပါးသော everyday laptop — ကျောင်းသားများနှင့် အိမ်သုံးအတွက် အကောင်းဆုံး။",
     "specs": ["AMD Ryzen 5 7520U", "AMD Radeon 610M", "8GB LPDDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
     "specsMy": ["AMD Ryzen 5 7520U", "AMD Radeon 610M", "8GB LPDDR5", "512GB NVMe SSD", "15.6\" FHD IPS"],
-    "image": "lenovo-ideapad-slim-3.png",
+    "image": "lenovo-ideapad-slim-3.webp",
     "featuredRank": 99,
     "productsOnly": true
   },
@@ -165,7 +165,7 @@
     "descMy": "RTX 4060၊ AMD Ryzen 7 နှင့် 144Hz မျက်နှာပြင်ပါဝင်သော 15.6-inch gaming laptop။",
     "specs": ["RTX 4060 8GB", "AMD Ryzen 7 7435HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
     "specsMy": ["RTX 4060 8GB", "AMD Ryzen 7 7435HS", "16GB DDR5", "512GB NVMe SSD", "15.6\" FHD 144Hz"],
-    "image": "asus-tuf-gaming-a15.png",
+    "image": "asus-tuf-gaming-a15.webp",
     "featuredRank": 11
   }
 ]

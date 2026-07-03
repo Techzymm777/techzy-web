@@ -1,3 +1,15 @@
+/* Self-hosted Inter (variable, latin subset) — replaces the render-blocking
+   Google Fonts stylesheet. Burmese text falls through to the system stack
+   via unicode-range, same as it did under Google Fonts. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0 !important; }
 html { scroll-behavior: auto; scroll-padding-top: 96px; }
 body {
@@ -14,6 +26,9 @@ img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; background: none; border: none; color: inherit; cursor: pointer; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+/* <main> receives programmatic focus after route changes / skip-link jumps;
+   it's not in the tab order, so no page-sized outline. */
+#app:focus { outline: none; }
 
 .skip-link {
   position: absolute; left: -999px; top: 0; z-index: 9999;
@@ -75,8 +90,9 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
 .nav-links { display: flex; gap: var(--s4); list-style: none; align-items: center; }
 .nav-links a, .nav-links .lang {
   font-size: 13px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
-  position: relative; padding: 4px 0;
+  position: relative; padding: 6px 0; /* ≥24px hit area at the 11px mobile size (SC 2.5.8) */
 }
+.nav-links .lang { padding: 6px 8px; } /* two-letter label alone is under 24px wide */
 .nav-links a::after {
   content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
   background: currentColor; transform: scaleX(0); transform-origin: right;
@@ -116,8 +132,9 @@ main { min-height: 100vh; }
   background: var(--paper); padding: var(--s4); display: flex; flex-direction: column; gap: var(--s3);
   transition: background .35s var(--ease), color .35s var(--ease);
 }
-.card .idx { font-size: var(--t-label); letter-spacing: .14em; opacity: var(--alpha-tertiary); display: block; margin-bottom: var(--s2); }
-.card h3 { font-size: var(--t-1); letter-spacing: -.02em; margin-top: var(--s2); }
+/* index + category badge is informational — .62 keeps it ≥4.5:1 (SC 1.4.3) */
+.card .idx { font-size: var(--t-label); letter-spacing: .14em; opacity: var(--alpha-secondary); display: block; margin-bottom: var(--s2); }
+.card .card-title { font-size: var(--t-1); font-weight: 500; letter-spacing: -.02em; margin-top: var(--s2); }
 .card .spec { font-size: 13px; }
 .card-actions { display: flex; gap: var(--s1); margin-top: auto; flex-wrap: wrap; }
 /* Card hover inverts to black; buttons flip with it */
@@ -231,5 +248,7 @@ main { min-height: 100vh; }
 footer { border-top: 1px solid var(--ink); padding: var(--s8) 0; }
 .foot { display: flex; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; align-items: flex-start; }
 .foot-links { display: flex; gap: var(--s4); list-style: none; flex-wrap: wrap; }
-.foot-links a { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
-.foot small { display: block; margin-top: var(--s6); font-size: 12px; opacity: var(--alpha-tertiary); }
+/* inline-block + vertical padding lifts the hit area to ≥24px (SC 2.5.8) */
+.foot-links a { display: inline-block; padding: 4px 0; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
+/* informational text (tagline, copyright) — .40 is decorative-only per CLAUDE.md */
+.foot small { display: block; margin-top: var(--s6); font-size: 12px; opacity: var(--alpha-secondary); }

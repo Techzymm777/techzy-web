@@ -40,7 +40,7 @@ export function render() {
         </label>
       </div>
     </div>
-    <div class="grid-products" id="productGrid">${list.map(cardHTML).join('')}</div>
+    <div class="grid-products" id="productGrid">${list.map((p, i) => cardHTML(p, i, 'h2')).join('')}</div>
     <div class="empty" id="emptyState" hidden>
       <h2 class="title">${t('products.empty.title')}</h2>
       <p class="muted">${t('products.empty.body')}</p>
@@ -59,7 +59,7 @@ export function mount() {
 
   const apply = () => {
     const list = sortProducts(filterProducts(products, { category, term: q.value }), sortSel.value)
-    grid.innerHTML = list.map(cardHTML).join('')
+    grid.innerHTML = list.map((p, i) => cardHTML(p, i, 'h2')).join('')
     // Filtered results appear mid-page after the entry reveals already ran —
     // show them immediately instead of leaving them in the hidden pre-reveal state.
     grid.querySelectorAll('[data-clip]').forEach((el) => {

@@ -37,7 +37,7 @@ function pageTitle(route) {
 
 let currentPage = null
 
-export function renderRoute(route) {
+export function renderRoute(route, initial = false) {
   currentRoute = route
   currentPage?.unmount?.() // page-owned resources: three.js scene, marquee tween
   if (pageCtx) {
@@ -55,7 +55,7 @@ export function renderRoute(route) {
     if (active) a.setAttribute('aria-current', 'page')
     else a.removeAttribute('aria-current')
   })
-  pageCtx = applyReveals(app)
+  pageCtx = applyReveals(app, initial)
 }
 
 export function getCurrentRoute() {
@@ -67,14 +67,25 @@ export function getCurrentRoute() {
 let firstRender = true
 let transitioning = false
 function onRoute(route) {
-  if (firstRender || reducedMotion || transitioning) {
+  if (firstRender) {
     firstRender = false
+    renderRoute(route, true)
+    return
+  }
+  // The old page (with the link that had focus) is replaced wholesale, which
+  // would drop keyboard focus back to <body>. Land it on <main> instead so
+  // the tab order continues from the top of the new page.
+  if (reducedMotion || transitioning) {
     renderRoute(route)
+    app.focus({ preventScroll: true })
     return
   }
   transitioning = true
   transitionTo(
-    () => renderRoute(route),
+    () => {
+      renderRoute(route)
+      app.focus({ preventScroll: true })
+    },
     () => {
       transitioning = false
     },

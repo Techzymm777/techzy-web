@@ -1,4 +1,5 @@
-import { applyI18n, getLang, setLang } from './i18n.js'
+import { applyI18n, getLang, setLang, t } from './i18n.js'
+import { reducedMotion } from './motion/reduced.js'
 
 export function initShell({ onLangChange }) {
   const nav = document.getElementById('nav')
@@ -23,7 +24,10 @@ export function initShell({ onLangChange }) {
   // Language toggle — persists and re-renders the current route.
   const langBtn = document.getElementById('langToggle')
   const syncLangBtn = () => {
-    langBtn.textContent = getLang() === 'my' ? 'EN' : 'MY'
+    const next = getLang() === 'my' ? 'EN' : 'MY'
+    langBtn.textContent = next
+    // Label in Name (SC 2.5.3): accessible name must contain the visible text.
+    langBtn.setAttribute('aria-label', `${next} — ${t('common.langToggleAria')}`)
   }
   langBtn.addEventListener('click', () => {
     setLang(getLang() === 'my' ? 'en' : 'my')
@@ -36,7 +40,8 @@ export function initShell({ onLangChange }) {
   document.getElementById('year').textContent = String(new Date().getFullYear())
   document.getElementById('backToTop').addEventListener('click', (e) => {
     e.preventDefault()
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
+    document.getElementById('app').focus({ preventScroll: true })
   })
 
   applyI18n()
