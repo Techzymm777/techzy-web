@@ -11,12 +11,13 @@ of truth for build settings and overrides anything set in the Netlify UI.
 | Publish directory | `dist` |
 | Node version | 22 (pinned via `NODE_VERSION` in `netlify.toml`) |
 
-**Pre-launch state:** production currently serves the static
-`coming-soon/` page (`[context.production]` in `netlify.toml`). Pull
-requests get deploy previews and branches get branch deploys of the FULL
-site — that is the staging environment. **To launch:** delete the
-`[context.production]` block from `netlify.toml` and merge; production
-then builds and publishes `dist` like every other context.
+**Branch workflow:** `staging` is the default branch — all feature work
+pushes and merges there, and its Netlify branch deploy is the staging
+environment. `main` is production: it only moves when a `staging` → `main`
+pull request is manually reviewed and merged (that merge is the production
+release). The `coming-soon/` folder is kept in the repo — to take
+production offline again, point `[context.production]` in `netlify.toml`
+at it (see git history of this file for the exact block).
 
 ## Things the build relies on
 
