@@ -46,7 +46,9 @@ export function runPreloader() {
       },
     }, 0.2)
     .to('.loader-line', { scaleX: 1, duration: 0.7, ease: 'power3.inOut' }, '-=.5')
-    .to([mark, countEl, '.loader-tag'], { opacity: 0, duration: 0.3 }, '-=.2')
+    // masked slide-out (not a fade): text is either fully white or gone, so
+    // no transient low-contrast frame for an accessibility scan to catch
+    .to([...mark.children, countEl, '.loader-tag span'], { yPercent: -115, duration: 0.35, ease: 'power4.in' }, '-=.2')
     .to('.loader-panel.top', { yPercent: -100, duration: 1, ease: 'power4.inOut' })
     .to('.loader-panel.bottom', { yPercent: 100, duration: 1, ease: 'power4.inOut' }, '<')
     .set('.loader-line', { opacity: 0 }, '<+.1')

@@ -53,15 +53,20 @@
   display: flex; overflow: hidden;
 }
 .loader-mark span { display: inline-block; transform: translateY(110%); }
+/* count/tag exit by sliding their inner span out of these overflow masks —
+   a masked cut, never a mid-fade frame of gray-on-black text. */
 .loader-count {
   position: absolute; bottom: var(--s4); left: var(--gutter); z-index: 2;
   color: var(--paper); font-size: var(--t-label); font-weight: 500; letter-spacing: .14em;
+  overflow: hidden;
 }
 .loader-tag {
   position: absolute; bottom: var(--s4); right: var(--gutter); z-index: 2;
   color: var(--paper); font-size: var(--t-label); font-weight: 500; letter-spacing: .14em;
   text-transform: uppercase; opacity: var(--alpha-secondary);
+  overflow: hidden;
 }
+.loader-count span, .loader-tag span { display: inline-block; }
 
 /* Page transition — abbreviated seal cut */
 .veil { position: fixed; inset: 0; z-index: 8000; pointer-events: none; }

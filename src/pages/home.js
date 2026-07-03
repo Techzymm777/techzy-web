@@ -6,8 +6,12 @@ import { reducedMotion } from '../motion/reduced.js'
 
 const TESTIMONIALS = Array.from({ length: 10 }, (_, i) => String(i + 1).padStart(2, '0'))
 
-const shotHTML = (n) =>
-  `<div class="frame shot"><img src="/assets/images/testimonials/feedback-${n}.jpg" alt="${t('home.testimonials.title')} ${n}" loading="lazy"></div>`
+// The clone half of the marquee strip is presentation-only — hide it from
+// the accessibility tree so screen readers hear each testimonial once.
+const shotHTML = (n, clone = false) =>
+  clone
+    ? `<div class="frame shot" aria-hidden="true"><img src="/assets/images/testimonials/feedback-${n}.jpg" alt="" loading="lazy"></div>`
+    : `<div class="frame shot"><img src="/assets/images/testimonials/feedback-${n}.jpg" alt="${t('home.testimonials.title')} ${n}" loading="lazy"></div>`
 
 export function render() {
   const featured = [...products]
@@ -17,7 +21,8 @@ export function render() {
 
   // Marquee needs the strip twice for a seamless loop; under reduced motion
   // it renders once and becomes a plain horizontally scrollable strip.
-  const shots = TESTIMONIALS.map(shotHTML).join('')
+  const shots = TESTIMONIALS.map((n) => shotHTML(n)).join('')
+  const clones = TESTIMONIALS.map((n) => shotHTML(n, true)).join('')
 
   return `
   <section class="hero">
@@ -48,7 +53,7 @@ export function render() {
         </div>
         <a class="btn" href="/products" data-reveal><span>${t('home.featured.link')}</span></a>
       </div>
-      <div class="grid-products">${featured.map(cardHTML).join('')}</div>
+      <div class="grid-products">${featured.map((p, i) => cardHTML(p, i)).join('')}</div>
     </div>
   </section>
 
@@ -71,7 +76,7 @@ export function render() {
     </div>
   </section>
   <div class="marquee" aria-label="${t('home.testimonials.title')}">
-    <div class="marquee-track" id="marquee">${shots}${reducedMotion ? '' : shots}</div>
+    <div class="marquee-track" id="marquee">${shots}${reducedMotion ? '' : clones}</div>
   </div>
 
   <section class="section cta-band">
@@ -102,12 +107,17 @@ export function mount() {
 
   // Three.js quiet field — lazy-loaded so it never blocks inner pages, and
   // guarded in case the user navigates away before the chunk arrives.
+  // Double-rAF starts the fetch one frame after the hero text has painted,
+  // so the ~500KB chunk is never on the first-paint critical path.
   const canvas = document.getElementById('webgl')
   if (canvas) {
-    import('../three/hero.js').then(({ createHero }) => {
-      if (!mounted || !document.getElementById('webgl')) return
-      three = createHero(canvas, { animate: !reducedMotion })
-    })
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (!mounted) return
+      import('../three/hero.js').then(({ createHero }) => {
+        if (!mounted || !document.getElementById('webgl')) return
+        three = createHero(canvas, { animate: !reducedMotion })
+      })
+    }))
   }
 }
 

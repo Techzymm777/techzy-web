@@ -11,19 +11,21 @@ export function getProductText(p) {
   }
 }
 
-export function cardHTML(p, i) {
+// heading defaults to h3 (cards sit under an h2 section on home); the
+// products page passes h2 since its cards sit directly under the page h1.
+export function cardHTML(p, i, heading = 'h3') {
   const pt = getProductText(p)
   return `
   <article class="card" data-card>
-    <a href="/product/${esc(p.id)}" aria-label="${esc(pt.name)}">
+    <a href="/product/${esc(p.id)}">
       <span class="idx">${String(i + 1).padStart(2, '0')} / ${esc(pt.badge)}</span>
-      <div class="frame" data-clip style="aspect-ratio:4/3"><img src="/assets/images/products/${esc(p.image)}" alt="${esc(pt.name)}" loading="lazy"></div>
-      <h3>${esc(pt.name)}</h3>
+      <div class="frame" data-clip style="aspect-ratio:4/3"><img src="/assets/images/products/${esc(p.image)}" alt="" loading="lazy"></div>
+      <${heading} class="card-title">${esc(pt.name)}</${heading}>
       <p class="spec muted">${pt.specs.slice(0, 4).map(esc).join(' / ')}</p>
     </a>
     <div class="card-actions">
-      <a class="btn" href="/contact" aria-label="${esc(t('products.card.askAria', { name: pt.name }))}"><span>${t('products.card.ask')}</span></a>
-      <a class="btn solid" href="/contact" aria-label="${esc(t('products.card.buyAria', { name: pt.name }))}"><span>${t('products.card.buy')}</span></a>
+      <a class="btn" href="/contact" aria-label="${esc(t('products.card.ask'))}: ${esc(pt.name)}"><span>${t('products.card.ask')}</span></a>
+      <a class="btn solid" href="/contact" aria-label="${esc(t('products.card.buy'))}: ${esc(pt.name)}"><span>${t('products.card.buy')}</span></a>
     </div>
   </article>`
 }

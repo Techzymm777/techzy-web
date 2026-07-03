@@ -15,8 +15,30 @@ export function splitAll(root) {
 // Returns a gsap.context whose revert() is the page's cleanup contract —
 // it kills every tween and ScrollTrigger created here. Returns null under
 // reduced motion (CSS keeps everything visible and static).
-export function applyReveals(root) {
+//
+// On the hard load (initial=true) anything inside the first viewport renders
+// settled: the preloader is the entrance for that content, and hiding it
+// behind reveal states would push LCP past budget (CLAUDE.md: the preloader
+// must not hide a slow LCP). Below-fold content and SPA navigations keep
+// the full reveal treatment.
+export function applyReveals(root, initial = false) {
   if (reducedMotion) return null
+  if (initial) {
+    const vh = window.innerHeight
+    const inView = (el) => {
+      const r = el.getBoundingClientRect()
+      return r.top < vh && r.bottom > 0
+    }
+    root.querySelectorAll('.split').forEach((el) => {
+      if (inView(el)) el.classList.remove('split')
+    })
+    root.querySelectorAll('[data-reveal]').forEach((el) => {
+      if (inView(el)) el.removeAttribute('data-reveal')
+    })
+    root.querySelectorAll('[data-clip]').forEach((el) => {
+      if (inView(el)) el.removeAttribute('data-clip')
+    })
+  }
   splitAll(root)
   const ctx = gsap.context(() => {
     root.querySelectorAll('.split').forEach((el) => {

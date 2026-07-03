@@ -9,12 +9,12 @@ export function render() {
       <p class="lede muted" data-reveal>${t('about.hero.lede')}</p>
     </div>
   </section>
-  <section class="wrap"><div class="frame" data-clip style="aspect-ratio:21/9"><img src="/assets/images/hero/hero-about.jpg" alt="${t('about.hero.title')}"></div></section>
+  <section class="wrap"><div class="frame" data-clip style="aspect-ratio:21/9"><img src="/assets/images/hero/hero-about.webp" alt="${t('about.hero.title')}" width="1600" height="1600" fetchpriority="high"></div></section>
 
   <section class="section wrap">
     <div class="belief">
       <div>
-        <span class="label" data-reveal>${t('about.beliefs.title')}</span>
+        <h2 class="label" data-reveal>${t('about.beliefs.title')}</h2>
         <p class="lede" data-reveal>${t('about.beliefs.body')}</p>
       </div>
       <div>

@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="description" content="Brand new, factory-sealed laptops and desktops. Only at Techzy." />
     <title>Techzy</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
@@ -23,8 +21,8 @@
       <div class="loader-panel bottom"></div>
       <div class="loader-line"></div>
       <div class="loader-mark" id="loaderMark"></div>
-      <div class="loader-count" id="loaderCount">000</div>
-      <div class="loader-tag">Factory sealed / First touch</div>
+      <div class="loader-count"><span id="loaderCount">000</span></div>
+      <div class="loader-tag"><span>Factory sealed / First touch</span></div>
     </div>
 
     <!-- page-transition veil -->
@@ -44,7 +42,8 @@
         <li><a href="/products" data-nav="products" data-i18n="nav.products">Products</a></li>
         <li><a href="/contact" data-nav="contact" data-i18n="nav.contact">Contact</a></li>
         <li>
-          <button class="lang" id="langToggle" type="button" data-i18n-attr="aria-label:common.langToggleAria">MY</button>
+          <!-- aria-label is owned by shell.js so it always contains the visible MY/EN text (SC 2.5.3) -->
+          <button class="lang" id="langToggle" type="button">MY</button>
         </li>
         <li>
           <button class="sound" id="soundToggle" type="button" aria-pressed="false" aria-label="Turn sound on">
