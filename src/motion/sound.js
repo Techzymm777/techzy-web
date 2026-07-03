@@ -1,9 +1,10 @@
-// Ambient sound behind the nav toggle. OFF by default; starts only on user
-// tap (satisfies autoplay policies). Plays the licensed loop from
-// /public/audio/ ("Cinematic Space Journey – Interstellar Odyssey",
-// Pixabay Content License — free for commercial use, no attribution; see
-// DEPLOY.md) with the same fade-in/out and tab-blur suspend the original
-// Web Audio drone had.
+// Ambient sound behind the nav toggle (EQ bars only, no text label). ON by
+// default: autoplay is attempted at boot, and when the browser blocks it
+// (no user gesture yet) playback starts at the first interaction instead.
+// Plays the licensed loop from /public/audio/ ("Cinematic Space Journey –
+// Interstellar Odyssey", Pixabay Content License — free for commercial use,
+// no attribution; see DEPLOY.md) with a 2s fade in / 0.8s fade out and
+// suspend on tab blur.
 
 const TRACK = '/audio/ambient-loop.mp3'
 const TARGET_VOLUME = 0.35
@@ -30,10 +31,12 @@ function startAudio() {
     el = new Audio(TRACK)
     el.loop = true
     el.preload = 'auto'
+    document.body.appendChild(el) // no UI of its own; in-DOM for inspectability
   }
   el.volume = 0
-  el.play().catch(() => {}) // fetch/decode failure = silence, never a crash
+  const playing = el.play() ?? Promise.resolve()
   fadeTo(TARGET_VOLUME, 2000)
+  return playing
 }
 
 function stopAudio() {
@@ -43,16 +46,37 @@ function stopAudio() {
 
 export function initSound() {
   const btn = document.getElementById('soundToggle')
-  const label = document.getElementById('soundLabel')
-  if (!btn || !label) return
+  if (!btn) return
 
-  btn.addEventListener('click', () => {
-    on = !on
-    if (on) startAudio()
-    else stopAudio()
+  const setState = (next) => {
+    on = next
     btn.setAttribute('aria-pressed', String(on))
     btn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on')
-    label.textContent = on ? 'Sound on' : 'Sound off'
+  }
+
+  btn.addEventListener('click', () => {
+    setState(!on)
+    if (on) startAudio().catch(() => {})
+    else stopAudio()
+  })
+
+  // Default ON. Browsers reject play() before any user gesture — in that
+  // case arm one-shot listeners and start at the first interaction, unless
+  // the user has toggled sound off (or the toggle itself is the gesture:
+  // its own click handler owns the state then).
+  setState(true)
+  startAudio().catch(() => {
+    const cleanup = () => {
+      window.removeEventListener('pointerdown', arm, true)
+      window.removeEventListener('keydown', arm, true)
+    }
+    const arm = (e) => {
+      cleanup()
+      if (!on || btn.contains(e.target)) return
+      startAudio().catch(() => {})
+    }
+    window.addEventListener('pointerdown', arm, true)
+    window.addEventListener('keydown', arm, true)
   })
 
   // Suspend on tab blur, resume on focus.

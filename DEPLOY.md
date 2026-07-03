@@ -29,8 +29,10 @@ branches get branch deploys. All contexts run the same build.
 ## The ambient audio track
 
 The sound toggle plays `public/audio/ambient-loop.mp3` via
-`src/motion/sound.js` (fade in/out on toggle, suspend on tab blur, OFF by
-default, playback only ever starting from the user's tap).
+`src/motion/sound.js` (fade in/out on toggle, suspend on tab blur). Sound is
+ON by default: autoplay is attempted at boot, and when the browser blocks it
+(most do before any user gesture) playback starts at the visitor's first
+interaction instead.
 
 Current track: **"Cinematic Space Journey – Interstellar Odyssey"** (1:19,
 looped) — https://pixabay.com/music/ambient-cinematic-space-journey-interstellar-odyssey-365175/
