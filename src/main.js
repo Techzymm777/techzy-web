@@ -35,13 +35,17 @@ function pageTitle(route) {
   return `${t(key)} | Techzy`
 }
 
+let currentPage = null
+
 export function renderRoute(route) {
   currentRoute = route
+  currentPage?.unmount?.() // page-owned resources: three.js scene, marquee tween
   if (pageCtx) {
     pageCtx.revert() // kill every tween + ScrollTrigger the old page created
     pageCtx = null
   }
   const page = PAGES[route.name] || PAGES.notFound
+  currentPage = page
   app.innerHTML = page.render(route)
   page.mount?.(route)
   window.scrollTo(0, 0)

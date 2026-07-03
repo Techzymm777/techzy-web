@@ -4,3 +4,7 @@ dist/
 
 # OS noise
 .DS_Store
+
+# Local tooling
+.astro/
+.claude/
