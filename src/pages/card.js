@@ -1,4 +1,5 @@
 import { getLang, t } from '../i18n.js'
+import { esc } from '../escape.js'
 
 export function getProductText(p) {
   const isMy = getLang() === 'my'
@@ -14,15 +15,15 @@ export function cardHTML(p, i) {
   const pt = getProductText(p)
   return `
   <article class="card" data-card>
-    <a href="/product/${p.id}" aria-label="${pt.name}">
-      <span class="idx">${String(i + 1).padStart(2, '0')} / ${pt.badge}</span>
-      <div class="frame" data-clip style="aspect-ratio:4/3"><img src="/assets/images/products/${p.image}" alt="${pt.name}" loading="lazy"></div>
-      <h3>${pt.name}</h3>
-      <p class="spec muted">${pt.specs.slice(0, 4).join(' / ')}</p>
+    <a href="/product/${esc(p.id)}" aria-label="${esc(pt.name)}">
+      <span class="idx">${String(i + 1).padStart(2, '0')} / ${esc(pt.badge)}</span>
+      <div class="frame" data-clip style="aspect-ratio:4/3"><img src="/assets/images/products/${esc(p.image)}" alt="${esc(pt.name)}" loading="lazy"></div>
+      <h3>${esc(pt.name)}</h3>
+      <p class="spec muted">${pt.specs.slice(0, 4).map(esc).join(' / ')}</p>
     </a>
     <div class="card-actions">
-      <a class="btn" href="/contact" aria-label="${t('products.card.askAria', { name: pt.name })}"><span>${t('products.card.ask')}</span></a>
-      <a class="btn solid" href="/contact" aria-label="${t('products.card.buyAria', { name: pt.name })}"><span>${t('products.card.buy')}</span></a>
+      <a class="btn" href="/contact" aria-label="${esc(t('products.card.askAria', { name: pt.name }))}"><span>${t('products.card.ask')}</span></a>
+      <a class="btn solid" href="/contact" aria-label="${esc(t('products.card.buyAria', { name: pt.name }))}"><span>${t('products.card.buy')}</span></a>
     </div>
   </article>`
 }
