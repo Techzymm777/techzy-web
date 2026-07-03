@@ -1,9 +1,6 @@
-# This repo currently lives at the home directory. To prevent accidentally
-# committing personal/system files, ignore everything by default and only
-# allow the site project folder.
-*
-!.gitignore
-!README.md
-!techzymm-web/
-!techzymm-web/**
+# Dependencies / build output
+node_modules/
+dist/
 
+# OS noise
+.DS_Store
