@@ -1,8 +1,13 @@
+import { gsap } from 'gsap'
 import products from '../../content/products.json'
 import { t } from '../i18n.js'
 import { cardHTML } from './card.js'
+import { reducedMotion } from '../motion/reduced.js'
 
 const TESTIMONIALS = Array.from({ length: 10 }, (_, i) => String(i + 1).padStart(2, '0'))
+
+const shotHTML = (n) =>
+  `<div class="frame shot"><img src="/assets/images/testimonials/feedback-${n}.jpg" alt="${t('home.testimonials.title')} ${n}" loading="lazy"></div>`
 
 export function render() {
   const featured = [...products]
@@ -10,12 +15,17 @@ export function render() {
     .sort((a, b) => a.featuredRank - b.featuredRank)
     .slice(0, 6)
 
+  // Marquee needs the strip twice for a seamless loop; under reduced motion
+  // it renders once and becomes a plain horizontally scrollable strip.
+  const shots = TESTIMONIALS.map(shotHTML).join('')
+
   return `
-  <section class="hero section">
+  <section class="hero">
+    <canvas id="webgl" aria-hidden="true"></canvas>
     <div class="wrap">
       <p class="label hero-eyebrow" data-reveal>${t('home.hero.kicker')}</p>
-      <h1 class="display split">${t('home.hero.title')}</h1>
-      <p class="hero-sub muted" data-reveal>${t('home.hero.lede')}</p>
+      <h1 class="split">${t('home.hero.title')}</h1>
+      <p class="hero-sub" data-reveal>${t('home.hero.lede')}</p>
       <div class="hero-cta" data-reveal>
         <a class="btn" href="/products"><span>${t('home.hero.ctaPrimary')}</span></a>
         <a class="btn" href="/about"><span>${t('home.hero.ctaSecondary')}</span></a>
@@ -26,6 +36,7 @@ export function render() {
         <div><span class="label">${t('home.metrics.supportLabel')}</span><strong>${t('home.metrics.supportValue')}</strong></div>
       </div>
     </div>
+    <span class="hero-scroll" aria-hidden="true">Scroll</span>
   </section>
 
   <section class="section">
@@ -53,15 +64,15 @@ export function render() {
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" style="padding-bottom:var(--s8)">
     <div class="wrap">
       <span class="label" data-reveal>${t('home.testimonials.title')}</span>
       <h2 class="headline split">${t('home.testimonials.subtitle')}</h2>
-      <div class="testimonials">
-        ${TESTIMONIALS.map((n) => `<div class="frame testimonial" data-clip><img src="/assets/images/testimonials/feedback-${n}.jpg" alt="${t('home.testimonials.title')} ${n}" loading="lazy"></div>`).join('')}
-      </div>
     </div>
   </section>
+  <div class="marquee" aria-label="${t('home.testimonials.title')}">
+    <div class="marquee-track" id="marquee">${shots}${reducedMotion ? '' : shots}</div>
+  </div>
 
   <section class="section cta-band">
     <div class="wrap">
@@ -70,4 +81,44 @@ export function render() {
       <a class="btn" href="/products" data-reveal><span>${t('about.cta.button')}</span></a>
     </div>
   </section>`
+}
+
+let three = null
+let marqueeTween = null
+let mounted = false
+
+export function mount() {
+  mounted = true
+
+  // Testimonial marquee — ~28s seamless loop; skipped under reduced motion
+  // (the strip is then scrollable via CSS overflow).
+  if (!reducedMotion) {
+    const track = document.getElementById('marquee')
+    if (track) {
+      const half = track.scrollWidth / 2
+      marqueeTween = gsap.to(track, { x: -half, duration: 28, ease: 'none', repeat: -1 })
+    }
+  }
+
+  // Three.js quiet field — lazy-loaded so it never blocks inner pages, and
+  // guarded in case the user navigates away before the chunk arrives.
+  const canvas = document.getElementById('webgl')
+  if (canvas) {
+    import('../three/hero.js').then(({ createHero }) => {
+      if (!mounted || !document.getElementById('webgl')) return
+      three = createHero(canvas, { animate: !reducedMotion })
+    })
+  }
+}
+
+export function unmount() {
+  mounted = false
+  if (three) {
+    three.destroy()
+    three = null
+  }
+  if (marqueeTween) {
+    marqueeTween.kill()
+    marqueeTween = null
+  }
 }

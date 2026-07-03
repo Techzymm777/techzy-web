@@ -103,7 +103,7 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
 
 .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--ink); width: 0; z-index: 7100; mix-blend-mode: difference; }
 
-main { min-height: 100vh; padding-top: var(--s12); }
+main { min-height: 100vh; }
 .section { padding: var(--s16) 0; }
 .page-head { padding: var(--s20) 0 var(--s8); }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s8); flex-wrap: wrap; }
@@ -123,7 +123,19 @@ main { min-height: 100vh; padding-top: var(--s12); }
 .why-item h3 { font-size: var(--t-1); margin: var(--s2) 0; }
 .why-item p { opacity: var(--alpha-secondary); font-size: 15px; max-width: 36ch; }
 
-.testimonials { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--s2); margin-top: var(--s6); }
+/* Testimonial marquee — customer feedback screenshots on an infinite strip.
+   Under reduced motion the strip doesn't autoplay; it scrolls natively. */
+.marquee {
+  overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline));
+  border-bottom: 1px solid rgba(0, 0, 0, var(--alpha-hairline));
+  padding: var(--s6) 0;
+}
+.marquee-track { display: flex; gap: var(--s3); width: max-content; will-change: transform; }
+.marquee .shot { width: 280px; aspect-ratio: 4/5; flex: none; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+}
 
 .cta-band { background: var(--ink); color: var(--paper); }
 .cta-band .btn { margin-top: var(--s6); background: transparent; color: var(--paper); border-color: var(--paper); }
@@ -155,15 +167,32 @@ main { min-height: 100vh; padding-top: var(--s12); }
 .pd-specs li { padding: var(--s2) 0; border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); font-size: 14px; }
 .pd-actions { display: flex; gap: var(--s2); margin-top: var(--s6); }
 
+/* Home hero — black, full-viewport, three.js quiet field behind the copy */
+.hero {
+  position: relative; min-height: 100vh; background: var(--ink); color: var(--paper);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: var(--s20) 0 var(--s8); overflow: hidden;
+}
+#webgl { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero .wrap { position: relative; z-index: 2; width: 100%; }
+.hero h1 { font-size: var(--t-4); font-weight: 800; letter-spacing: -.045em; line-height: .98; max-width: 14ch; }
+.hero-eyebrow { margin-bottom: var(--s3); color: var(--paper); opacity: var(--alpha-secondary); }
+.hero-sub { margin-top: var(--s4); max-width: 44ch; opacity: var(--alpha-secondary); }
 .hero-cta { display: flex; gap: var(--s2); margin-top: var(--s6); flex-wrap: wrap; }
+.hero .btn { background: transparent; color: var(--paper); border-color: var(--paper); }
+.hero .btn::before { background: var(--paper); }
+.hero .btn:hover span { color: var(--ink); }
 .hero-meta {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3);
   margin-top: var(--s12); padding-top: var(--s3);
-  border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline));
+  border-top: 1px solid rgba(255, 255, 255, var(--alpha-hairline));
 }
 .hero-meta strong { display: block; font-weight: 500; margin-top: var(--s1); }
-.hero-sub { margin-top: var(--s4); max-width: 44ch; }
-.hero-eyebrow { margin-bottom: var(--s3); }
+.hero-scroll {
+  position: absolute; right: var(--gutter); bottom: var(--s8); z-index: 2;
+  writing-mode: vertical-rl; font-size: var(--t-label); letter-spacing: .2em;
+  text-transform: uppercase; opacity: var(--alpha-tertiary); color: var(--paper);
+}
 
 footer { border-top: 1px solid var(--ink); padding: var(--s8) 0; }
 .foot { display: flex; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; align-items: flex-start; }
