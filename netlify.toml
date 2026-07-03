@@ -1,0 +1,17 @@
+# Production keeps publishing the current live site (techzymm-web/) until
+# Phase 7 flips it to the new Vite build. Deploy previews and branch
+# deploys build the new site so every phase PR can be reviewed live.
+# NOTE: this file overrides base/publish settings configured in the
+# Netlify UI.
+
+[build]
+  publish = "techzymm-web"
+  command = "echo 'production publishes the legacy static site until Phase 7'"
+
+[context.deploy-preview]
+  command = "npm run build"
+  publish = "dist"
+
+[context.branch-deploy]
+  command = "npm run build"
+  publish = "dist"
