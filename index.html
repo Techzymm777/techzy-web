@@ -12,6 +12,28 @@
   </head>
   <body>
     <a class="skip-link" href="#app" data-i18n="common.skip">Skip to content</a>
+
+    <!-- custom cursor (hidden on touch + reduced motion) -->
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-frame" aria-hidden="true"><span>VIEW</span></div>
+
+    <!-- preloader — the seal cut, once per hard load -->
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader-panel top"></div>
+      <div class="loader-panel bottom"></div>
+      <div class="loader-line"></div>
+      <div class="loader-mark" id="loaderMark"></div>
+      <div class="loader-count" id="loaderCount">000</div>
+      <div class="loader-tag">Factory sealed / First touch</div>
+    </div>
+
+    <!-- page-transition veil -->
+    <div class="veil" id="veil" aria-hidden="true">
+      <div class="veil-panel top"></div>
+      <div class="veil-panel bottom"></div>
+      <div class="veil-line"></div>
+    </div>
+
     <div class="progress" id="progress" aria-hidden="true"></div>
 
     <nav class="nav" id="nav" aria-label="Main">

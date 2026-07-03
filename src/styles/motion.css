@@ -1,0 +1,88 @@
+/* Motion layer — seal-cut preloader, page-transition veil, custom cursor,
+   scroll-reveal states. Ported from design/techzy-motion-prototype.html.
+   All animation is gated: reduced-motion gets static content and the
+   native cursor (see the media block at the bottom). */
+
+/* Native cursor hidden only where the custom cursor can exist. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  *, *::before, *::after { cursor: none !important; }
+}
+
+/* Cursor — dot + trailing frame, difference blend */
+.cursor, .cursor-frame {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+  mix-blend-mode: difference;
+}
+.cursor {
+  width: 8px; height: 8px; background: #fff;
+  transform: translate(-50%, -50%);
+}
+.cursor-frame {
+  width: 40px; height: 40px; border: 1px solid #fff;
+  transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center;
+  transition: width .35s var(--ease), height .35s var(--ease);
+}
+.cursor-frame span {
+  font-size: 10px; font-weight: 600; letter-spacing: .12em; color: #fff;
+  opacity: 0; transition: opacity .2s;
+}
+.cursor-frame.is-label { width: 72px; height: 72px; }
+.cursor-frame.is-label span { opacity: 1; }
+.cursor-frame.is-hover { width: 64px; height: 64px; }
+@media (hover: none) { .cursor, .cursor-frame { display: none; } }
+
+/* Preloader — the seal cut */
+.loader {
+  position: fixed; inset: 0; z-index: 9000;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.loader-panel {
+  position: absolute; left: 0; width: 100%; height: 50.5%; background: var(--ink);
+}
+.loader-panel.top { top: 0; }
+.loader-panel.bottom { bottom: 0; }
+.loader-line {
+  position: absolute; top: 50%; left: 0; height: 1px; width: 100%; background: var(--paper);
+  transform: scaleX(0); transform-origin: left center;
+}
+.loader-mark {
+  position: relative; z-index: 2; color: var(--paper);
+  font-size: var(--t-2); font-weight: 600; letter-spacing: -.03em;
+  display: flex; overflow: hidden;
+}
+.loader-mark span { display: inline-block; transform: translateY(110%); }
+.loader-count {
+  position: absolute; bottom: var(--s4); left: var(--gutter); z-index: 2;
+  color: var(--paper); font-size: var(--t-label); font-weight: 500; letter-spacing: .14em;
+}
+.loader-tag {
+  position: absolute; bottom: var(--s4); right: var(--gutter); z-index: 2;
+  color: var(--paper); font-size: var(--t-label); font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; opacity: var(--alpha-secondary);
+}
+
+/* Page transition — abbreviated seal cut */
+.veil { position: fixed; inset: 0; z-index: 8000; pointer-events: none; }
+.veil-panel { position: absolute; left: 0; width: 100%; height: 50.5%; background: var(--ink); transform: scaleY(0); }
+.veil-panel.top { top: 0; transform-origin: top center; }
+.veil-panel.bottom { bottom: 0; transform-origin: bottom center; }
+.veil-line { position: absolute; top: 50%; left: 0; height: 1px; width: 100%; background: var(--paper); transform: scaleX(0); transform-origin: left center; }
+
+/* Masked word reveal */
+.split .w { display: inline-block; overflow: hidden; vertical-align: top; }
+.split .w i { display: inline-block; font-style: normal; transform: translateY(115%); }
+
+/* Reveal initial states (GSAP animates to the resting values) */
+[data-reveal] { opacity: 0; transform: translateY(32px); }
+[data-clip] { clip-path: inset(100% 0 0 0); }
+
+/* Reduced motion: everything static, native cursor, no hidden content */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  [data-clip] { clip-path: none !important; }
+  .split .w i { transform: none !important; }
+  .cursor, .cursor-frame { display: none; }
+  .loader, .veil { display: none; }
+}

@@ -16,7 +16,7 @@ export function cardHTML(p, i) {
   <article class="card" data-card>
     <a href="/product/${p.id}" aria-label="${pt.name}">
       <span class="idx">${String(i + 1).padStart(2, '0')} / ${pt.badge}</span>
-      <div class="frame" style="aspect-ratio:4/3"><img src="/assets/images/products/${p.image}" alt="${pt.name}" loading="lazy"></div>
+      <div class="frame" data-clip style="aspect-ratio:4/3"><img src="/assets/images/products/${p.image}" alt="${pt.name}" loading="lazy"></div>
       <h3>${pt.name}</h3>
       <p class="spec muted">${pt.specs.slice(0, 4).join(' / ')}</p>
     </a>

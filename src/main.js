@@ -1,18 +1,29 @@
 import './styles/tokens.css'
 import './styles/base.css'
+import './styles/motion.css'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { initI18n, t } from './i18n.js'
 import { initRouter } from './router.js'
 import { PAGES } from './pages/index.js'
 import products from '../content/products.json'
 import { getProductText } from './pages/card.js'
 import { initShell } from './shell.js'
+import { reducedMotion } from './motion/reduced.js'
+import { applyReveals } from './motion/reveals.js'
+import { transitionTo, runPreloader } from './motion/transitions.js'
+import { initCursor } from './motion/cursor.js'
+import { initSound } from './motion/sound.js'
 
 if (import.meta.env.PROD) {
   import('./amplitude-init.js')
 }
 
+gsap.registerPlugin(ScrollTrigger)
+
 const app = document.getElementById('app')
 let currentRoute = { name: 'home' }
+let pageCtx = null // gsap.context for the current page — revert() is the cleanup contract
 
 function pageTitle(route) {
   if (route.name === 'home') return 'Techzy'
@@ -26,6 +37,10 @@ function pageTitle(route) {
 
 export function renderRoute(route) {
   currentRoute = route
+  if (pageCtx) {
+    pageCtx.revert() // kill every tween + ScrollTrigger the old page created
+    pageCtx = null
+  }
   const page = PAGES[route.name] || PAGES.notFound
   app.innerHTML = page.render(route)
   page.mount?.(route)
@@ -36,12 +51,35 @@ export function renderRoute(route) {
     if (active) a.setAttribute('aria-current', 'page')
     else a.removeAttribute('aria-current')
   })
+  pageCtx = applyReveals(app)
 }
 
 export function getCurrentRoute() {
   return currentRoute
 }
 
+// Route changes run through the seal-cut veil; the first render happens
+// instantly (the preloader covers it), and reduced motion swaps instantly.
+let firstRender = true
+let transitioning = false
+function onRoute(route) {
+  if (firstRender || reducedMotion || transitioning) {
+    firstRender = false
+    renderRoute(route)
+    return
+  }
+  transitioning = true
+  transitionTo(
+    () => renderRoute(route),
+    () => {
+      transitioning = false
+    },
+  )
+}
+
 initI18n()
 initShell({ onLangChange: () => renderRoute(getCurrentRoute()) })
-initRouter(renderRoute)
+initSound()
+initCursor()
+initRouter(onRoute)
+runPreloader()
