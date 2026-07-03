@@ -4,13 +4,13 @@ export function render() {
   return `
   <section class="page-head">
     <div class="wrap">
-      <span class="label">${t('contact.hero.kicker')}</span>
-      <h1 class="display">${t('contact.hero.title')}</h1>
-      <p class="lede muted">${t('contact.hero.lede')}</p>
+      <span class="label" data-reveal>${t('contact.hero.kicker')}</span>
+      <h1 class="display split">${t('contact.hero.title')}</h1>
+      <p class="lede muted" data-reveal>${t('contact.hero.lede')}</p>
     </div>
   </section>
   <section class="wrap section contact-grid">
-    <div>
+    <div data-reveal>
       <h2 class="title">${t('contact.form.title')}</h2>
       <p class="muted">${t('contact.form.subtitle')}</p>
       <form id="contactForm" name="contact" method="POST" action="/" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
@@ -39,9 +39,9 @@ export function render() {
       </form>
     </div>
     <aside>
-      <div class="info-block"><h3>${t('contact.aside.hoursTitle')}</h3><p class="muted">${t('contact.aside.hoursBody')}</p></div>
-      <div class="info-block"><h3>${t('contact.aside.supportTitle')}</h3><p class="muted">${t('contact.aside.supportBody')}</p></div>
-      <div class="info-block"><h3>${t('contact.aside.locationTitle')}</h3><p class="muted">${t('contact.aside.locationBody')}</p></div>
+      <div class="info-block" data-reveal><h3>${t('contact.aside.hoursTitle')}</h3><p class="muted">${t('contact.aside.hoursBody')}</p></div>
+      <div class="info-block" data-reveal><h3>${t('contact.aside.supportTitle')}</h3><p class="muted">${t('contact.aside.supportBody')}</p></div>
+      <div class="info-block" data-reveal><h3>${t('contact.aside.locationTitle')}</h3><p class="muted">${t('contact.aside.locationBody')}</p></div>
     </aside>
   </section>`
 }

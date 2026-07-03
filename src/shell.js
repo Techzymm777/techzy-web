@@ -18,15 +18,7 @@ export function initShell({ onLangChange }) {
     { passive: true },
   )
 
-  // Sound toggle — UI state only in Phase 1; Phase 2 wires the audio engine.
-  const soundBtn = document.getElementById('soundToggle')
-  const soundLabel = document.getElementById('soundLabel')
-  soundBtn.addEventListener('click', () => {
-    const on = soundBtn.getAttribute('aria-pressed') === 'true'
-    soundBtn.setAttribute('aria-pressed', String(!on))
-    soundBtn.setAttribute('aria-label', on ? 'Turn sound on' : 'Turn sound off')
-    soundLabel.textContent = on ? 'Sound off' : 'Sound on'
-  })
+  // Sound toggle is owned by src/motion/sound.js (initSound in main.js).
 
   // Language toggle — persists and re-renders the current route.
   const langBtn = document.getElementById('langToggle')

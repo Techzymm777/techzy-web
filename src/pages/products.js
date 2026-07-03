@@ -7,9 +7,9 @@ export function render() {
   return `
   <section class="page-head">
     <div class="wrap">
-      <span class="label">${t('products.hero.kicker')}</span>
-      <h1 class="display">${t('products.hero.title')}</h1>
-      <p class="lede muted">${t('products.hero.lede')}</p>
+      <span class="label" data-reveal>${t('products.hero.kicker')}</span>
+      <h1 class="display split">${t('products.hero.title')}</h1>
+      <p class="lede muted" data-reveal>${t('products.hero.lede')}</p>
     </div>
   </section>
   <section class="wrap section">
