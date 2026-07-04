@@ -33,18 +33,18 @@ at it (see git history of this file for the exact block).
 
 ## The ambient audio track
 
-The sound toggle plays `public/audio/ambient-loop.mp3` via
+The sound toggle plays `public/audio/ambient-loop.m4a` via
 `src/motion/sound.js` (fade in/out on toggle, suspend on tab blur). Sound is
 ON by default: autoplay is attempted at boot, and when the browser blocks it
 (most do before any user gesture) playback starts at the visitor's first
 interaction instead.
 
-Current track: **"Cinematic Space Journey – Interstellar Odyssey"** (1:19,
-looped) — https://pixabay.com/music/ambient-cinematic-space-journey-interstellar-odyssey-365175/
-Licensed under the Pixabay Content License: free for commercial use, no
-attribution required, but the file may not be redistributed standalone.
+Current track: owner-supplied ambient recording (3:23, looped), audio
+extracted 2026-07-04 from the owner's `IMG_5149.MOV` (AAC stereo 128kbps).
+It replaced the earlier Pixabay track ("Cinematic Space Journey –
+Interstellar Odyssey").
 
-To swap the track: replace `public/audio/ambient-loop.mp3` with the new file
+To swap the track: replace `public/audio/ambient-loop.m4a` with the new file
 (same name, no code change) and update this section's provenance note.
 
 ## Local verification before shipping

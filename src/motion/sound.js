@@ -1,12 +1,10 @@
 // Ambient sound behind the nav toggle (EQ bars only, no text label). ON by
 // default: autoplay is attempted at boot, and when the browser blocks it
 // (no user gesture yet) playback starts at the first interaction instead.
-// Plays the licensed loop from /public/audio/ ("Cinematic Space Journey –
-// Interstellar Odyssey", Pixabay Content License — free for commercial use,
-// no attribution; see DEPLOY.md) with a 2s fade in / 0.8s fade out and
-// suspend on tab blur.
+// Plays the owner-supplied ambient loop from /public/audio/ (see DEPLOY.md
+// for provenance) with a 2s fade in / 0.8s fade out and suspend on tab blur.
 
-const TRACK = '/audio/ambient-loop.mp3'
+const TRACK = '/audio/ambient-loop.m4a'
 const TARGET_VOLUME = 0.35
 
 let el = null
