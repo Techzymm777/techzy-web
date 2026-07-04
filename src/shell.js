@@ -36,6 +36,32 @@ export function initShell({ onLangChange }) {
   })
   syncLangBtn()
 
+  // Off-canvas menu (mobile + tablet). Scroll locks while open; Escape and
+  // any menu-link click close it; focus moves into the menu on open and back
+  // to the toggle on close (a later route change re-lands focus on <main>).
+  const menu = document.getElementById('menu')
+  const menuBtn = document.getElementById('menuToggle')
+  const setMenu = (open) => {
+    menu.classList.toggle('is-open', open)
+    menuBtn.setAttribute('aria-expanded', String(open))
+    document.body.style.overflow = open ? 'hidden' : ''
+    if (open) menu.querySelector('a')?.focus({ preventScroll: true })
+    else menuBtn.focus({ preventScroll: true })
+  }
+  menuBtn.addEventListener('click', () => {
+    setMenu(menuBtn.getAttribute('aria-expanded') !== 'true')
+  })
+  menu.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setMenu(false)
+  })
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false)
+  })
+  // Resizing to desktop hides the overlay via CSS — release the scroll lock too.
+  window.matchMedia('(min-width: 1025px)').addEventListener('change', (e) => {
+    if (e.matches && menu.classList.contains('is-open')) setMenu(false)
+  })
+
   // Footer bits.
   document.getElementById('year').textContent = String(new Date().getFullYear())
   document.getElementById('backToTop').addEventListener('click', (e) => {
