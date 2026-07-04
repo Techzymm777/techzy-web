@@ -21,19 +21,24 @@ export function initShell({ onLangChange }) {
 
   // Sound toggle is owned by src/motion/sound.js (initSound in main.js).
 
-  // Language toggle — persists and re-renders the current route.
-  const langBtn = document.getElementById('langToggle')
+  // Language toggle — persists and re-renders the current route. Two
+  // instances share the wiring: nav (mobile/small tablet) and dock (desktop).
+  const langBtns = Array.from(document.querySelectorAll('[data-lang-toggle]'))
   const syncLangBtn = () => {
     const next = getLang() === 'my' ? 'EN' : 'MY'
-    langBtn.textContent = next
-    // Label in Name (SC 2.5.3): accessible name must contain the visible text.
-    langBtn.setAttribute('aria-label', `${next} — ${t('common.langToggleAria')}`)
+    for (const btn of langBtns) {
+      btn.textContent = next
+      // Label in Name (SC 2.5.3): accessible name must contain the visible text.
+      btn.setAttribute('aria-label', `${next} — ${t('common.langToggleAria')}`)
+    }
   }
-  langBtn.addEventListener('click', () => {
-    setLang(getLang() === 'my' ? 'en' : 'my')
-    syncLangBtn()
-    onLangChange()
-  })
+  for (const btn of langBtns) {
+    btn.addEventListener('click', () => {
+      setLang(getLang() === 'my' ? 'en' : 'my')
+      syncLangBtn()
+      onLangChange()
+    })
+  }
   syncLangBtn()
 
   // Off-canvas menu (mobile + tablet). Scroll locks while open; Escape and
@@ -62,13 +67,16 @@ export function initShell({ onLangChange }) {
     if (e.matches && menu.classList.contains('is-open')) setMenu(false)
   })
 
-  // Footer bits.
+  // Footer bits. Back-to-top has two instances: footer text link
+  // (mobile/small tablet) and dock icon (desktop).
   document.getElementById('year').textContent = String(new Date().getFullYear())
-  document.getElementById('backToTop').addEventListener('click', (e) => {
-    e.preventDefault()
-    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
-    document.getElementById('app').focus({ preventScroll: true })
-  })
+  for (const el of document.querySelectorAll('[data-back-to-top]')) {
+    el.addEventListener('click', (e) => {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
+      document.getElementById('app').focus({ preventScroll: true })
+    })
+  }
 
   applyI18n()
 }
