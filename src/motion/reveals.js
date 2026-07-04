@@ -23,6 +23,15 @@ export function splitAll(root) {
 // the full reveal treatment.
 export function applyReveals(root, initial = false) {
   if (reducedMotion) return null
+  // Burmese: the overflow-hidden word masks clip the script's stacked
+  // marks at any line-height (mask box and glyph box scale together), so
+  // .split headings fall back to the fade-up reveal instead.
+  if (document.documentElement.lang === 'my') {
+    root.querySelectorAll('.split').forEach((el) => {
+      el.classList.remove('split')
+      el.setAttribute('data-reveal', '')
+    })
+  }
   if (initial) {
     const vh = window.innerHeight
     const inView = (el) => {
