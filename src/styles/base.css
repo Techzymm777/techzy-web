@@ -155,8 +155,10 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
 .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--ink); width: 0; z-index: 7100; mix-blend-mode: difference; }
 
 main { min-height: 100vh; }
-.section { padding: var(--s16) 0; }
-.page-head { padding: var(--s20) 0 var(--s8); }
+/* Vertical rhythm only — longhands so these never clobber the horizontal
+   gutter when an element carries both .wrap and .section/.page-head. */
+.section { padding-top: var(--s16); padding-bottom: var(--s16); }
+.page-head { padding-top: var(--s20); padding-bottom: var(--s8); }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s8); flex-wrap: wrap; }
 
 .grid-products {
