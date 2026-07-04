@@ -17,7 +17,7 @@ export function render() {
   const featured = [...products]
     .filter((p) => !p.productsOnly)
     .sort((a, b) => a.featuredRank - b.featuredRank)
-    .slice(0, 6)
+    .slice(0, 8)
 
   // Marquee needs the strip twice for a seamless loop; under reduced motion
   // it renders once and becomes a plain horizontally scrollable strip.
