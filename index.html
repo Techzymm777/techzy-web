@@ -13,8 +13,11 @@
 
     <!-- Techzy wordmark, defined once; nav and footer reference it via <use>.
          No fills — it inherits currentColor, so the nav's difference blend
-         inverts it exactly like the old text logo. -->
-    <svg hidden aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+         inverts it exactly like the old text logo. Hidden via inline style:
+         the `hidden` attribute is not reliably honored on SVG elements and
+         an unhidden defs block renders as a 300x150 box that pushes the
+         whole page down. -->
+    <svg style="display:none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
       <symbol id="tz-wordmark" viewBox="0 0 1363.15 518.81">
         <path d="M306.31,260.33c0-25.91,14.32-40.56,34.43-40.56h34.76c8.87,0,12.96,4.43,12.96,12.61s-4.44,11.93-13.3,11.93h-42.36c-3.52,0-6.38,2.85-6.38,6.38v18.27c0,3.52,2.85,6.38,6.38,6.38h54.29c39.2,0,55.56-15.34,55.56-45,0-32.04-19.09-54.53-58.28-54.53h-43.29c-52.83,0-91.35,34.42-91.35,84.87s38.52,85.21,91.35,85.21h92.37v-46.69s-92.71,0-92.71,0c-20.11,0-34.43-13.3-34.43-38.86Z"/>
         <path d="M539.9,227.61h77.04v-51.81h-76.7c-52.83,0-91.34,34.42-91.34,84.87s38.51,85.21,91.34,85.21h76.7v-51.81h-77.04c-20.11,0-34.42-13.63-34.42-33.4s14.31-33.06,34.42-33.06Z"/>
