@@ -1,77 +1,86 @@
-// Ambient sound engine behind the nav toggle. OFF by default; starts only
-// on user tap (satisfies autoplay policies). Currently a Web Audio drone
-// (two detuned sines + a low triangle behind a slowly breathing lowpass),
-// ported from the prototype.
-//
-// To swap in a licensed track later: replace startAudio/stopAudio with an
-// <audio loop src="/audio/track.mp3"> element and call .play()/.pause(),
-// keeping the same fade-in/out and the visibilitychange suspend below.
+// Ambient sound behind the nav toggle (EQ bars only, no text label). ON by
+// default: autoplay is attempted at boot, and when the browser blocks it
+// (no user gesture yet) playback starts at the first interaction instead.
+// Plays the owner-supplied ambient loop from /public/audio/ (see DEPLOY.md
+// for provenance) with a 2s fade in / 0.8s fade out and suspend on tab blur.
 
-let audio = null
+const TRACK = '/audio/ambient-loop.m4a'
+const TARGET_VOLUME = 0.35
+
+let el = null
+let fadeRaf = 0
+let on = false
+
+function fadeTo(target, ms, done) {
+  cancelAnimationFrame(fadeRaf)
+  const from = el.volume
+  const t0 = performance.now()
+  const step = (t) => {
+    const k = Math.min(1, (t - t0) / ms)
+    el.volume = from + (target - from) * k
+    if (k < 1) fadeRaf = requestAnimationFrame(step)
+    else done?.()
+  }
+  fadeRaf = requestAnimationFrame(step)
+}
 
 function startAudio() {
-  const ctx = new (window.AudioContext || window.webkitAudioContext)()
-  const master = ctx.createGain()
-  master.gain.value = 0
-  master.connect(ctx.destination)
-
-  const filter = ctx.createBiquadFilter()
-  filter.type = 'lowpass'
-  filter.frequency.value = 520
-  filter.Q.value = 0.4
-  filter.connect(master)
-
-  const voices = [[110, 'sine', 0.5], [110.7, 'sine', 0.5], [55, 'triangle', 0.35]].map(([f, type, g]) => {
-    const o = ctx.createOscillator()
-    const vg = ctx.createGain()
-    o.type = type
-    o.frequency.value = f
-    vg.gain.value = g
-    o.connect(vg)
-    vg.connect(filter)
-    o.start()
-    return o
-  })
-
-  // Slow breathing on the filter so the pad never feels static.
-  const lfo = ctx.createOscillator()
-  const lfoGain = ctx.createGain()
-  lfo.frequency.value = 0.05
-  lfoGain.gain.value = 180
-  lfo.connect(lfoGain)
-  lfoGain.connect(filter.frequency)
-  lfo.start()
-
-  master.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 2) // gentle fade in
-  audio = { ctx, master, voices, lfo }
+  if (!el) {
+    el = new Audio(TRACK)
+    el.loop = true
+    el.preload = 'auto'
+    document.body.appendChild(el) // no UI of its own; in-DOM for inspectability
+  }
+  el.volume = 0
+  const playing = el.play() ?? Promise.resolve()
+  fadeTo(TARGET_VOLUME, 2000)
+  return playing
 }
 
 function stopAudio() {
-  if (!audio) return
-  const { ctx, master } = audio
-  master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8)
-  setTimeout(() => ctx.close(), 900)
-  audio = null
+  if (!el) return
+  fadeTo(0, 800, () => el.pause())
 }
 
 export function initSound() {
   const btn = document.getElementById('soundToggle')
-  const label = document.getElementById('soundLabel')
-  if (!btn || !label) return
+  if (!btn) return
+
+  const setState = (next) => {
+    on = next
+    btn.setAttribute('aria-pressed', String(on))
+    btn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on')
+  }
 
   btn.addEventListener('click', () => {
-    const on = btn.getAttribute('aria-pressed') === 'true'
-    if (on) stopAudio()
-    else startAudio()
-    btn.setAttribute('aria-pressed', String(!on))
-    btn.setAttribute('aria-label', on ? 'Turn sound on' : 'Turn sound off')
-    label.textContent = on ? 'Sound off' : 'Sound on'
+    setState(!on)
+    if (on) startAudio().catch(() => {})
+    else stopAudio()
+  })
+
+  // Default ON. Browsers reject play() before any user gesture — in that
+  // case arm one-shot listeners and start at the first interaction, unless
+  // the user has toggled sound off (or the toggle itself is the gesture:
+  // its own click handler owns the state then).
+  setState(true)
+  startAudio().catch(() => {
+    const cleanup = () => {
+      window.removeEventListener('pointerdown', arm, true)
+      window.removeEventListener('keydown', arm, true)
+    }
+    const arm = (e) => {
+      cleanup()
+      if (!on || btn.contains(e.target)) return
+      startAudio().catch(() => {})
+    }
+    window.addEventListener('pointerdown', arm, true)
+    window.addEventListener('keydown', arm, true)
   })
 
   // Suspend on tab blur, resume on focus.
   document.addEventListener('visibilitychange', () => {
-    if (!audio) return
-    if (document.hidden) audio.ctx.suspend()
-    else audio.ctx.resume()
+    if (!el || !on) return
+    if (document.hidden) el.pause()
+    else el.play().catch(() => {})
   })
 }

@@ -31,18 +31,21 @@ at it (see git history of this file for the exact block).
 - **No secrets in the repo**: environment variables live in the Netlify UI.
   The Amplitude browser key in `src/amplitude-init.js` is a public client key.
 
-## Swapping in the licensed audio track
+## The ambient audio track
 
-The sound toggle currently plays a Web Audio drone (`src/motion/sound.js`).
-Once a track is licensed:
+The sound toggle plays `public/audio/ambient-loop.m4a` via
+`src/motion/sound.js` (fade in/out on toggle, suspend on tab blur). Sound is
+ON by default: autoplay is attempted at boot, and when the browser blocks it
+(most do before any user gesture) playback starts at the visitor's first
+interaction instead.
 
-1. Drop the file at `public/audio/<track>.mp3` (or `.ogg`).
-2. In `src/motion/sound.js`, replace `startAudio`/`stopAudio` with an
-   `<audio loop src="/audio/<track>.mp3">` element and call
-   `.play()`/`.pause()`.
-3. Keep the existing behavior around it: gentle fade in/out on toggle, the
-   `visibilitychange` suspend/resume, OFF by default, and playback only ever
-   starting from the user's tap (autoplay policies).
+Current track: owner-supplied ambient recording (3:23, looped), audio
+extracted 2026-07-04 from the owner's `IMG_5149.MOV` (AAC stereo 128kbps).
+It replaced the earlier Pixabay track ("Cinematic Space Journey –
+Interstellar Odyssey").
+
+To swap the track: replace `public/audio/ambient-loop.m4a` with the new file
+(same name, no code change) and update this section's provenance note.
 
 ## Local verification before shipping
 

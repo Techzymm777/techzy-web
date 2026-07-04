@@ -86,25 +86,60 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
   transition: transform .5s var(--ease);
 }
 .nav.is-hidden { transform: translateY(-100%); }
-.nav-logo { font-weight: 600; font-size: 18px; letter-spacing: -.02em; }
+.nav-logo { font-weight: 600; font-size: 18px; letter-spacing: -.02em; display: inline-flex; align-items: center; padding: 4px 0; }
+/* wordmark inherits currentColor — the nav's difference blend inverts it like text */
+.logo-mark { display: block; height: 40px; width: 105px; fill: currentColor; }
+.logo-mark--footer { height: 48px; width: 126px; }
+.nav-right { display: flex; gap: var(--s4); align-items: center; }
 .nav-links { display: flex; gap: var(--s4); list-style: none; align-items: center; }
-.nav-links a, .nav-links .lang {
+.nav-links a, .nav .lang {
   font-size: 13px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
-  position: relative; padding: 6px 0; /* ≥24px hit area at the 11px mobile size (SC 2.5.8) */
+  position: relative; padding: 6px 0; /* ≥24px hit area (SC 2.5.8) */
 }
-.nav-links .lang { padding: 6px 8px; } /* two-letter label alone is under 24px wide */
+.nav .lang { padding: 6px 8px; } /* two-letter label alone is under 24px wide */
 .nav-links a::after {
   content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
   background: currentColor; transform: scaleX(0); transform-origin: right;
   transition: transform .4s var(--ease);
 }
 .nav-links a:hover::after, .nav-links a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
-@media (max-width: 720px) { .nav-links { gap: var(--s2); } .nav-links a, .nav-links .lang { font-size: 11px; } }
+
+/* Off-canvas menu — mobile + tablet only. Full-viewport black overlay
+   sliding in from the right; the fixed nav bar (logo, lang, sound, toggle)
+   stays above it at z 7000 and reads white via the difference blend. */
+.menu-btn { display: none; }
+.menu { display: none; }
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .menu-btn {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 6px; padding: 8px 4px; /* 32x30 hit area */
+  }
+  .menu-btn span {
+    display: block; width: 24px; height: 2px; background: currentColor;
+    transition: transform .4s var(--ease);
+  }
+  .menu-btn[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .menu {
+    position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh;
+    z-index: 6900; background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; padding: 0 var(--gutter);
+    transform: translateX(100%); visibility: hidden;
+    transition: transform .6s var(--ease), visibility 0s linear .6s;
+  }
+  .menu.is-open { transform: none; visibility: visible; transition: transform .6s var(--ease), visibility 0s; }
+  .menu-links { list-style: none; display: flex; flex-direction: column; gap: var(--s3); }
+  .menu-links a {
+    display: inline-block; padding: var(--s1) 0;
+    font-size: var(--t-3); font-weight: 600; letter-spacing: -.03em; line-height: 1.05;
+  }
+  .menu-links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 12px; }
+}
 
 .sound {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
-  color: #fff; padding: 6px 0;
+  display: flex; align-items: center;
+  color: #fff; padding: 6px 8px; /* bars alone are ~14px — pad to a ≥24px target (SC 2.5.8) */
 }
 .sound-bars { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
 .sound-bars i {
@@ -120,8 +155,10 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
 .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--ink); width: 0; z-index: 7100; mix-blend-mode: difference; }
 
 main { min-height: 100vh; }
-.section { padding: var(--s16) 0; }
-.page-head { padding: var(--s20) 0 var(--s8); }
+/* Vertical rhythm only — longhands so these never clobber the horizontal
+   gutter when an element carries both .wrap and .section/.page-head. */
+.section { padding-top: var(--s16); padding-bottom: var(--s16); }
+.page-head { padding-top: var(--s20); padding-bottom: var(--s8); }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s8); flex-wrap: wrap; }
 
 .grid-products {

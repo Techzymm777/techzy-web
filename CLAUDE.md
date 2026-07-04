@@ -35,10 +35,11 @@ Brand promise = factory-sealed, first-touch hardware. Motion expresses it:
   `(hover:hover) and (prefers-reduced-motion:no-preference)`). Custom 8px dot
   + lerping 40px frame, `mix-blend-mode:difference`. Frame grows to 64px on
   interactive hover, 72px with "VIEW" label on product cards.
-- **Sound:** ambient loop, OFF by default, toggle in nav with animated EQ bars,
-  `aria-pressed`, fade in/out on toggle, suspend on tab blur. Track file lives
-  in `/public/audio/` once licensed; until then use the Web Audio drone from
-  the prototype.
+- **Sound:** ambient loop, ON by default (autoplay attempted at boot; when
+  the browser blocks it, playback starts at the first user interaction).
+  Toggle in nav is EQ bars only — no text label — with `aria-pressed` and an
+  aria-label. Fade in/out on toggle, suspend on tab blur. Track file lives at
+  `/public/audio/ambient-loop.mp3` (licensed; provenance in DEPLOY.md).
 - **Three.js hero (home only):** "quiet field" — grid of white points, nearly
   still ambient wave, ripple follows cursor with lerp. Dispose scene fully on
   route leave. Lazy-load three so it never blocks inner pages.
