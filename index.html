@@ -64,22 +64,36 @@
 
     <nav class="nav" id="nav" aria-label="Main">
       <a href="/" class="nav-logo" data-i18n-attr="aria-label:common.brandHomeAria"><svg class="logo-mark" aria-hidden="true" focusable="false"><use href="#tz-wordmark"/></svg></a>
-      <ul class="nav-links">
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="/" data-nav="home" data-i18n="nav.home">Home</a></li>
+          <li><a href="/about" data-nav="about" data-i18n="nav.about">About Us</a></li>
+          <li><a href="/products" data-nav="products" data-i18n="nav.products">Products</a></li>
+          <li><a href="/contact" data-nav="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+        <!-- aria-label is owned by shell.js so it always contains the visible MY/EN text (SC 2.5.3) -->
+        <button class="lang" id="langToggle" type="button">MY</button>
+        <button class="sound" id="soundToggle" type="button" aria-pressed="true" aria-label="Turn sound off">
+          <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </button>
+        <button class="menu-btn" id="menuToggle" type="button" aria-expanded="false" aria-controls="menu" data-i18n-attr="aria-label:common.menuToggleAria">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Off-canvas menu (mobile + tablet): full-viewport overlay, slides in
+         from the right. Lives outside .nav so the nav's difference blend
+         doesn't invert the solid black panel. -->
+    <div class="menu" id="menu">
+      <ul class="menu-links">
         <li><a href="/" data-nav="home" data-i18n="nav.home">Home</a></li>
         <li><a href="/about" data-nav="about" data-i18n="nav.about">About Us</a></li>
         <li><a href="/products" data-nav="products" data-i18n="nav.products">Products</a></li>
         <li><a href="/contact" data-nav="contact" data-i18n="nav.contact">Contact</a></li>
-        <li>
-          <!-- aria-label is owned by shell.js so it always contains the visible MY/EN text (SC 2.5.3) -->
-          <button class="lang" id="langToggle" type="button">MY</button>
-        </li>
-        <li>
-          <button class="sound" id="soundToggle" type="button" aria-pressed="true" aria-label="Turn sound off">
-            <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-          </button>
-        </li>
       </ul>
-    </nav>
+    </div>
 
     <main id="app" tabindex="-1"></main>
 
