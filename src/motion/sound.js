@@ -1,4 +1,5 @@
-// Ambient sound behind the nav toggle (EQ bars only, no text label). ON by
+// Ambient sound behind the sound toggles (EQ bars only, no text label) — one
+// in the nav (mobile/small tablet), one in the floating dock (desktop). ON by
 // default: autoplay is attempted at boot, and when the browser blocks it
 // (no user gesture yet) playback starts at the first interaction instead.
 // Plays the owner-supplied ambient loop from /public/audio/ (see DEPLOY.md
@@ -43,20 +44,25 @@ function stopAudio() {
 }
 
 export function initSound() {
-  const btn = document.getElementById('soundToggle')
-  if (!btn) return
+  // Two instances share the state: nav (mobile/small tablet) and dock (desktop).
+  const btns = Array.from(document.querySelectorAll('[data-sound-toggle]'))
+  if (!btns.length) return
 
   const setState = (next) => {
     on = next
-    btn.setAttribute('aria-pressed', String(on))
-    btn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on')
+    for (const btn of btns) {
+      btn.setAttribute('aria-pressed', String(on))
+      btn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on')
+    }
   }
 
-  btn.addEventListener('click', () => {
-    setState(!on)
-    if (on) startAudio().catch(() => {})
-    else stopAudio()
-  })
+  for (const btn of btns) {
+    btn.addEventListener('click', () => {
+      setState(!on)
+      if (on) startAudio().catch(() => {})
+      else stopAudio()
+    })
+  }
 
   // Default ON. Browsers reject play() before any user gesture — in that
   // case arm one-shot listeners and start at the first interaction, unless
@@ -70,7 +76,7 @@ export function initSound() {
     }
     const arm = (e) => {
       cleanup()
-      if (!on || btn.contains(e.target)) return
+      if (!on || btns.some((b) => b.contains(e.target))) return
       startAudio().catch(() => {})
     }
     window.addEventListener('pointerdown', arm, true)
