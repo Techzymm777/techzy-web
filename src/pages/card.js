@@ -24,8 +24,7 @@ export function cardHTML(p, i, heading = 'h3') {
       <p class="spec muted">${pt.specs.slice(0, 4).map(esc).join(' / ')}</p>
     </a>
     <div class="card-actions">
-      <a class="btn" href="/contact" aria-label="${esc(t('products.card.ask'))}: ${esc(pt.name)}"><span>${t('products.card.ask')}</span></a>
-      <a class="btn solid" href="/contact" aria-label="${esc(t('products.card.buy'))}: ${esc(pt.name)}"><span>${t('products.card.buy')}</span></a>
+      <a class="btn solid" href="/contact" aria-label="${esc(t('products.card.ask'))}: ${esc(pt.name)}"><span>${t('products.card.ask')}</span></a>
     </div>
   </article>`
 }
