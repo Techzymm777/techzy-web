@@ -17,37 +17,10 @@
     <path d="M590 270 L690 290 L690 417 L590 440 Z"/>
     <path d="M606 285 L674 301 L674 406 L606 425 Z"/>
 
-    <!-- Right wall: wooden shelving with laptops -->
+    <!-- Right wall: empty wooden shelving -->
     <path d="M1600 150 L1200 278 M1600 280 L1200 325 M1600 410 L1200 371 M1600 540 L1200 417"/>
     <path d="M1600 150 L1600 540 M1400 214 L1400 478 M1200 278 L1200 417"/>
-    <path d="M1442 295 l12 -24 h52 l12 24 z"/>
-    <path d="M1454 271 h52"/>
-    <path d="M1300 312 l10 -20 h44 l10 20 z"/>
-    <path d="M1442 397 l12 -22 h52 l12 22 z"/>
-    <path d="M1454 375 h52"/>
 
-    <!-- Display table A (foreground) -->
-    <path d="M300 540 L470 540 L700 430 L560 430 Z"/>
-    <path d="M300 540 L300 554 L470 554 L470 540"/>
-    <path d="M300 554 L300 650 M316 554 L316 650 M300 650 H316"/>
-    <path d="M470 554 L470 645 M486 554 L486 645 M470 645 H486"/>
-    <path d="M560 432 L560 560 M574 432 L574 560 M560 560 H574"/>
-    <path d="M690 432 L690 546 M704 432 L704 546 M690 546 H704"/>
-    <!-- Open laptop on table A -->
-    <path d="M418 490 L560 490 L588 466 L446 466 Z"/>
-    <path d="M446 466 L462 400 L604 400 L588 466 Z"/>
-    <path d="M470 483 L546 483"/>
-
-    <!-- Display table B (mid-ground) -->
-    <path d="M650 452 L770 452 L900 392 L800 392 Z"/>
-    <path d="M650 452 L650 462 L770 462 L770 452"/>
-    <path d="M650 462 L650 528 M662 462 L662 528"/>
-    <path d="M770 462 L770 520 M782 462 L782 520"/>
-    <path d="M800 394 L800 490 M812 394 L812 490"/>
-    <!-- Open laptop on table B -->
-    <path d="M694 408 L802 408 L826 386 L718 386 Z"/>
-    <path d="M718 386 L732 340 L840 340 L826 386 Z"/>
-    <path d="M712 403 L780 403"/>
   </g>
 
   <!-- Real Techzy logo inlined as the back-wall store sign -->
