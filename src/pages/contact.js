@@ -1,5 +1,56 @@
 import { t } from '../i18n.js'
 
+// Shared contact details — both shops use the same line and inbox.
+const PHONE_DISPLAY = '+95 9 783 388913'
+const PHONE_TEL = '+959783388913'
+const EMAIL = 'techzymm@gmail.com'
+
+// Keyless Google Maps embeds (no API key, nothing secret to commit).
+// `coords` drops a pin at exact lat,lng; `query` geocodes a text search
+// to a pin (block-level accuracy) as a fallback until coords are known.
+const SHOPS = [
+  {
+    name: 'contact.shops.ygnName',
+    address: 'contact.shops.ygnAddress',
+    coords: '16.797709,96.154140',
+  },
+  {
+    name: 'contact.shops.mdyName',
+    address: 'contact.shops.mdyAddress',
+    query: 'Techzy, 101 Street, Maha Aungmye Township, Mandalay, Myanmar',
+  },
+]
+
+function shopCard(shop) {
+  const q = encodeURIComponent(shop.coords || shop.query)
+  const z = shop.coords ? 17 : 16
+  const embed = `https://maps.google.com/maps?q=${q}&z=${z}&hl=en&output=embed`
+  const link = `https://www.google.com/maps/search/?api=1&query=${q}`
+  const name = t(shop.name)
+  return `
+    <article class="shop" data-reveal>
+      <div class="shop-map frame">
+        <iframe
+          src="${embed}"
+          title="${name} — map"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+      <div class="shop-body">
+        <h3 class="title">${name}</h3>
+        <p class="muted">${t(shop.address)}</p>
+        <dl class="shop-contact">
+          <dt>${t('contact.shops.phoneLabel')}</dt>
+          <dd><a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a></dd>
+          <dt>${t('contact.shops.emailLabel')}</dt>
+          <dd><a href="mailto:${EMAIL}">${EMAIL}</a></dd>
+        </dl>
+        <a class="btn" href="${link}" target="_blank" rel="noopener noreferrer"><span>${t('contact.shops.directions')}</span></a>
+      </div>
+    </article>`
+}
+
 export function render() {
   return `
   <section class="page-head">
@@ -9,8 +60,8 @@ export function render() {
       <p class="lede muted" data-reveal>${t('contact.hero.lede')}</p>
     </div>
   </section>
-  <section class="wrap section contact-grid">
-    <div data-reveal>
+  <section class="wrap section contact-layout">
+    <div class="contact-form-col" data-reveal>
       <h2 class="title">${t('contact.form.title')}</h2>
       <p class="muted">${t('contact.form.subtitle')}</p>
       <form id="contactForm" name="contact" method="POST" action="/" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
@@ -38,11 +89,15 @@ export function render() {
         <p class="field-help" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </div>
-    <aside>
-      <div class="info-block" data-reveal><h3>${t('contact.aside.hoursTitle')}</h3><p class="muted">${t('contact.aside.hoursBody')}</p></div>
-      <div class="info-block" data-reveal><h3>${t('contact.aside.supportTitle')}</h3><p class="muted">${t('contact.aside.supportBody')}</p></div>
-      <div class="info-block" data-reveal><h3>${t('contact.aside.locationTitle')}</h3><p class="muted">${t('contact.aside.locationBody')}</p></div>
-    </aside>
+    <div class="shops-col">
+      <div class="shops-head" data-reveal>
+        <span class="label">${t('contact.shops.kicker')}</span>
+        <h2 class="title">${t('contact.shops.title')}</h2>
+      </div>
+      <div class="shops-rows">
+        ${SHOPS.map(shopCard).join('')}
+      </div>
+    </div>
   </section>`
 }
 

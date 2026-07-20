@@ -29,8 +29,7 @@ export function render(route) {
         </tbody>
       </table>
       <div class="pd-actions" data-reveal>
-        <a class="btn solid" href="/contact" aria-label="${esc(t('products.card.buyAria', { name: pt.name }))}"><span>${t('products.card.buy')}</span></a>
-        <a class="btn" href="/contact" aria-label="${esc(t('products.card.askAria', { name: pt.name }))}"><span>${t('products.card.ask')}</span></a>
+        <a class="btn solid" href="/contact" aria-label="${esc(t('products.card.askAria', { name: pt.name }))}"><span>${t('products.card.ask')}</span></a>
       </div>
     </div>
   </section>`
