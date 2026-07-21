@@ -252,11 +252,44 @@ main { min-height: 100vh; }
   border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline));
   border-bottom: 1px solid rgba(0, 0, 0, var(--alpha-hairline));
   padding: var(--s6) 0;
+  /* Draggable strip: claim horizontal gestures, let vertical page-scroll pass. */
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
+.marquee.is-dragging { cursor: grabbing; }
+.marquee img { -webkit-user-drag: none; user-drag: none; }
 .marquee-track { display: flex; gap: var(--s3); width: max-content; will-change: transform; }
-.marquee .shot { width: 280px; aspect-ratio: 4/5; flex: none; }
+/* Feedback screenshots are square (2000x2000); a 1/1 frame shows them in
+   full so nothing (e.g. the corner logo) gets cropped by object-fit: cover. */
+.marquee .shot { width: 280px; aspect-ratio: 1/1; flex: none; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
-  .marquee { overflow-x: auto; }
+  .marquee { overflow-x: auto; touch-action: auto; cursor: default; }
+}
+
+/* Testimonial lightbox — click a shot to view it full-size. Overlay click,
+   the close button, or Escape dismiss it. Hidden (and out of the a11y tree /
+   tab order) when closed via visibility. */
+.lightbox {
+  position: fixed; inset: 0; z-index: 9000;
+  display: flex; align-items: center; justify-content: center; padding: var(--s6);
+  background: rgba(0, 0, 0, .92);
+  opacity: 0; visibility: hidden;
+  transition: opacity .3s var(--ease), visibility .3s var(--ease);
+}
+.lightbox.is-open { opacity: 1; visibility: visible; }
+.lightbox-img { max-width: min(92vw, 720px); max-height: 86vh; width: auto; height: auto; display: block; background: var(--paper); }
+.lightbox-close {
+  position: absolute; top: var(--s3); right: var(--s3);
+  width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid rgba(255, 255, 255, .4); color: var(--paper); cursor: pointer;
+}
+.lightbox-close:hover { background: rgba(255, 255, 255, .12); }
+.lightbox-close svg { width: 20px; height: 20px; }
+body.modal-open { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .lightbox { transition: none; }
 }
 
 .cta-band { background: var(--ink); color: var(--paper); }
