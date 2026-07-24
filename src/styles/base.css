@@ -262,8 +262,10 @@ main { min-height: 100vh; }
 .marquee img { -webkit-user-drag: none; user-drag: none; }
 .marquee-track { display: flex; gap: var(--s3); width: max-content; will-change: transform; }
 /* Feedback screenshots are square (2000x2000); a 1/1 frame shows them in
-   full so nothing (e.g. the corner logo) gets cropped by object-fit: cover. */
+   full so nothing (e.g. the corner logo) gets cropped by object-fit: cover.
+   Always keep grayscale to maintain binary palette (no colorful hover). */
 .marquee .shot { width: 280px; aspect-ratio: 1/1; flex: none; cursor: pointer; }
+.marquee .shot img { filter: grayscale(1) contrast(1.08) !important; }
 @media (prefers-reduced-motion: reduce) {
   .marquee { overflow-x: auto; touch-action: auto; cursor: default; }
 }
