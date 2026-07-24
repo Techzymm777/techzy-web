@@ -235,7 +235,8 @@ function wireTestimonials() {
     try { marquee.releasePointerCapture(e.pointerId) } catch { /* already released */ }
     // Re-sync the loop tween to the dragged position so resume() is seamless.
     if (marqueeTween && half) marqueeTween.progress((-Number(gsap.getProperty(track, 'x')) % half) / half)
-    if (Math.abs(movedX) > 6) suppressClick = true
+    // Require > 16px movement to suppress click (allows reliable lightbox opens)
+    if (Math.abs(movedX) > 16) suppressClick = true
     syncMarquee()
   }
 
