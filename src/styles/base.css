@@ -397,8 +397,12 @@ body.modal-open { overflow: hidden; }
   text-transform: uppercase; opacity: var(--alpha-tertiary); color: var(--paper);
 }
 
-/* Careers — posting cards reuse .card; a label/value grid replaces the
-   product image. Detail page mirrors the .pd-grid two-column layout. */
+/* Careers — posting cards reuse .card but sit on a plain white grid (not the
+   gray hairline-seam grid): with only a couple of postings, auto-fill tracks
+   would expose the seam background as a large gray block, so each card carries
+   its own hairline instead and the row fills with auto-fit. */
+.grid-jobs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--s3); }
+.job-card { border: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); }
 .job-card .card-title { margin-top: var(--s1); }
 .job-card .spec { max-width: 44ch; }
 .job-meta { display: grid; grid-template-columns: repeat(3, auto); gap: var(--s1) var(--s4);

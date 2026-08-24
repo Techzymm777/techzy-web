@@ -62,7 +62,7 @@ export function render() {
         </label>
       </div>
     </div>
-    <div class="grid-products" id="jobGrid">${list.map((p, i) => postingCard(p, i)).join('')}</div>
+    <div class="grid-jobs" id="jobGrid">${list.map((p, i) => postingCard(p, i)).join('')}</div>
     <div class="empty" id="jobEmpty" hidden>
       <h2 class="title">${t('careers.empty.title')}</h2>
       <p class="muted">${t('careers.empty.body')}</p>
