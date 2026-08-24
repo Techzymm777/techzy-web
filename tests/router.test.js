@@ -14,6 +14,11 @@ describe('parseRoute', () => {
   it('extracts product ids', () => {
     expect(parseRoute('/product/asus-rog-strix-g16')).toEqual({ name: 'product', id: 'asus-rog-strix-g16' })
   })
+  it('maps the careers list and extracts posting ids', () => {
+    expect(parseRoute('/careers')).toEqual({ name: 'careers' })
+    expect(parseRoute('/careers/')).toEqual({ name: 'careers' })
+    expect(parseRoute('/careers/sales-advisor-yangon')).toEqual({ name: 'careerDetail', id: 'sales-advisor-yangon' })
+  })
   it('falls back to notFound', () => {
     expect(parseRoute('/nope')).toEqual({ name: 'notFound' })
     expect(parseRoute('/product/')).toEqual({ name: 'notFound' })

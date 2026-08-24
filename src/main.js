@@ -7,7 +7,10 @@ import { initI18n, t } from './i18n.js'
 import { initRouter } from './router.js'
 import { PAGES } from './pages/index.js'
 import products from '../content/products.json'
+import careers from '../content/careers.json'
 import { getProductText } from './pages/card.js'
+import { findPosting } from './careers.js'
+import { getPostingText } from './pages/careers.js'
 import { initShell } from './shell.js'
 import { reducedMotion } from './motion/reduced.js'
 import { applyReveals } from './motion/reveals.js'
@@ -31,7 +34,11 @@ function pageTitle(route) {
     const p = products.find((x) => x.id === route.id)
     return p ? `${getProductText(p).name} | Techzy` : `${t('notFound.title')} | Techzy`
   }
-  const key = { about: 'nav.about', products: 'nav.products', contact: 'nav.contact', notFound: 'notFound.title' }[route.name]
+  if (route.name === 'careerDetail') {
+    const p = findPosting(careers, route.id)
+    return p ? `${getPostingText(p).title} | Techzy` : `${t('notFound.title')} | Techzy`
+  }
+  const key = { about: 'nav.about', products: 'nav.products', contact: 'nav.contact', careers: 'careers.hero.kicker', notFound: 'notFound.title' }[route.name]
   return `${t(key)} | Techzy`
 }
 
@@ -51,7 +58,8 @@ export function renderRoute(route, initial = false) {
   window.scrollTo(0, 0)
   document.title = pageTitle(route)
   document.querySelectorAll('[data-nav]').forEach((a) => {
-    const active = a.dataset.nav === (route.name === 'product' ? 'products' : route.name)
+    const navName = { product: 'products', careerDetail: 'careers' }[route.name] || route.name
+    const active = a.dataset.nav === navName
     if (active) a.setAttribute('aria-current', 'page')
     else a.removeAttribute('aria-current')
   })

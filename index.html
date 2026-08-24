@@ -123,6 +123,7 @@
         <ul class="foot-links">
           <li><a href="/about" data-i18n="footer.about">About</a></li>
           <li><a href="/products" data-i18n="footer.products">Products</a></li>
+          <li><a href="/careers" data-i18n="footer.careers">Careers</a></li>
           <li><a href="/contact" data-i18n="footer.contact">Contact</a></li>
           <li class="foot-top"><a href="#app" id="backToTop" data-back-to-top data-i18n="footer.backToTop">Back to top</a></li>
         </ul>
@@ -137,6 +138,21 @@
       <input type="text" name="name" />
       <input type="email" name="email" />
       <textarea name="message"></textarea>
+    </form>
+
+    <!-- Career applications. Registered here at build time (with the file
+         input, so Netlify accepts the resume upload); the interactive form is
+         rendered client-side on /careers/:id with these exact field names and
+         submitted as multipart/form-data. -->
+    <form name="career-application" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data" hidden aria-hidden="true">
+      <input type="hidden" name="form-name" value="career-application" />
+      <input name="bot-field" />
+      <input type="text" name="job" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="file" name="resume" />
+      <textarea name="why"></textarea>
     </form>
 
     <script type="module" src="/src/main.js"></script>

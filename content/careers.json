@@ -1,0 +1,82 @@
+{
+  "roles": {
+    "sales-advisor": {
+      "title": "Sales Advisor",
+      "titleMy": "Sales Advisor",
+      "department": "Sales",
+      "departmentMy": "Sales",
+      "type": "Full-time",
+      "typeMy": "အချိန်ပြည့်",
+      "summary": "If you are energetic, interested in technology, and keen on sales, you are welcome to apply.",
+      "summaryMy": "နည်းပညာကိုစိတ်ဝင်စားပြီး သွက်သွက်လက်လက်နဲ့ အရောင်းပိုင်းကျွမ်းကျင်သူတိုင်း လျှောက်ထားနိုင်ပါတယ်။",
+      "requirements": [
+        "Age between 19 and 30.",
+        "Working hours: 6 days a week, 9:00 AM to 5:30 PM. One day off per week is arranged by schedule, and overtime pay applies when you work extra hours.",
+        "A degree from any university; applicants with no prior experience are also welcome."
+      ],
+      "requirementsMy": [
+        "အသက် ၁၉ နှစ် - ၃၀ အတွင်း",
+        "အလုပ်ချိန် - တစ်ပတ် (၆) ရက် မနက် ၉ နာရီ မှ ညနေ ၅ နာရီခွဲ အထိဆင်းရပါမည်။ (Schedule ဖြင့် တစ်ပတ် တစ်ရက် ပိတ်ပေးမှာဖြစ်ပြီး အချိန်ပိုဆင်းရပါက OT ကြေးအား ခံစားခွင့်ရှိပါမည်။)",
+        "တက္ကသိုလ်တစ်ခုခုမှ ဘွဲ့ရထားပြီး အတွေ့အကြုံမရှိသူများလဲ လျှောက်ထားနိုင်ပါသည်။"
+      ],
+      "responsibilities": [
+        "Patiently explain laptops to customers who visit Techzy.",
+        "Make the required number of sales calls to meet targets.",
+        "Use Facebook Page and Messenger skilfully to respond to customer inquiries.",
+        "Keep basic sales records for products in Excel."
+      ],
+      "responsibilitiesMy": [
+        "Techzy သို့ လာရောက်ဝယ်ယူသော Customers များအား Laptop နဲ့ပတ်သက်ပြီး စိတ်ရှည်လက်ရှည် ရှင်းပြပေးရမည်။",
+        "သတ်မှတ်ထားသော Sale Call များ အရေအတွက် ပြည့်မီအောင် ဖုန်းခေါ်ဆိုရမည်။",
+        "Facebook Page နဲ့ Messenger ကို ကျွမ်းကျွမ်းကျင်ကျင် အသုံးပြုတတ်ပြီး Customer စုံစမ်းမေးမြန်းမှုများကို ပြန်လည်ဖြေကြားပေးရပါမည်။",
+        "အရောင်းပစ္စည်းများအတွက် Excel ဖြင့် အခြေခံစာရင်းလုပ်ရပါမည်။"
+      ],
+      "whoShouldApply": [
+        "A team player.",
+        "Polite and courteous in conversation.",
+        "Of good character.",
+        "Interested in technology.",
+        "Always eager to learn and grow.",
+        "Able to handle work pressure."
+      ],
+      "whoShouldApplyMy": [
+        "အသင်းအဖွဲ့နဲ့ အလုပ်လုပ်တတ်သူ",
+        "စကားပြောယဥ်ကျေးသူ",
+        "အကျင့်စာရိတ္တကောင်းမွန်သူ",
+        "နည်းပညာကို စိတ်ဝင်စားသူ",
+        "မိမိဘဝတိုးတက်ဖို့ အမြဲသင်ယူချင်စိတ်ရှိသူ",
+        "အလုပ် Pressure ကို ခံနိုင်ရည်ရှိသူ"
+      ],
+      "whatYoullLearn": [
+        "Learn the craft of selling.",
+        "Gain plenty of experience in customer service.",
+        "Understand how a technology business operates.",
+        "Learn a great deal from the training Techzy provides from time to time."
+      ],
+      "whatYoullLearnMy": [
+        "အရောင်းပညာနဲ့ပတ်သက်ပြီး လေ့လာနိုင်မယ်။",
+        "Customer Service နဲ့ပတ်သက်ပြီး အများကြီးလေ့လာလို့ရမယ်။",
+        "နည်းပညာနဲ့ပတ်သက်တဲ့ လုပ်ငန်းလည်ပတ်ပုံတွေကို လေ့လာနိုင်မယ်။",
+        "Techzy မှ အခါအားလျော်စွာ သင်ကြားပို့ချပေးမဲ့ Training တွေမှာ အများကြီးလေ့လာနိုင်မယ်။"
+      ]
+    }
+  },
+  "postings": [
+    {
+      "id": "sales-advisor-yangon",
+      "role": "sales-advisor",
+      "location": "yangon",
+      "locationLabel": "Yangon",
+      "locationLabelMy": "ရန်ကုန်",
+      "openings": 3
+    },
+    {
+      "id": "sales-advisor-mandalay",
+      "role": "sales-advisor",
+      "location": "mandalay",
+      "locationLabel": "Mandalay",
+      "locationLabelMy": "မန္တလေး",
+      "openings": 2
+    }
+  ]
+}
