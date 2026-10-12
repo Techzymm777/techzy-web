@@ -17,7 +17,12 @@ export function injectPage(template, head, body) {
   return html.replace(MAIN, () => `<main id="app" tabindex="-1">${body}</main>`)
 }
 
-// /about → dist/about/index.html, so the URL is served without a redirect.
+// /about → dist/about.html. Netlify serves that at /about directly; a
+// directory index (about/index.html) would 301 /about to /about/ instead,
+// putting a redirect in front of every canonical URL and internal link.
 export function outputFile(dist, path) {
-  return path === '/' ? join(dist, 'index.html') : join(dist, ...path.slice(1).split('/'), 'index.html')
+  if (path === '/') return join(dist, 'index.html')
+  const parts = path.slice(1).split('/')
+  parts[parts.length - 1] += '.html'
+  return join(dist, ...parts)
 }

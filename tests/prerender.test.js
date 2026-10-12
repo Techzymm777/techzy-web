@@ -37,9 +37,9 @@ describe('injectPage', () => {
 })
 
 describe('outputFile', () => {
-  it('maps routes to directory index files', () => {
+  it('maps routes to flat .html files (served by Netlify without a trailing-slash redirect)', () => {
     expect(outputFile('/d', '/')).toBe(join('/d', 'index.html'))
-    expect(outputFile('/d', '/about')).toBe(join('/d', 'about', 'index.html'))
-    expect(outputFile('/d', '/product/asus-rog-strix-g16')).toBe(join('/d', 'product', 'asus-rog-strix-g16', 'index.html'))
+    expect(outputFile('/d', '/about')).toBe(join('/d', 'about.html'))
+    expect(outputFile('/d', '/product/asus-rog-strix-g16')).toBe(join('/d', 'product', 'asus-rog-strix-g16.html'))
   })
 })
