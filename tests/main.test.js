@@ -96,6 +96,7 @@ describe('document titles', () => {
     ['/products', `${en['nav.products']} | Techzy`],
     ['/contact', `${en['nav.contact']} | Techzy`],
     ['/careers', `${en['careers.hero.kicker']} | Techzy`],
+    ['/privacy-policy', 'Privacy Policy | Techzy'],
     ['/nope', `${en['notFound.title']} | Techzy`],
     [`/product/${products[0].id}`, `${products[0].name} | Techzy`],
     ['/product/missing', `${en['notFound.title']} | Techzy`],

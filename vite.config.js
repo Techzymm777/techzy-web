@@ -3,6 +3,9 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     environment: 'happy-dom',
+    // The first test in a file pays for cold module imports (main.js pulls in
+    // the whole app); under a full parallel run that can exceed the 5s default.
+    testTimeout: 15000,
     environmentOptions: {
       // Unit tests never touch the network: rendered iframes (map embeds),
       // scripts (Amplitude CDN) and stylesheets stay unloaded.

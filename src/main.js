@@ -17,6 +17,7 @@ import { applyReveals } from './motion/reveals.js'
 import { transitionTo, runPreloader } from './motion/transitions.js'
 import { initCursor } from './motion/cursor.js'
 import { initSound } from './motion/sound.js'
+import { initMagnetic, releaseMagnetic } from './motion/magnetic.js'
 
 if (import.meta.env.PROD) {
   import('./amplitude-init.js')
@@ -38,6 +39,7 @@ function pageTitle(route) {
     const p = findPosting(careers, route.id)
     return p ? `${getPostingText(p).title} | Techzy` : `${t('notFound.title')} | Techzy`
   }
+  if (route.name === 'privacy') return `${PAGES.privacy.title()} | Techzy`
   const key = { about: 'nav.about', products: 'nav.products', contact: 'nav.contact', careers: 'careers.hero.kicker', notFound: 'notFound.title' }[route.name]
   return `${t(key)} | Techzy`
 }
@@ -47,6 +49,7 @@ let currentPage = null
 export function renderRoute(route, initial = false) {
   currentRoute = route
   currentPage?.unmount?.() // page-owned resources: three.js scene, marquee tween
+  releaseMagnetic() // the hovered button may be about to disappear
   if (pageCtx) {
     pageCtx.revert() // kill every tween + ScrollTrigger the old page created
     pageCtx = null
@@ -104,5 +107,6 @@ initI18n()
 initShell({ onLangChange: () => renderRoute(getCurrentRoute()) })
 initSound()
 initCursor()
+initMagnetic()
 initRouter(onRoute)
 runPreloader()

@@ -35,6 +35,11 @@ Brand promise = factory-sealed, first-touch hardware. Motion expresses it:
   `(hover:hover) and (prefers-reduced-motion:no-preference)`). Custom 8px dot
   + lerping 40px frame, `mix-blend-mode:difference`. Frame grows to 64px on
   interactive hover, 72px with "VIEW" label on product cards.
+- **Magnetic buttons:** over `.btn`, filter tabs, and nav/dock icon buttons
+  the custom cursor fades out and the button is pulled toward the pointer
+  (30% of offset, max 16px; `.btn` label +15%), `power3.out`; settles back
+  on leave. Desktop only (`(hover:hover) and (pointer:fine)`, mouse
+  pointerType); off on touch devices and under reduced motion (`src/motion/magnetic.js`).
 - **Sound:** ambient loop, ON by default (autoplay attempted at boot; when
   the browser blocks it, playback starts at the first user interaction).
   Toggle in nav is EQ bars only — no text label — with `aria-pressed` and an
