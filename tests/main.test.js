@@ -4,6 +4,7 @@ import products from '../content/products.json'
 import careers from '../content/careers.json'
 import en from '../content/copy.en.json'
 import my from '../content/copy.my.json'
+import seo from '../content/seo.json'
 
 // main.js is the composition root: boot order, route rendering, titles,
 // nav state, page cleanup and the seal-cut transition handshake. Motion
@@ -90,20 +91,33 @@ describe('document titles', () => {
     await boot(path)
     return document.title
   }
+  // English tabs use the search titles from content/seo.json.
+  const P = seo.pages
   it.each([
-    ['/', 'Techzy'],
-    ['/about', `${en['nav.about']} | Techzy`],
-    ['/products', `${en['nav.products']} | Techzy`],
-    ['/contact', `${en['nav.contact']} | Techzy`],
-    ['/careers', `${en['careers.hero.kicker']} | Techzy`],
+    ['/', P.home.title],
+    ['/about', P.about.title],
+    ['/products', P.products.title],
+    ['/contact', P.contact.title],
+    ['/careers', P.careers.title],
     ['/privacy-policy', 'Privacy Policy | Techzy'],
-    ['/nope', `${en['notFound.title']} | Techzy`],
-    [`/product/${products[0].id}`, `${products[0].name} | Techzy`],
-    ['/product/missing', `${en['notFound.title']} | Techzy`],
-    [`/careers/${careers.postings[0].id}`, `${careers.roles[careers.postings[0].role].title} | Techzy`],
-    ['/careers/missing', `${en['notFound.title']} | Techzy`],
+    ['/nope', P.notFound.title],
+    [`/product/${products[0].id}`, `${products[0].name}: Brand New, Factory Sealed | Techzy`],
+    ['/product/missing', P.notFound.title],
+    [`/careers/${careers.postings[0].id}`, `${careers.roles[careers.postings[0].role].title} Job in ${careers.postings[0].locationLabel} | Techzy Careers`],
+    ['/careers/missing', P.notFound.title],
   ])('%s → %s', async (path, title) => {
     expect(await titleFor(path)).toBe(title)
+  })
+
+  it('updates description and canonical on navigation', async () => {
+    document.head.innerHTML = '<meta name="description" content="">'
+    await boot('/', { reduced: true })
+    clickLink('/contact')
+    expect(document.head.querySelector('meta[name="description"]').content).toBe(P.contact.description)
+    expect(document.head.querySelector('link[rel="canonical"]').getAttribute('href')).toBe('https://techzymm.com/contact')
+    clickLink('/nope')
+    expect(document.head.querySelector('link[rel="canonical"]')).toBeNull()
+    expect(document.head.querySelector('meta[name="robots"]').content).toBe('noindex')
   })
 })
 

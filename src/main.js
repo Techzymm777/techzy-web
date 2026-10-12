@@ -3,7 +3,7 @@ import './styles/base.css'
 import './styles/motion.css'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { initI18n, t } from './i18n.js'
+import { getLang, initI18n, t } from './i18n.js'
 import { initRouter } from './router.js'
 import { PAGES } from './pages/index.js'
 import products from '../content/products.json'
@@ -18,6 +18,7 @@ import { transitionTo, runPreloader } from './motion/transitions.js'
 import { initCursor } from './motion/cursor.js'
 import { initSound } from './motion/sound.js'
 import { initMagnetic, releaseMagnetic } from './motion/magnetic.js'
+import { applyHead, getMeta } from './seo.js'
 
 if (import.meta.env.PROD) {
   import('./amplitude-init.js')
@@ -29,7 +30,9 @@ const app = document.getElementById('app')
 let currentRoute = { name: 'home' }
 let pageCtx = null // gsap.context for the current page — revert() is the cleanup contract
 
-function pageTitle(route) {
+// Myanmar tab titles, built from the localized page names. English uses the
+// search-optimised titles from src/seo.js (the ones crawlers see).
+function localTitle(route) {
   if (route.name === 'home') return 'Techzy'
   if (route.name === 'product') {
     const p = products.find((x) => x.id === route.id)
@@ -59,7 +62,8 @@ export function renderRoute(route, initial = false) {
   app.innerHTML = page.render(route)
   page.mount?.(route)
   window.scrollTo(0, 0)
-  document.title = pageTitle(route)
+  const meta = getMeta(route)
+  applyHead(meta, getLang() === 'my' ? localTitle(route) : meta.title)
   document.querySelectorAll('[data-nav]').forEach((a) => {
     const navName = { product: 'products', careerDetail: 'careers' }[route.name] || route.name
     const active = a.dataset.nav === navName

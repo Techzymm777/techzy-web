@@ -68,7 +68,8 @@
       "location": "yangon",
       "locationLabel": "Yangon",
       "locationLabelMy": "ရန်ကုန်",
-      "openings": 3
+      "openings": 3,
+      "datePosted": "2026-08-25"
     },
     {
       "id": "sales-advisor-mandalay",
@@ -76,7 +77,8 @@
       "location": "mandalay",
       "locationLabel": "Mandalay",
       "locationLabelMy": "မန္တလေး",
-      "openings": 2
+      "openings": 2,
+      "datePosted": "2026-08-25"
     }
   ]
 }

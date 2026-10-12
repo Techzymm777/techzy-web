@@ -20,7 +20,7 @@ describe('copy keys', () => {
   const used = new Set()
   for (const file of srcFiles()) {
     for (const m of readFileSync(file, 'utf8').matchAll(/\bt\(\s*'([\w.]+)'/g)) used.add(m[1])
-    for (const m of readFileSync(file, 'utf8').matchAll(/\[\s*'\w+'\s*,\s*'([\w.]+)'\s*\]/g)) used.add(m[1]) // TABS tables
+    for (const m of readFileSync(file, 'utf8').matchAll(/\[\s*'\w+'\s*,\s*'(\w+\.[\w.]+)'\s*\]/g)) used.add(m[1]) // TABS tables
     for (const m of readFileSync(file, 'utf8').matchAll(/(?:name|address):\s*'([\w.]+\.[\w.]+)'/g)) used.add(m[1]) // SHOPS
   }
   for (const m of indexHTML().matchAll(/data-i18n="([\w.]+)"/g)) used.add(m[1])
@@ -132,11 +132,16 @@ describe('static assets referenced by pages', () => {
   })
 })
 
-describe('Netlify SPA routing', () => {
-  it('rewrites every path to index.html so deep links work', () => {
-    // Vite copies public/ into dist/, which netlify.toml publishes.
-    const redirects = readFileSync(join(ROOT, 'public/_redirects'), 'utf8')
-    expect(redirects).toMatch(/^\/\*\s+\/index\.html\s+200\s*$/m)
+describe('Netlify routing', () => {
+  it('publishes the prerendered build', () => {
     expect(readFileSync(join(ROOT, 'netlify.toml'), 'utf8')).toMatch(/publish\s*=\s*"dist"/)
+    expect(JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).scripts.build).toMatch(/vite build && node scripts\/prerender\.mjs/)
+  })
+
+  it('has no catch-all rewrite: unknown paths get 404.html with a real 404 status', () => {
+    // Every real route is a prerendered file; a "/* /index.html 200" rule would
+    // serve the homepage for typos and dead links (a soft 404).
+    const redirects = join(ROOT, 'public/_redirects')
+    if (existsSync(redirects)) expect(readFileSync(redirects, 'utf8')).not.toMatch(/^\/\*\s+\/index\.html\s+200/m)
   })
 })

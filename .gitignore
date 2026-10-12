@@ -9,3 +9,4 @@ dist/
 .astro/
 .claude/
 coverage/
+scripts/share-images/.venv/

@@ -1,0 +1,70 @@
+{
+  "site": "https://techzymm.com",
+  "name": "Techzy",
+  "legalName": "Techzy Tech Store",
+  "slogan": "Brand New. Factory Sealed. Only at Techzy.",
+  "summary": "Techzy sells brand new, factory-sealed laptops in Myanmar from shops in Yangon and Mandalay: ASUS, Acer and Lenovo for office, school, business and gaming, with a 2-year warranty and fast, insured shipping. Prices are quoted on request.",
+  "email": "techzymm@gmail.com",
+  "telephone": "+959783388913",
+  "telephoneDisplay": "+95 9 783 388913",
+  "sameAs": [],
+  "defaultImage": "/og/techzy.jpg",
+  "defaultImageAlt": "Techzy: Brand new, factory-sealed laptops",
+  "logo": "/icons/logo-512.png",
+  "shops": [
+    {
+      "id": "yangon",
+      "name": "Techzy Yangon",
+      "streetAddress": "No. 85/1A, Ground Floor, Yaydashay Old Road, Yaydashay Ward, Bahan Township",
+      "locality": "Yangon",
+      "region": "Yangon Region",
+      "postalCode": "11201",
+      "latitude": 16.797709,
+      "longitude": 96.15414
+    },
+    {
+      "id": "mandalay",
+      "name": "Techzy Mandalay",
+      "streetAddress": "No. G-9, between 101st (Theikpan) Street and 66th x 67th Streets, Maha Aungmye Township",
+      "locality": "Mandalay",
+      "region": "Mandalay Region"
+    }
+  ],
+  "pages": {
+    "home": {
+      "title": "Brand New, Factory-Sealed Laptops in Myanmar | Techzy",
+      "description": "Brand new, factory-sealed laptops for office, school, business and gaming. ASUS, Acer and Lenovo with a 2-year warranty. Shops in Yangon and Mandalay."
+    },
+    "about": {
+      "title": "About Us: A Minimalist Approach to Computers | Techzy",
+      "description": "We sell carefully selected laptops that prioritize reliability, clean design, and quiet performance. Factory sealed, from our shops in Yangon and Mandalay."
+    },
+    "products": {
+      "title": "Laptops from ASUS, Acer and Lenovo | Techzy",
+      "description": "Brand new, factory-sealed gaming, business and everyday laptops: ASUS ROG and TUF, Acer Nitro, Lenovo Legion and LOQ. Ask us for a quote."
+    },
+    "contact": {
+      "title": "Contact: Laptop Shops in Yangon and Mandalay | Techzy",
+      "description": "Visit our laptop shops in Bahan, Yangon and Maha Aungmye, Mandalay, or send a message about specs, shipping and warranties. Real humans reply."
+    },
+    "careers": {
+      "title": "Careers: Sales Advisor Jobs in Yangon and Mandalay | Techzy",
+      "description": "We are hiring Sales Advisors in Yangon and Mandalay. Read the role details and apply online in a couple of minutes."
+    },
+    "privacy": {
+      "title": "Privacy Policy | Techzy",
+      "description": "How Techzy collects, uses and protects your personal data on techzymm.com and in our shops in Yangon and Mandalay."
+    },
+    "notFound": {
+      "title": "Page not found | Techzy",
+      "description": "This page does not exist. Browse brand new, factory-sealed laptops at Techzy."
+    },
+    "product": {
+      "title": "{name}: Brand New, Factory Sealed | Techzy",
+      "suffix": "Brand new, factory sealed, 2-year warranty."
+    },
+    "careerDetail": {
+      "title": "{title} Job in {location} | Techzy Careers"
+    }
+  }
+}
