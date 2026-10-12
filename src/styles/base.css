@@ -397,6 +397,67 @@ body.modal-open { overflow: hidden; }
   text-transform: uppercase; opacity: var(--alpha-tertiary); color: var(--paper);
 }
 
+/* Careers — posting cards reuse .card but sit on a plain white grid (not the
+   gray hairline-seam grid): with only a couple of postings, auto-fill tracks
+   would expose the seam background as a large gray block, so each card carries
+   its own hairline instead and the row fills with auto-fit. */
+.grid-jobs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--s3); }
+.job-card { border: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); }
+.job-card .card-title { margin-top: var(--s1); }
+.job-card .spec { max-width: 44ch; }
+.job-meta { display: grid; grid-template-columns: repeat(3, auto); gap: var(--s1) var(--s4);
+  margin-top: var(--s3); padding-top: var(--s3); justify-content: start;
+  border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); }
+.job-meta dt { font-size: var(--t-label); letter-spacing: .12em; text-transform: uppercase;
+  opacity: var(--alpha-secondary); }
+.job-meta dd { margin: var(--s1) 0 0; font-size: 14px; font-weight: 500; }
+.card:hover .job-meta { border-top-color: rgba(255, 255, 255, var(--alpha-hairline)); }
+
+.back-link { display: inline-block; margin-bottom: var(--s3);
+  border-bottom: 1px solid transparent; transition: border-color .3s var(--ease); }
+.back-link:hover { border-bottom-color: currentColor; }
+
+.jd-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: var(--s8); align-items: start; }
+@media (max-width: 820px) { .jd-grid { grid-template-columns: 1fr; } }
+.jd-section { padding: var(--s4) 0; border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); }
+.jd-section:first-child { border-top: 0; padding-top: 0; }
+.jd-heading { font-size: var(--t-1); font-weight: 600; letter-spacing: -.02em; margin-bottom: var(--s3); }
+.jd-list { list-style: none; display: flex; flex-direction: column; gap: var(--s2); }
+.jd-list li { position: relative; padding-left: var(--s4); font-size: 15px; max-width: 60ch; }
+.jd-list li::before { content: ""; position: absolute; left: 0; top: .62em; width: 12px; height: 1px; background: var(--ink); }
+.jd-aside { border: 1px solid var(--ink); padding: var(--s4); }
+@media (min-width: 821px) { .jd-aside { position: sticky; top: var(--s12); } }
+.jd-facts { display: grid; grid-template-columns: auto 1fr; gap: var(--s2) var(--s4); margin-bottom: var(--s4); }
+.jd-facts dt { font-size: var(--t-label); letter-spacing: .12em; text-transform: uppercase; opacity: var(--alpha-secondary); align-self: center; }
+.jd-facts dd { margin: 0; font-size: 15px; font-weight: 500; }
+.jd-aside .apply-open { width: 100%; justify-content: center; }
+
+/* Apply modal — paper panel over a dark backdrop; scrolls internally when the
+   form is taller than the viewport. Hidden from the a11y tree + tab order via
+   visibility when closed, same contract as the testimonial lightbox. */
+.modal { position: fixed; inset: 0; z-index: 9000;
+  display: flex; align-items: center; justify-content: center; padding: var(--s4);
+  opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), visibility .3s var(--ease); }
+.modal.is-open { opacity: 1; visibility: visible; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .92); }
+.modal-panel { position: relative; z-index: 1; background: var(--paper); color: var(--ink);
+  width: min(92vw, 560px); max-height: 90vh; overflow-y: auto; padding: var(--s6); border: 1px solid var(--ink); }
+.modal-title { margin-bottom: var(--s1); }
+.modal-panel > .muted { margin-bottom: var(--s6); }
+.modal-panel form { margin-top: var(--s2); }
+.modal-close { position: absolute; top: var(--s2); right: var(--s2);
+  width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--ink); color: var(--ink); cursor: pointer; }
+.modal-close:hover { background: var(--ink); color: var(--paper); }
+.modal-close svg { width: 18px; height: 18px; }
+.field-hint { font-size: 12px; opacity: var(--alpha-secondary); }
+.field input[type="file"] { padding: var(--s2) 0; font-size: 13px; }
+.field input[type="file"]::file-selector-button {
+  font: inherit; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  margin-right: var(--s2); padding: var(--s1) var(--s2); background: var(--ink); color: var(--paper);
+  border: 0; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .modal { transition: none; } }
+
 footer { border-top: 1px solid var(--ink); padding: var(--s8) 0; }
 .foot { display: flex; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; align-items: flex-start; }
 .foot-links { display: flex; gap: var(--s4); list-style: none; flex-wrap: wrap; }
@@ -404,3 +465,33 @@ footer { border-top: 1px solid var(--ink); padding: var(--s8) 0; }
 .foot-links a { display: inline-block; padding: 4px 0; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
 /* informational text (tagline, copyright) — .40 is decorative-only per CLAUDE.md */
 .foot small { display: block; margin-top: var(--s6); font-size: 12px; opacity: var(--alpha-secondary); }
+
+/* Privacy policy — long-form copy from content/privacy-policy.en.md. Sticky
+   contents rail on the left, sections under hairlines on the right; tables
+   stack into label/value rows on narrow screens. */
+.policy-intro { display: flex; flex-direction: column; gap: var(--s2); margin-top: var(--s6); max-width: 64ch; }
+.policy-intro p { font-size: var(--t-0); line-height: 1.6; opacity: var(--alpha-secondary); }
+.policy-grid { display: grid; grid-template-columns: minmax(216px, 1fr) 3fr; gap: var(--s8); align-items: start; }
+@media (max-width: 820px) { .policy-grid { grid-template-columns: 1fr; gap: var(--s6); } }
+.policy-toc { border-top: 1px solid var(--ink); padding-top: var(--s2); }
+@media (min-width: 821px) { .policy-toc { position: sticky; top: var(--s12); } }
+.policy-toc ol { list-style: none; }
+.policy-toc a { display: block; min-height: 24px; padding: var(--s1) 0; font-size: 14px; opacity: var(--alpha-secondary); transition: opacity .3s var(--ease); }
+.policy-toc a:hover { opacity: 1; }
+.policy-section { padding: var(--s6) 0; border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); }
+.policy-section:first-child { border-top: 0; padding-top: 0; }
+.policy-section > * + * { margin-top: var(--s2); }
+.policy-section > h3 { font-size: var(--t-0); font-weight: 600; letter-spacing: -.01em; margin-top: var(--s4); }
+.policy-section p, .policy-section li { font-size: 15px; line-height: 1.6; max-width: 64ch; }
+.policy-section .jd-list { gap: var(--s1); }
+.policy-section a, .policy-intro a { border-bottom: 1px solid currentColor; }
+.policy-table { width: 100%; border-collapse: collapse; }
+.policy-table th, .policy-table td { text-align: left; vertical-align: top; padding: var(--s2) var(--s3) var(--s2) 0; border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); font-size: 14px; line-height: 1.5; }
+.policy-table th { font-size: var(--t-label); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; opacity: var(--alpha-secondary); border-top-color: var(--ink); }
+.policy-table td:first-child { font-weight: 500; }
+@media (max-width: 640px) {
+  .policy-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .policy-table tr { display: block; padding: var(--s2) 0; border-top: 1px solid rgba(0, 0, 0, var(--alpha-hairline)); }
+  .policy-table td { display: block; border: 0; padding: 0 0 var(--s1); }
+  .policy-table td::before { content: attr(data-label); display: block; font-size: var(--t-label); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; opacity: var(--alpha-secondary); }
+}
