@@ -7,6 +7,7 @@ export function parseRoute(pathname) {
   if (path === '/products') return { name: 'products' }
   if (path === '/contact') return { name: 'contact' }
   if (path === '/careers') return { name: 'careers' }
+  if (path === '/privacy-policy') return { name: 'privacy' }
   const c = path.match(/^\/careers\/([A-Za-z0-9-]+)$/)
   if (c) return { name: 'careerDetail', id: c[1] }
   const m = path.match(/^\/product\/([A-Za-z0-9-]+)$/)

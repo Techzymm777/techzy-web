@@ -19,6 +19,10 @@ describe('parseRoute', () => {
     expect(parseRoute('/careers/')).toEqual({ name: 'careers' })
     expect(parseRoute('/careers/sales-advisor-yangon')).toEqual({ name: 'careerDetail', id: 'sales-advisor-yangon' })
   })
+  it('maps the privacy policy', () => {
+    expect(parseRoute('/privacy-policy')).toEqual({ name: 'privacy' })
+    expect(parseRoute('/privacy-policy/')).toEqual({ name: 'privacy' })
+  })
   it('falls back to notFound', () => {
     expect(parseRoute('/nope')).toEqual({ name: 'notFound' })
     expect(parseRoute('/product/')).toEqual({ name: 'notFound' })
