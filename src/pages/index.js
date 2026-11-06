@@ -6,6 +6,7 @@ import * as contact from './contact.js'
 import * as careers from './careers.js'
 import * as careerDetail from './careerDetail.js'
 import * as privacy from './privacy.js'
+import * as terms from './terms.js'
 import * as notFound from './not-found.js'
 
-export const PAGES = { home, products, product, about, contact, careers, careerDetail, privacy, notFound }
+export const PAGES = { home, products, product, about, contact, careers, careerDetail, privacy, terms, notFound }

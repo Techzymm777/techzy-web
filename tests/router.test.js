@@ -23,6 +23,11 @@ describe('parseRoute', () => {
     expect(parseRoute('/privacy-policy')).toEqual({ name: 'privacy' })
     expect(parseRoute('/privacy-policy/')).toEqual({ name: 'privacy' })
   })
+
+  it('maps the terms and conditions', () => {
+    expect(parseRoute('/terms-and-conditions')).toEqual({ name: 'terms' })
+    expect(parseRoute('/terms-and-conditions/')).toEqual({ name: 'terms' })
+  })
   it('falls back to notFound', () => {
     expect(parseRoute('/nope')).toEqual({ name: 'notFound' })
     expect(parseRoute('/product/')).toEqual({ name: 'notFound' })

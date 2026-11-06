@@ -17,7 +17,7 @@ const label = (r) => (r.id ? `${r.name}:${r.id}` : r.name)
 describe('routes', () => {
   it('covers every page, product and job posting', () => {
     const routes = allRoutes()
-    expect(routes).toHaveLength(6 + products.length + careers.postings.length)
+    expect(routes).toHaveLength(7 + products.length + careers.postings.length)
     expect(routes.filter((r) => r.name === 'product').map((r) => r.id)).toEqual(products.map((p) => p.id))
   })
 

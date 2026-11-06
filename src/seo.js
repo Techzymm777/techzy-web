@@ -9,6 +9,7 @@ import careers from '../content/careers.json'
 import { findPosting, resolvePostings } from './careers.js'
 import { esc } from './escape.js'
 import { title as privacyTitle } from './pages/privacy.js'
+import { title as termsTitle } from './pages/terms.js'
 
 export const SITE = seo.site
 
@@ -38,6 +39,7 @@ export function routePath(route) {
   if (route.name === 'product') return `/product/${route.id}`
   if (route.name === 'careerDetail') return `/careers/${route.id}`
   if (route.name === 'privacy') return '/privacy-policy'
+  if (route.name === 'terms') return '/terms-and-conditions'
   return `/${route.name}`
 }
 
@@ -52,6 +54,7 @@ export function allRoutes() {
     { name: 'careers' },
     ...resolvePostings(careers).map((p) => ({ name: 'careerDetail', id: p.id })),
     { name: 'privacy' },
+    { name: 'terms' },
   ]
 }
 
@@ -172,6 +175,8 @@ export function getMeta(route) {
       return { ...base, ...page[route.name] }
     case 'privacy':
       return { ...base, ...page.privacy, title: `${privacyTitle()} | ${seo.name}` }
+    case 'terms':
+      return { ...base, ...page.terms, title: `${termsTitle()} | ${seo.name}` }
     case 'product': {
       const p = products.find((x) => x.id === route.id)
       if (!p) break
@@ -299,6 +304,7 @@ export function llmsTxt() {
     `- [Contact](${abs('/contact')}): shop addresses, maps, phone, email and a contact form`,
     `- [Careers](${abs('/careers')}): open jobs`,
     `- [Privacy Policy](${abs('/privacy-policy')})`,
+    `- [Terms and Conditions](${abs('/terms-and-conditions')})`,
     '',
     '## Laptops',
     '',

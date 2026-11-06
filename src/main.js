@@ -43,6 +43,7 @@ function localTitle(route) {
     return p ? `${getPostingText(p).title} | Techzy` : `${t('notFound.title')} | Techzy`
   }
   if (route.name === 'privacy') return `${PAGES.privacy.title()} | Techzy`
+  if (route.name === 'terms') return `${PAGES.terms.title()} | Techzy`
   const key = { about: 'nav.about', products: 'nav.products', contact: 'nav.contact', careers: 'careers.hero.kicker', notFound: 'notFound.title' }[route.name]
   return `${t(key)} | Techzy`
 }
