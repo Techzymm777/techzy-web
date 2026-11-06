@@ -14,6 +14,7 @@ const ROUTES = [
   { name: 'contact' },
   { name: 'careers' },
   { name: 'privacy' },
+  { name: 'terms' },
   { name: 'notFound' },
   ...products.map((p) => ({ name: 'product', id: p.id })),
   ...resolvePostings(careers).map((p) => ({ name: 'careerDetail', id: p.id })),
