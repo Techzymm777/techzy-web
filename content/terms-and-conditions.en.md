@@ -34,7 +34,7 @@
 
 ## 4. Ordering
 
-4.1 The Website is a product catalogue. To order, contact us through the "Ask about this" button, +95 9 78 3388 970, or visit one of our shops.
+4.1 The Website is a product catalogue. To order, contact us through the "Ask about this" button, +95 9 783 388913, or visit one of our shops.
 
 4.2 An order is confirmed only when we confirm availability, price and delivery details in writing (message, invoice or receipt) and receive your payment or deposit.
 
@@ -142,7 +142,7 @@ These Terms are published in English and Myanmar. If there is any inconsistency,
 
 Techzy | Address: No.85/1A,Old Yay Tar Shay Street, Yay Tar Shay Ward, Bahan Township, Yangon
 
-Phone: 09945505355
+Phone: +95 9 783 388913
 
 Email: techzymm@gmail.com
 

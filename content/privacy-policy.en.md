@@ -15,7 +15,7 @@ By using our website, visiting our shop, placing an order, or contacting us, you
 - **Business name:** Techzy Tech Store
 - **Address:** No. 85/1A, Old Yay Tar Shay Street, Yay Tar Shay Ward, Bahan Township, Yangon, Myanmar
 - **Contact for privacy matters:** ayezaw@techzymm.com
-- **Phone:** +95 9 945505355
+- **Phone:** +95 9 783 388913
 - **Business hours:** Monday to Sunday, 9:00 to 17:30
 
 We handle personal data in line with Myanmar's Electronic Transactions Law (2004, as amended in 2021), the Law Protecting the Privacy and Security of Citizens (2017), and other applicable Myanmar law.
@@ -208,6 +208,6 @@ We may update this policy as our services or the law change. The date at the top
 ## 14. Contact us
 
 - **Email:** ayezaw@techzymm.com
-- **Phone:** +95 9 945505355
+- **Phone:** +95 9 783 388913
 - **Address:** No. 85/1A, Old Yay Tar Shay Street, Yay Tar Shay Ward, Bahan Township, Yangon, Myanmar
 - **Business hours:** Monday to Friday, 9:00 to 17:30
